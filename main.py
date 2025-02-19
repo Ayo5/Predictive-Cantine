@@ -5,6 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
 # Generate some example data
+# TODO -- Trouver les data qui nous serait utiles
 np.random.seed(0)
 X = 2 * np.random.rand(100, 1)
 y = 4 + 3 * X + np.random.randn(100, 1)
@@ -22,3 +23,4 @@ mse = mean_squared_error(y_test, y_pred)
 print(f'Mean Squared Error: {mse}')
 print(f'Coefficients: {model.coef_}')
 print(f'Intercept: {model.intercept_}')
+
