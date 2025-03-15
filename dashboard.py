@@ -8,11 +8,23 @@ import joblib
 
 # Streamlit interface
 st.title("POC Vision Food")
+st.markdown("Il s'agit d'une preuve que notre application peux fonction")
 
-# Input fields for new data
-year = st.number_input("Year", min_value=2000, max_value=2100, value=2023)
-month = st.number_input("Month", min_value=1, max_value=12, value=1)
-day = st.number_input("Day", min_value=1, max_value=31, value=1)
+# Champs qui permet d'envoyer un csv
+
+upload_csv = st.file_uploader("Importer un CSV", type="csv")
+if upload_csv :
+    df = pd.read_csv(upload_csv)
+    st.write("Apercu",df.head())
+
+    # Champs qui permet d'explorer les données
+    st.subheader("Exploration")
+    if st.checkbox("Afficher stat descriptives"):
+        st.write(df.describe())
+
+
+# Champs qui permettra de faire une prédiction
+date = st.date_input("Choisir une date")
 entree = st.text_input("Entrée", "Pamplemousse")
 plat = st.text_input("Plat", "Rôti de porc au jus")
 legumes = st.text_input("Légumes", "Lentilles")
@@ -42,24 +54,24 @@ st.slider('Pick a number', 0, 50)
 
 
 
-# Create a DataFrame for the new observation
-nouvelle_observation = {
-    "Year": year,
-    "Month": month,
-    "Day": day,
-    "Entrée": entree,
-    "Plat": plat,
-    "Légumes": legumes,
-    "Laitage": laitage,
-    "Gouter": gouter,
-    "Allergies": allergies,
-    "Taux participation": taux_participation,
-    "Température": temperature,
-    "Humidité": humidite,
-    "Vitesse du vent moyen 10 mn": vent,
-    "Attente moyenne": attente,
-    # Add one-hot encoded values for categorical variables
-}
+# Utilisation des données saisies par le user
+# nouvelle_observation = {
+#     "Year": year,
+#     "Month": month,
+#     "Day": day,
+#     "Entrée": entree,
+#     "Plat": plat,
+#     "Légumes": legumes,
+#     "Laitage": laitage,
+#     "Gouter": gouter,
+#     "Allergies": allergies,
+#     "Taux participation": taux_participation,
+#     "Température": temperature,
+#     "Humidité": humidite,
+#     "Vitesse du vent moyen 10 mn": vent,
+#     "Attente moyenne": attente,
+#     # Add one-hot encoded values for categorical variables
+# }
 
 #nouveau_df = pd.DataFrame([nouvelle_observation])
 #nouveau_df = nouveau_df.reindex(columns=model.feature_names_in_, fill_value=0)
