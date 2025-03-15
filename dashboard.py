@@ -1,27 +1,36 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import joblib
+import plotly.express as px
+
+# import joblib
 
 # Load the trained model
 # model = joblib.load('linear_regression_model.pkl')
 
 # Streamlit interface
 st.title("POC Vision Food")
-st.markdown("Il s'agit d'une preuve que notre application peux fonction")
+st.markdown("Il s'agit d'une preuve que notre application peut fonctionner")
 
-# Champs qui permet d'envoyer un csv
-
+# Champs qui permet d'envoyer un CSV
 upload_csv = st.file_uploader("Importer un CSV", type="csv")
-if upload_csv :
+if upload_csv:
     df = pd.read_csv(upload_csv)
-    st.write("Apercu",df.head())
+    st.write("Aperçu", df.head())
 
     # Champs qui permet d'explorer les données
     st.subheader("Exploration")
     if st.checkbox("Afficher stat descriptives"):
         st.write(df.describe())
 
+    st.subheader("Visualisation")
+    column = st.selectbox("Choisir une colonne", df.columns)
+    if st.button("Générer le graphique"):
+        fig = px.bar(df, x=column)
+        st.plotly_chart(fig)
+
+    # Champs de téléchargement du CSV modifié
+    st.download_button("Télécharger le CSV", df.to_csv(index=False), "data_edited.csv")
 
 # Champs qui permettra de faire une prédiction
 date = st.date_input("Choisir une date")
@@ -37,7 +46,7 @@ humidite = st.number_input("Humidité", value=58)
 vent = st.number_input("Vitesse du vent moyen 10 mn", value=4.5)
 attente = st.number_input("Attente moyenne", value=0)
 
-# Widget
+# Widgets
 st.checkbox('Yes')
 st.button('Click Me')
 st.radio('Pick your gender', ['Male', 'Female'])
@@ -46,15 +55,7 @@ st.multiselect('Choose a planet', ['Jupiter', 'Mars', 'Neptune'])
 st.select_slider('Pick a mark', ['Bad', 'Good', 'Excellent'])
 st.slider('Pick a number', 0, 50)
 
-
-
-
-
-
-
-
-
-# Utilisation des données saisies par le user
+# Utilisation des données saisies par l'utilisateur
 # nouvelle_observation = {
 #     "Year": year,
 #     "Month": month,
@@ -63,7 +64,7 @@ st.slider('Pick a number', 0, 50)
 #     "Plat": plat,
 #     "Légumes": legumes,
 #     "Laitage": laitage,
-#     "Gouter": gouter,
+#     "Goûter": gouter,
 #     "Allergies": allergies,
 #     "Taux participation": taux_participation,
 #     "Température": temperature,
@@ -73,10 +74,10 @@ st.slider('Pick a number', 0, 50)
 #     # Add one-hot encoded values for categorical variables
 # }
 
-#nouveau_df = pd.DataFrame([nouvelle_observation])
-#nouveau_df = nouveau_df.reindex(columns=model.feature_names_in_, fill_value=0)
+# nouveau_df = pd.DataFrame([nouvelle_observation])
+# nouveau_df = nouveau_df.reindex(columns=model.feature_names_in_, fill_value=0)
 
 # Prediction
-#if st.button("Predict"):
-#    prediction = model.predict(nouveau_df)
-#    st.write(f"Predicted Waste Rate: {prediction[0]:.2f}%")
+# if st.button("Predict"):
+#     prediction = model.predict(nouveau_df)
+#     st.write(f"Predicted Waste Rate: {prediction[0]:.2f}%")
