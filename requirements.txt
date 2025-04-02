@@ -1,0 +1,19 @@
+# Data manipulation and analysis
+pandas>=1.5.0
+numpy>=1.21.0
+
+# Machine Learning
+scikit-learn>=1.0.0
+tensorflow>=2.10.0
+joblib>=1.1.0
+
+# Visualization
+matplotlib>=3.5.0
+plotly>=5.10.0
+
+# Web Interface
+streamlit>=1.15.0
+
+# Jupyter (optional, for notebook support)
+jupyter>=1.0.0
+ipykernel>=6.0.0
