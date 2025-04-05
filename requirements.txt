@@ -1,9 +1,9 @@
 # Data manipulation and analysis
 numpy
-pandas==1.3.1
+pandas
 
 # DataRobot
-datarobot==2.26.0
+datarobot
 
 # Machine Learning
 scikit-learn

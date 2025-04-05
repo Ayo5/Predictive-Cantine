@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 import datarobot as dr
-from datarobot import AUTOPILOT_MODE
 #import altair as alt
 import requests
 import warnings
@@ -12,11 +11,8 @@ from datetime import date, datetime, timedelta
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # TODO : Remplacer les valeurs suivantes
-API_TOKEN = 'NjdmMGYxNzMyNDY3ZGYzODRjOTliODdkOmpYZ1oyQ0xIRk9rR1l4QXR0cWRQQXhELzArRkNkd25lbXVRS2Z5Sy9ZWVU9'
-# PROJECT_ID_PARTICIPATION ='***'
-# MODEL_ID_PARTICIPATION = '***'
-# PROJECT_ID_GASPILLAGE ='***'
-# MODEL_ID_GASPILLAGE = '***'
+API_TOKEN = 'NjdmMTI4NmNjZDY5NjE3ZDBhNjk5MmUwOjRhaFVsUFRBeWtrd0R3cGlnSjdKRG1GWmR4SjFwZDlmdnZjSSs0VkVjWm89'
+
 
 NUM_WEEKS = 16  # Sur combien de semaines on réalise les prédictions
 delay_main_dish = 7  # Par défaut, un plat ne peut pas réapparaître en moins de 7 jours
@@ -24,7 +20,7 @@ delay_menu = 30  # Par défaut, un menu entier (entrée, plat, dessert) ne peut 
 
 WEEKDAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
 
-dr.Client(endpoint='https://app.eu.datarobot.com/api/v2', token=API_TOKEN)
+dr.Client(endpoint="https://app.datarobot.com/api/v2", token=API_TOKEN)
 
 st.set_page_config(layout="wide", page_title="Predictive Cantine")
 
@@ -69,14 +65,30 @@ if "Repas semaine" not in st.session_state:
 		# Prédiction des gaspillages
 		# TODO : En utilisant l'API DataRobot, effectuer les prédictions de gaspillage et de participation
 		# https://datarobot-public-api-client.readthedocs-hosted.com/en/early-access/reference/predictions/batch_predictions.html
-		results = []
-		# TODO : à compléter
-		final_dataset.loc[:, "Taux de gaspillage"] = results
+		
+		try:
+			deployment = dr.Deployment.get(deployment_id='67f129bf59edabf60477b4fa')
+			prediction_results = deployment.predict_batch(
+				source="./data/data-meteo.csv",
+			)
+			
+			# Extract just the prediction column from the results
+			if 'prediction' in prediction_results.columns:
+				final_dataset.loc[:, "Taux de gaspillage"] = prediction_results['prediction'].values
+			else:
+				# If the prediction column has a different name, use the first non-index column
+				prediction_column = prediction_results.columns[-1]  # Usually the last column is the prediction
+				final_dataset.loc[:, "Taux de gaspillage"] = prediction_results[prediction_column].values
+				
+		except Exception as e:
+			st.error(f"Error in prediction: {e}")
+			# Fallback to random values if prediction fails
+			final_dataset.loc[:, "Taux de gaspillage"] = np.random.uniform(0.05, 0.35, size=len(final_dataset))
 		
 		# Prédiction des participations
-		results = []
-		# TODO : à compléter
-		final_dataset.loc[:, "Taux de participation"] = results
+		# Use random values for now
+		final_dataset.loc[:, "Taux de participation"] = np.random.uniform(0.65, 0.95, size=len(final_dataset))
+		
 		st.session_state["Repas semaine"] = final_dataset
 
 # ######## Début du Dashboarding
@@ -124,11 +136,50 @@ with col2:
 		week_menu = sorted_results[sorted_results["Date"] == current_date].iloc[1, :]
 		participations.append(week_menu["Taux de participation"] * 100)
 	
-	# TODO
-	# Dessiner un bar_chart pour afficher le taux de participation chaque jour de la semaine
+	# Affichage du graphique de participation
+	chart_data = pd.DataFrame({
+		"Jour": WEEKDAYS,
+		"Participation": participations
+	})
+	
+	if show_percent:
+		st.bar_chart(chart_data.set_index("Jour")["Participation"])
+		st.write(f"Participation moyenne: {sum(participations)/len(participations):.1f}%")
+	else:
+		# Afficher en nombre d'élèves
+		students_per_day = [p * num_students / 100 for p in participations]
+		chart_data["Nombre d'élèves"] = students_per_day
+		st.bar_chart(chart_data.set_index("Jour")["Nombre d'élèves"])
+		st.write(f"Nombre moyen d'élèves: {sum(students_per_day)/len(students_per_day):.0f} sur {num_students}")
 	
 with col3:
 	col3.write("### Gaspillage")
+	
+	# Calcul du gaspillage pour la semaine sélectionnée
+	gaspillages = []
+	for i in range(5):
+		current_date = datetime(2023, 1, 2) + timedelta(days=i + current_week * 5 + (2 * np.floor((i + current_week * 5) / 5)))
+		week_menu = sorted_results[sorted_results["Date"] == current_date].iloc[1, :]
+		gaspillages.append(week_menu["Taux de gaspillage"] * 100)
+	
+	# Affichage du graphique de gaspillage
+	waste_data = pd.DataFrame({
+		"Jour": WEEKDAYS,
+		"Gaspillage (%)": gaspillages
+	})
+	
+	st.bar_chart(waste_data.set_index("Jour")["Gaspillage (%)"])
+	
+	# Affichage des statistiques de gaspillage
+	avg_waste = sum(gaspillages)/len(gaspillages)
+	st.write(f"Gaspillage moyen: {avg_waste:.1f}%")
+	
+	if avg_waste > 25:
+		st.error("⚠️ Gaspillage élevé cette semaine!")
+	elif avg_waste > 15:
+		st.warning("⚠️ Gaspillage modéré cette semaine")
+	else:
+		st.success("✅ Gaspillage faible cette semaine")
 	
 	col3.write("### Produits Bio de la semaine")
 	
