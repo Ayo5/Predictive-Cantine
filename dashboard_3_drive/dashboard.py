@@ -7,16 +7,19 @@ import altair as alt
 import requests
 import warnings
 
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # TODO : Remplacer les valeurs suivantes
-API_TOKEN = "NjdmYTY3YzQ0OTVhMGQ4YWJlMTk5NTZiOkExVDlPM1IyWXJBeXY4V3FYUmcwV1dSN3o1K2QzNWNZd2tzT1FycmVNTnc9"
-PROJECT_ID_PARTICIPATION ="67fa5e94baa141fedb404d66"
-MODEL_ID_PARTICIPATION = "67fa5a3725057535f02682be"
-PROJECT_ID_GASPILLAGE ="67f129bf59edabf60477b4fa"
-MODEL_ID_GASPILLAGE = "67f0f01d248a943c18053d7c"
+API_TOKEN = "NjdmZDQwYzJkODMzODZiY2Y0MTk5NjI1Ok1tbVZrSUtyeDdINGFiNVo3amZKMEJaMzJhVXI2aGNmK0lrek9mRlJ0a0E9"
+PROJECT_ID_PARTICIPATION ="67fd3bea98b547d51db6629e"
+MODEL_ID_PARTICIPATION = "67fd3c9c28612c6236b2a9bb"
+
+API_TOKEN_GASP = "NjdmZDQxYjRmMzIzNmJiMGZjMTk5NTVmOiswNzVTNFZGZzFJMTBGVWc0dTFFVWZ1aWtHMHZ4YUtNU2RSSTVZWWxaaDg9"
+PROJECT_ID_GASPILLAGE ="67fd2e75a0da87f6f4503261"
+MODEL_ID_GASPILLAGE = "67fd35bb84cb9ee67965e9eb"
+ENDPOINT = "https://app.datarobot.com/api/v2"
 
 NUM_WEEKS = 16  # Sur combien de semaines on réalise les prédictions
 delay_main_dish = 7  # Par défaut, un plat ne peut pas réapparaître en moins de 7 jours
@@ -26,17 +29,60 @@ WEEKDAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
 
 # Initialize DataRobot client with error handling
 try:
-    dr.Client(endpoint='https://app.datarobot.com/api/v2', token=API_TOKEN)
+    dr.Client(endpoint=ENDPOINT, token=API_TOKEN)
 except Exception as e:
     st.error(f"Error initializing DataRobot client: {e}")
 
-st.set_page_config(layout="wide", page_title="Predictive Cantine")
+# Set page configuration with a more professional look
+st.set_page_config(
+    layout="wide", 
+    page_title="Predictive Cantine",
+    page_icon="🍽️"
+)
+
+# Add custom CSS for better styling
+st.markdown("""
+<style>
+    .main-header {
+        font-size: 2.5rem;
+        color: #1E88E5;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .section-header {
+        color: #0D47A1;
+        font-size: 1.5rem;
+        padding-top: 1rem;
+    }
+    .menu-day {
+        background-color: #f0f2f6;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .menu-item {
+        margin-bottom: 5px;
+    }
+    .bio-tag {
+        color: green;
+        font-weight: bold;
+    }
+    .divider {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Main title with better styling
+st.markdown("<h1 class='main-header'>🍽️ Predictive Cantine</h1>", unsafe_allow_html=True)
 
 st.write("# Predictive Cantine")
 
 if "Repas semaine" not in st.session_state:
 	with st.spinner('Calcul en cours...'):
-		dataset = pd.read_csv("data/data-meteo.csv")
+		dataset = pd.read_csv("./data/data-meteo.csv")
 		
 		# Il faut prédire pour des plats qui ont été servis que lorsque la cantine est ouverte
 		dataset = dataset[
@@ -72,11 +118,12 @@ if "Repas semaine" not in st.session_state:
 		
 		try:
 			# Prédiction des gaspillages
+			# Fix the client initialization - don't nest Client calls
+			dr.Client(endpoint=ENDPOINT, token=API_TOKEN_GASP)
 			results = []
 			project = dr.Project.get(PROJECT_ID_GASPILLAGE)
 			model = dr.Model.get(PROJECT_ID_GASPILLAGE, MODEL_ID_GASPILLAGE)
 			
-			# Create a copy for prediction to avoid modifying the original
 			pred_data = final_dataset.copy()
 			pred_dataset = project.upload_dataset(pred_data)
 			pred_job = model.request_predictions(pred_dataset.id)
@@ -86,6 +133,8 @@ if "Repas semaine" not in st.session_state:
 				results.append(row[1]["prediction"])
 			final_dataset.loc[:, "Taux de gaspillage"] = results
 			
+			# Reset client for participation prediction
+			dr.Client(endpoint=ENDPOINT, token=API_TOKEN)
 			# Prédiction des participations
 			results = []
 			project = dr.Project.get(PROJECT_ID_PARTICIPATION)
@@ -247,40 +296,52 @@ def get_current_menu(week_number):
 
 
 with col1:
-	st.write("### Menu de la semaine")
-	week_menus, prix_semaine, _ = get_current_menu(current_week)
-	for i, row in enumerate(week_menus):		
-		btn = col1.button("Changer de menu", key="redo_{}".format(row["Date"]))
-		if btn:
-			str_date = row["Date"].strftime("%d-%m-%Y")
-			st.session_state["skips"][str_date] = st.session_state["skips"].get(str_date, 0) + 1
-			week_menus, prix_semaine, _ = get_current_menu(current_week)
-			row = week_menus[i]
-			
-		col1.write("#### {} ({})".format(WEEKDAYS[row["Date"].weekday()], row["Date"].strftime("%d-%m-%Y")))
-		day_cols = col1.columns(3)
-		day_cols[0].write("##### Entrée")
-		day_cols[0].write(row["Entrée"])
-		if "AB" in str(row["Code_entrée"]):
-			day_cols[0].success("Bio")
-		day_cols[1].write("##### Plat")
-		day_cols[1].write(
-			" + ".join(
-				[x for x in [row["Plat"], row["Légumes"]] if str(x) != "nan"]
-			)
-		)
-		if "AB" in str(row["Code_plat"]) or "AB" in str(row["Code_légumes"]):
-			day_cols[1].success("Bio")
-		day_cols[2].write("##### Dessert")
-		day_cols[2].write(
-			" + ".join(
-				[x for x in [row["Dessert"], row["Laitage"]] if str(x) != "nan"]
-			)
-		)
-		if "AB" in str(row["Code_dessert"]) or "AB" in str(row["Code_laitage"]):
-			day_cols[2].success("Bio")
-		col1.write("---")
-	
+    st.markdown("<h2 class='section-header'>Menu de la semaine</h2>", unsafe_allow_html=True)
+    week_menus, prix_semaine, _ = get_current_menu(current_week)
+    for i, row in enumerate(week_menus):        
+        # Create a container for each day's menu
+        with st.container():
+            st.markdown(f"<div class='menu-day'>", unsafe_allow_html=True)
+            
+            # Day header with date
+            st.markdown(f"<h3>{WEEKDAYS[row['Date'].weekday()]} ({row['Date'].strftime('%d-%m-%Y')})</h3>", unsafe_allow_html=True)
+            
+            # Button to change menu
+            btn = st.button("Changer de menu", key=f"redo_{row['Date']}")
+            if btn:
+                str_date = row["Date"].strftime("%d-%m-%Y")
+                st.session_state["skips"][str_date] = st.session_state["skips"].get(str_date, 0) + 1
+                week_menus, prix_semaine, _ = get_current_menu(current_week)
+                row = week_menus[i]
+            
+            # Menu items in columns
+            day_cols = st.columns(3)
+            
+            # Entrée
+            with day_cols[0]:
+                st.markdown("<b>Entrée</b>", unsafe_allow_html=True)
+                st.markdown(f"<div class='menu-item'>{row['Entrée']}</div>", unsafe_allow_html=True)
+                if "AB" in str(row["Code_entrée"]):
+                    st.success("Bio")
+            
+            # Plat
+            with day_cols[1]:
+                st.markdown("<b>Plat</b>", unsafe_allow_html=True)
+                plat_text = " + ".join([x for x in [row["Plat"], row["Légumes"]] if str(x) != "nan"])
+                st.markdown(f"<div class='menu-item'>{plat_text}</div>", unsafe_allow_html=True)
+                if "AB" in str(row["Code_plat"]) or "AB" in str(row["Code_légumes"]):
+                    st.success("Bio")
+            
+            # Dessert
+            with day_cols[2]:
+                st.markdown("<b>Dessert</b>", unsafe_allow_html=True)
+                dessert_text = " + ".join([x for x in [row["Dessert"], row["Laitage"]] if str(x) != "nan"])
+                st.markdown(f"<div class='menu-item'>{dessert_text}</div>", unsafe_allow_html=True)
+                if "AB" in str(row["Code_dessert"]) or "AB" in str(row["Code_laitage"]):
+                    st.success("Bio")
+            
+            st.markdown("</div>", unsafe_allow_html=True)
+
 with col2:
 	participations = []
 	week_menus, prix_semaine, _ = get_current_menu(current_week)
@@ -289,13 +350,31 @@ with col2:
 		
 	col2.write("### Budget")
 	cols2_2 = col2.columns(2)
-	num_students = cols2_2[0].number_input("Nombre d'élèves inscrits à la cantine :", min_value=0, max_value=1500, value=150)
+	num_students = cols2_2[0].number_input("Nombre d'élèves inscrits à la cantine :", min_value=0, max_value=5000, value=150)
 	show_percent = cols2_2[1].checkbox("Afficher en pourcentages", value=False)
 	
 	cols2_1_metrics = col2.columns(3)
-	# TODO : Afficher les métriques de budget (coût de semaine, coût total, économies réalisées)
-	# ...
-
+	# Afficher les métriques de budget
+	cout_semaine = prix_semaine * num_students
+	cout_standard = 4.5 * 5 * num_students  # 4.5€ par repas standard, 5 jours
+	economies = cout_standard - cout_semaine if cout_standard > cout_semaine else 0
+	
+	cols2_1_metrics[0].metric(
+		"Coût par enfant",
+		f"{prix_semaine:.2f}€",
+		f"{(prix_semaine/5):.2f}€/jour"
+	)
+	cols2_1_metrics[1].metric(
+		"Coût total semaine",
+		f"{cout_semaine:.2f}€",
+		f"{num_students} enfants"
+	)
+	cols2_1_metrics[2].metric(
+		"Économies réalisées",
+		f"{economies:.2f}€",
+		f"{(economies/cout_standard*100):.1f}%" if cout_standard > 0 else "0%",
+		delta_color="normal" if economies > 0 else "off"
+	)
 		
 	col2.write("### Affluence")
 	col2.bar_chart(
@@ -317,8 +396,53 @@ with col3:
 		
 	col3.write("### Gaspillage et CO2")
 	cols3_1_metrics = col3.columns(3)
-	# TODO : Afficher les métriques de gaspillage
-	# ...
+	# Afficher les métriques de gaspillage
+	gaspillage_moyen_initial = sum(gaspillage_initial) / len(gaspillage_initial)
+	gaspillage_moyen_prevu = sum(gaspillage_prevu) / len(gaspillage_prevu)
+	reduction_gaspillage = gaspillage_moyen_initial - gaspillage_moyen_prevu
+	
+	cols3_1_metrics[0].metric(
+		"Gaspillage initial",
+		f"{gaspillage_moyen_initial:.1f}%",
+		delta=None
+	)
+	
+	cols3_1_metrics[1].metric(
+		"Gaspillage prévu",
+		f"{gaspillage_moyen_prevu:.1f}%",
+		f"-{reduction_gaspillage:.1f}%" if reduction_gaspillage > 0 else f"+{-reduction_gaspillage:.1f}%",
+		delta_color="inverse"  # Green when negative (less waste)
+	)
+	
+	cols3_1_metrics[2].metric(
+		"Empreinte CO2",
+		f"{co2:.1f} kg",
+		f"{co2/5:.2f} kg/jour"
+	)
+	
+	# Afficher le graphique comparatif de gaspillage
+	# Restructure the data for Altair
+	gaspillage_long = pd.DataFrame({
+		"Jour": [f"{i+1} - {w}" for i, w in enumerate(WEEKDAYS)] * 2,
+		"Type": ["Gaspillage initial"] * 5 + ["Gaspillage prévu"] * 5,
+		"Pourcentage": gaspillage_initial + gaspillage_prevu
+	})
+	
+	# Create chart with pre-melted data
+	gaspillage_chart = alt.Chart(gaspillage_long).mark_bar().encode(
+		x=alt.X('Jour:N', title='Jour de la semaine'),
+		y=alt.Y('Pourcentage:Q', title='Gaspillage (%)'),
+		color=alt.Color('Type:N', scale=alt.Scale(
+			domain=['Gaspillage initial', 'Gaspillage prévu'],
+			range=['#ff9999', '#66b3ff']
+		)),
+		column='Type:N',
+		tooltip=['Jour', 'Type', 'Pourcentage']
+	).properties(
+		title='Comparaison du gaspillage initial et prévu'
+	)
+	
+	col3.altair_chart(gaspillage_chart, use_container_width=True)
 	
 	col3.write("### Produits Bio de la semaine")
 	have_bio = False
