@@ -11,7 +11,7 @@ from datetime import date, datetime, timedelta
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # TODO : Remplacer les valeurs suivantes
-API_TOKEN = 'NjdmMTI4NmNjZDY5NjE3ZDBhNjk5MmUwOjRhaFVsUFRBeWtrd0R3cGlnSjdKRG1GWmR4SjFwZDlmdnZjSSs0VkVjWm89'
+API_TOKEN = 'NjdmZDJiMmEzZWI2NmE3NmI0ZjQwMTRkOk5qaUFGaTlQS2ZYd3ZGQmJGcGhaYjMvL094NWpYWWlwenRyRW9tSmNsUWM9'
 
 
 NUM_WEEKS = 16  # Sur combien de semaines on réalise les prédictions
@@ -104,7 +104,6 @@ current_week = int(st.selectbox(
 sorted_results = st.session_state["Repas semaine"].sort_values("Taux de gaspillage", ascending=True)
 
 def calcul_menus():
-	# Cette fonction va calculer tous les menus des prochaines semaines en appliquant les règles métiers
 	menus = {}
 	for week in range(NUM_WEEKS):
 		for i in range(5):

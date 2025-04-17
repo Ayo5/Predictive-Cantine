@@ -1,0 +1,132 @@
+import streamlit as st
+import pandas as pd
+import altair as alt
+from config import WEEKDAYS, DEFAULT_DELAY_MAIN_DISH, DEFAULT_DELAY_MENU
+from menu_generator import get_current_menu
+
+def display_waste_section(col, current_week):
+    """Display the waste and CO2 section"""
+    # Get data
+    week_menus, prix_semaine, co2 = get_current_menu(current_week)
+    gaspillage_initial = [row["Taux gaspillage"] * 100 for row in week_menus]
+    gaspillage_prevu = [row["Taux de gaspillage"] * 100 for row in week_menus]
+    
+    # Waste and CO2 section
+    col.markdown("<h2 class='section-header'>Gaspillage et CO2</h2>", unsafe_allow_html=True)
+    
+    # Calculate metrics
+    gaspillage_moyen_initial = sum(gaspillage_initial) / len(gaspillage_initial)
+    gaspillage_moyen_prevu = sum(gaspillage_prevu) / len(gaspillage_prevu)
+    reduction_gaspillage = gaspillage_moyen_initial - gaspillage_moyen_prevu
+    
+    # Display metrics
+    cols3_1_metrics = col.columns(3)
+    cols3_1_metrics[0].metric(
+        "Gaspillage initial",
+        f"{gaspillage_moyen_initial:.1f}%",
+        delta=None
+    )
+    
+    cols3_1_metrics[1].metric(
+        "Gaspillage prévu",
+        f"{gaspillage_moyen_prevu:.1f}%",
+        f"-{reduction_gaspillage:.1f}%" if reduction_gaspillage > 0 else f"+{-reduction_gaspillage:.1f}%",
+        delta_color="inverse"  # Green when negative (less waste)
+    )
+    
+    cols3_1_metrics[2].metric(
+        "Empreinte CO2",
+        f"{co2:.1f} kg",
+        f"{co2/5:.2f} kg/jour"
+    )
+    
+    # Add some space
+    col.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
+    
+    # Waste comparison chart
+    display_waste_chart(col, gaspillage_initial, gaspillage_prevu)
+    
+    # Bio products section
+    display_bio_products(col, week_menus)
+    
+    # Parameters section
+    display_parameters(col)
+
+def display_waste_chart(col, gaspillage_initial, gaspillage_prevu):
+    """Display waste comparison chart"""
+    # Restructure data for Altair
+    gaspillage_long = pd.DataFrame({
+        "Jour": [f"{i+1} - {w}" for i, w in enumerate(WEEKDAYS)] * 2,
+        "Type": ["Gaspillage initial"] * 5 + ["Gaspillage prévu"] * 5,
+        "Pourcentage": gaspillage_initial + gaspillage_prevu
+    })
+    
+    # Create chart
+    chart1 = alt.Chart(gaspillage_long[gaspillage_long["Type"] == "Gaspillage initial"]).mark_bar().encode(
+        x=alt.X('Jour:N', title='Jour de la semaine'),
+        y=alt.Y('Pourcentage:Q', title='Gaspillage (%)'),
+        color=alt.value('#ff9999'),
+        tooltip=['Jour', 'Pourcentage']
+    ).properties(
+        title='Gaspillage initial'
+    )
+    
+    chart2 = alt.Chart(gaspillage_long[gaspillage_long["Type"] == "Gaspillage prévu"]).mark_bar().encode(
+        x=alt.X('Jour:N', title='Jour de la semaine'),
+        y=alt.Y('Pourcentage:Q', title='Gaspillage (%)'),
+        color=alt.value('#66b3ff'),
+        tooltip=['Jour', 'Pourcentage']
+    ).properties(
+        title='Gaspillage prévu'
+    )
+    
+    # Combine charts
+    gaspillage_chart = alt.vconcat(chart1, chart2).resolve_scale(
+        y='shared'
+    )
+    
+    col.altair_chart(gaspillage_chart, use_container_width=True)
+
+def display_bio_products(col, week_menus):
+    """Display bio products section"""
+    col.markdown("<h2 class='section-header'>Produits Bio de la semaine</h2>", unsafe_allow_html=True)
+    
+    have_bio = False
+    bio_items = []
+    
+    for row in week_menus:
+        cols_codes = ["Code_entrée", "Code_plat", "Code_légumes", "Code_laitage", "Code_dessert"]
+        cols_dish = ["Entrée", "Plat", "Légumes", "Laitage", "Dessert"]
+        
+        for code, dish in zip(cols_codes, cols_dish):
+            if "AB" in str(row[code]) and not pd.isna(row[dish]):
+                bio_items.append(row[dish])
+                have_bio = True
+    
+    if have_bio:
+        for item in bio_items:
+            col.markdown(f"<div style='background-color:#e6f7e6; padding:5px; border-radius:5px; margin-bottom:5px;'>🌱 {item}</div>", unsafe_allow_html=True)
+    else:
+        col.error("Pas de bio cette semaine !")
+
+def display_parameters(col):
+    """Display parameters section"""
+    col.markdown("<h2 class='section-header'>Paramètres</h2>", unsafe_allow_html=True)
+    
+    global delay_main_dish, delay_menu
+    
+    delay_main_dish = col.slider(
+        "Délai d'apparition entre deux plats identiques (en jours)", 
+        min_value=1, 
+        max_value=30, 
+        value=DEFAULT_DELAY_MAIN_DISH, 
+        step=1
+    )
+    
+    delay_menu = col.slider(
+        "Délai d'apparition entre deux menus identiques (en jours)", 
+        min_value=1, 
+        max_value=90, 
+        value=DEFAULT_DELAY_MENU, 
+        step=1
+    )
