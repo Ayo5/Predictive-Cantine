@@ -8,8 +8,8 @@ PROJECT_ID_GASPILLAGE ="67fd2e75a0da87f6f4503261"
 MODEL_ID_GASPILLAGE = "67fd35bb84cb9ee67965e9eb"
 ENDPOINT = "https://app.datarobot.com/api/v2"
 
-CSV_PREDICTIONS = "/Users/dayabe/Documents/Projet/Kesk'IA/dashboard_3_drive/data/data-meteo.csv"
-CSV_CO2_COUTS = "/Users/dayabe/Documents/Projet/Kesk'IA/dashboard_3_drive/data/co2_couts.csv"
+CSV_PREDICTIONS = "/Users/dayabe/Documents/Projet/Kesk'IA/data/data-meteo.csv"
+CSV_CO2_COUTS = "/Users/dayabe/Documents/Projet/Kesk'IA/data/co2_couts.csv"
 
 NUM_WEEKS = 16  # Sur combien de semaines on réalise les prédictions
 WEEKDAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]

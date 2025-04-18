@@ -16,9 +16,9 @@ from components.waste_display import display_waste_section
 setup_page_style()
 
 # Main dashboard
-st.markdown("<h1 class='main-header'>🍽️ Food Vision</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-header'>🍽️ Vision Food</h1>", unsafe_allow_html=True)
 
-# Load data if not already in session state
+
 if "Repas semaine" not in st.session_state:
     with st.spinner('Calcul en cours...'):
         # Load and prepare dataset
