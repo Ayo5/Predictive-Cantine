@@ -1,0 +1,217 @@
+Date,Entrée,Plat,Légumes,Laitage,Dessert,Gouter,Taux participation,Température,Humidité,Vitesse du vent moyen 10 mn,Taux gaspillage,Attente moyenne
+2024-09-02,Taboulé,Poulet rôti,Petits pois,Petit suisse,Fruit frais,Pain / Chocolat / Lait,0.86,9.5,79,5.3,0.48,6.42
+2024-09-03,Taboulé,Steak haché,Haricots verts,Yaourt nature,Fruit frais,Pain / Confiture / Jus,0.85,15.4,76,5.8,0.27,12.22
+2024-09-04,Taboulé,Lasagnes,Riz,,Fruit frais,Pain / Confiture / Jus,0.94,7.9,62,4.8,0.37,26.32
+2024-09-05,Taboulé,Rôti de bœuf,Riz,Emmental,Fruit frais,Pain / Fromage / Lait,0.91,13.4,61,2.2,0.45,24.42
+2024-09-06,Betteraves,Steak haché,Petits pois,Petit suisse,Compote,Pain / Confiture / Jus,0.94,11.0,43,2.1,0.23,10.32
+2024-09-09,Taboulé,Lasagnes,Haricots verts,Saint Paulin,Gâteau,Pain / Chocolat / Lait,0.93,20.3,68,4.4,0.29,36.84
+2024-09-10,Carottes râpées,Rôti de porc,Légumes,Emmental,Compote,Pain / Fromage / Lait,0.88,10.0,58,4.5,0.5,33.46
+2024-09-11,Carottes râpées,Poulet rôti,Carottes,Petit suisse,Compote,Pain / Confiture / Jus,0.96,6.6,48,4.6,0.33,34.82
+2024-09-12,Concombres,Steak haché,Petits pois,Saint Paulin,Gâteau,Pain / Confiture / Jus,1.0,6.2,55,4.0,0.21,13.35
+2024-09-13,Betteraves,Poisson pané,Carottes,Petit suisse,Compote,Pain / Chocolat / Lait,0.86,10.4,40,2.5,0.47,25.04
+2024-09-16,Carottes râpées,Rôti de porc,Riz,Petit suisse,Compote,Pain / Fromage / Lait,0.91,19.9,45,3.4,0.08,20.28
+2024-09-17,Salade verte,Rôti de porc,Carottes,Yaourt nature,Crème dessert,Pain / Confiture / Jus,0.93,23.8,72,5.8,0.06,12.6
+2024-09-18,Pamplemousse,Poisson pané,Riz,Yaourt nature,Crème dessert,Pain / Confiture / Jus,0.92,17.4,67,2.7,0.35,37.63
+2024-09-19,Carottes râpées,Rôti de bœuf,Riz,Fromage blanc,Gâteau,Pain / Chocolat / Lait,0.94,22.1,41,2.4,0.45,22.33
+2024-09-20,Pamplemousse,Lasagnes,Carottes,Fromage blanc,Fruit frais,Pain / Confiture / Jus,0.85,13.7,69,4.1,0.15,29.97
+2024-09-23,Carottes râpées,Rôti de porc,Haricots verts,Emmental,Fruit frais,Pain / Chocolat / Lait,0.88,6.4,70,5.9,0.16,17.44
+2024-09-24,Pamplemousse,Rôti de bœuf,Riz,,Gâteau,Pain / Fromage / Lait,0.88,11.9,67,4.2,0.42,22.64
+2024-09-25,Concombres,Lasagnes,Carottes,Saint Paulin,Gâteau,Pain / Fromage / Lait,1.0,17.3,60,3.0,0.48,23.86
+2024-09-26,Betteraves,Lasagnes,Légumes,Petit suisse,Fruit frais,Pain / Chocolat / Lait,0.86,22.0,69,4.2,0.34,17.98
+2024-09-27,Concombres,Rôti de porc,Carottes,Fromage blanc,Fruit frais,Pain / Chocolat / Lait,0.93,10.8,67,5.9,0.36,38.85
+2024-09-30,Taboulé,Rôti de bœuf,Haricots verts,Saint Paulin,Fruit frais,Pain / Fromage / Lait,0.85,14.8,52,4.9,0.16,19.38
+2024-10-01,Pamplemousse,Poisson pané,Légumes,Emmental,Crème dessert,Pain / Fromage / Lait,0.97,12.0,75,2.1,0.44,7.81
+2024-10-02,Salade verte,Poulet rôti,Légumes,Camembert,Compote,Pain / Chocolat / Lait,0.99,22.3,74,5.4,0.25,24.74
+2024-10-03,Concombres,Poulet rôti,Petits pois,Petit suisse,Gâteau,Pain / Fromage / Lait,0.86,23.8,69,5.4,0.17,27.28
+2024-10-04,Carottes râpées,Poulet rôti,Haricots verts,Camembert,Compote,Pain / Fromage / Lait,0.94,13.6,41,3.6,0.43,14.1
+2024-10-07,Concombres,Steak haché,Riz,Camembert,Compote,Pain / Fromage / Lait,0.99,23.4,61,5.0,0.35,20.77
+2024-10-08,Pamplemousse,Rôti de porc,Frites,Saint Paulin,Gâteau,Pain / Chocolat / Lait,0.93,18.0,44,3.9,0.2,23.37
+2024-10-09,Pamplemousse,Poulet rôti,Petits pois,Fromage blanc,Mousse au chocolat,Pain / Fromage / Lait,0.92,21.7,67,2.4,0.13,33.55
+2024-10-10,Carottes râpées,Steak haché,Carottes,Saint Paulin,Compote,Pain / Confiture / Jus,0.87,10.9,41,3.3,0.09,26.75
+2024-10-11,Betteraves,Poisson pané,Carottes,Fromage blanc,Crème dessert,Pain / Fromage / Lait,0.9,10.0,74,4.3,0.42,22.18
+2024-10-14,Salade verte,Lasagnes,Légumes,Yaourt nature,Fruit frais,Pain / Fromage / Lait,0.96,6.6,59,2.2,0.37,19.5
+2024-10-15,Taboulé,Lasagnes,Petits pois,Yaourt nature,Compote,Pain / Fromage / Lait,0.98,20.8,59,3.1,0.23,22.11
+2024-10-16,Taboulé,Lasagnes,Petits pois,Yaourt nature,Crème dessert,Pain / Fromage / Lait,0.91,21.9,43,4.8,0.03,5.98
+2024-10-17,Carottes râpées,Lasagnes,Légumes,Yaourt nature,Fruit frais,Pain / Confiture / Jus,0.93,13.5,60,4.0,0.45,6.49
+2024-10-18,Pamplemousse,Lasagnes,Riz,,Compote,Pain / Confiture / Jus,0.97,14.2,58,4.8,0.11,16.78
+2024-10-21,Taboulé,Rôti de bœuf,Riz,Yaourt nature,Compote,Pain / Chocolat / Lait,0.92,23.3,79,4.0,0.26,23.76
+2024-10-22,Carottes râpées,Steak haché,Frites,Fromage blanc,Fruit frais,Pain / Fromage / Lait,0.96,15.4,67,3.7,0.48,31.8
+2024-10-23,Taboulé,Poisson pané,Petits pois,Petit suisse,Crème dessert,Pain / Fromage / Lait,0.95,11.3,55,5.2,0.3,35.78
+2024-10-24,Betteraves,Steak haché,Légumes,Fromage blanc,Gâteau,Pain / Confiture / Jus,0.89,16.6,67,5.1,0.22,23.3
+2024-10-25,Betteraves,Poisson pané,Carottes,Saint Paulin,Gâteau,Pain / Chocolat / Lait,0.85,17.6,79,5.6,0.11,5.64
+2024-10-28,Betteraves,Poisson pané,Riz,Emmental,Compote,Pain / Confiture / Jus,0.97,18.4,42,3.0,0.2,12.22
+2024-10-29,Taboulé,Steak haché,Petits pois,Yaourt nature,Gâteau,Pain / Fromage / Lait,0.89,7.0,57,3.0,0.02,14.44
+2024-10-30,Taboulé,Steak haché,Légumes,Camembert,Crème dessert,Pain / Chocolat / Lait,0.94,17.0,52,3.4,0.16,16.99
+2024-10-31,Concombres,Poisson pané,Frites,Camembert,Compote,Pain / Chocolat / Lait,0.88,11.6,45,4.1,0.22,10.18
+2024-11-01,Pamplemousse,Lasagnes,Petits pois,Yaourt nature,Fruit frais,Pain / Chocolat / Lait,0.88,8.0,75,4.7,0.45,19.12
+2024-11-04,Concombres,Rôti de porc,Légumes,Yaourt nature,Gâteau,Pain / Chocolat / Lait,0.93,5.8,69,2.9,0.09,37.99
+2024-11-05,Taboulé,Rôti de bœuf,Carottes,Emmental,Compote,Pain / Fromage / Lait,0.98,10.3,67,3.0,0.3,17.82
+2024-11-06,Salade verte,Poulet rôti,Haricots verts,Emmental,Fruit frais,Pain / Fromage / Lait,0.93,7.6,72,4.1,0.45,12.32
+2024-11-07,Concombres,Steak haché,Riz,,Fruit frais,Pain / Chocolat / Lait,0.87,8.6,62,3.7,0.14,5.18
+2024-11-08,Taboulé,Steak haché,Haricots verts,Petit suisse,Compote,Pain / Fromage / Lait,0.94,20.6,42,5.0,0.3,30.91
+2024-11-11,Betteraves,Steak haché,Riz,Fromage blanc,Mousse au chocolat,Pain / Fromage / Lait,0.93,5.7,53,2.1,0.27,23.65
+2024-11-12,Concombres,Lasagnes,Haricots verts,Camembert,Mousse au chocolat,Pain / Confiture / Jus,0.89,10.8,58,4.7,0.06,28.37
+2024-11-13,Carottes râpées,Poulet rôti,Haricots verts,Petit suisse,Crème dessert,Pain / Chocolat / Lait,0.9,11.8,45,3.6,0.2,12.76
+2024-11-14,Salade verte,Poulet rôti,Frites,Fromage blanc,Mousse au chocolat,Pain / Confiture / Jus,0.97,16.5,71,2.9,0.21,20.42
+2024-11-15,Concombres,Poisson pané,Petits pois,Fromage blanc,Mousse au chocolat,Pain / Chocolat / Lait,0.91,20.2,45,2.4,0.12,37.37
+2024-11-18,Salade verte,Rôti de porc,Frites,Petit suisse,Gâteau,Pain / Confiture / Jus,0.85,20.2,74,5.0,0.24,16.58
+2024-11-19,Carottes râpées,Steak haché,Riz,Saint Paulin,Fruit frais,Pain / Fromage / Lait,0.99,16.8,43,2.3,0.44,18.82
+2024-11-20,Concombres,Lasagnes,Frites,Camembert,Gâteau,Pain / Chocolat / Lait,0.92,12.3,54,4.0,0.08,22.31
+2024-11-21,Pamplemousse,Poisson pané,Légumes,Saint Paulin,Crème dessert,Pain / Chocolat / Lait,0.87,10.8,69,4.1,0.44,38.97
+2024-11-22,Carottes râpées,Rôti de porc,Frites,Yaourt nature,Gâteau,Pain / Chocolat / Lait,0.9,22.3,56,2.0,0.44,19.53
+2024-11-25,Carottes râpées,Poulet rôti,Riz,Camembert,Gâteau,Pain / Fromage / Lait,0.92,15.9,63,5.7,0.31,18.07
+2024-11-26,Salade verte,Lasagnes,Frites,Fromage blanc,Fruit frais,Pain / Confiture / Jus,0.95,14.5,64,2.7,0.48,30.96
+2024-11-27,Concombres,Rôti de porc,Haricots verts,Saint Paulin,Crème dessert,Pain / Chocolat / Lait,0.9,17.4,47,2.6,0.4,5.74
+2024-11-28,Concombres,Rôti de porc,Frites,Emmental,Fruit frais,Pain / Confiture / Jus,0.87,17.9,60,4.8,0.09,34.84
+2024-11-29,Taboulé,Poulet rôti,Haricots verts,Yaourt nature,Fruit frais,Pain / Chocolat / Lait,0.93,17.7,73,5.4,0.07,23.78
+2024-12-02,Taboulé,Poisson pané,Riz,Camembert,Compote,Pain / Fromage / Lait,0.98,10.0,72,5.1,0.47,36.16
+2024-12-03,Pamplemousse,Steak haché,Carottes,Petit suisse,Fruit frais,Pain / Confiture / Jus,0.91,23.3,51,2.3,0.26,18.89
+2024-12-04,Betteraves,Rôti de bœuf,Carottes,Emmental,Gâteau,Pain / Chocolat / Lait,0.93,7.1,64,4.5,0.48,7.9
+2024-12-05,Salade verte,Lasagnes,Petits pois,Camembert,Mousse au chocolat,Pain / Chocolat / Lait,0.96,8.5,40,4.1,0.07,34.85
+2024-12-06,Carottes râpées,Poulet rôti,Petits pois,Saint Paulin,Crème dessert,Pain / Chocolat / Lait,0.98,24.2,66,4.5,0.1,12.11
+2024-12-09,Salade verte,Poisson pané,Haricots verts,Fromage blanc,Fruit frais,Pain / Confiture / Jus,0.98,19.8,57,5.8,0.09,32.98
+2024-12-10,Carottes râpées,Lasagnes,Carottes,,Fruit frais,Pain / Confiture / Jus,0.93,22.5,75,2.3,0.15,32.89
+2024-12-11,Salade verte,Poisson pané,Légumes,Camembert,Fruit frais,Pain / Confiture / Jus,0.86,8.6,50,3.3,0.11,6.83
+2024-12-12,Concombres,Poisson pané,Petits pois,Saint Paulin,Gâteau,Pain / Fromage / Lait,0.94,22.1,73,4.4,0.18,20.91
+2024-12-13,Carottes râpées,Steak haché,Riz,Saint Paulin,Gâteau,Pain / Fromage / Lait,0.99,18.6,56,2.3,0.42,21.39
+2024-12-16,Salade verte,Steak haché,Carottes,Saint Paulin,Crème dessert,Pain / Fromage / Lait,0.92,12.0,60,3.6,0.18,18.77
+2024-12-17,Salade verte,Rôti de bœuf,Légumes,Petit suisse,Compote,Pain / Confiture / Jus,0.9,10.2,49,3.5,0.46,6.76
+2024-12-18,Pamplemousse,Rôti de bœuf,Haricots verts,Fromage blanc,Compote,Pain / Chocolat / Lait,0.87,5.9,67,6.0,0.14,30.56
+2024-12-19,Carottes râpées,Poulet rôti,Petits pois,Saint Paulin,Compote,Pain / Fromage / Lait,0.97,20.0,73,3.6,0.28,28.59
+2024-12-20,Carottes râpées,Lasagnes,Frites,Emmental,Compote,Pain / Confiture / Jus,0.99,20.6,75,5.8,0.4,30.84
+2024-12-23,Pamplemousse,Rôti de porc,Carottes,Fromage blanc,Fruit frais,Pain / Chocolat / Lait,0.88,16.0,44,4.2,0.45,35.48
+2024-12-24,Taboulé,Steak haché,Frites,Yaourt nature,Gâteau,Pain / Chocolat / Lait,0.91,25.0,46,2.8,0.5,26.39
+2024-12-25,Pamplemousse,Poulet rôti,Haricots verts,Yaourt nature,Fruit frais,Pain / Chocolat / Lait,0.9,7.9,74,3.4,0.42,5.24
+2024-12-26,Taboulé,Poisson pané,Petits pois,Petit suisse,Gâteau,Pain / Confiture / Jus,0.88,19.6,76,4.7,0.36,22.54
+2024-12-27,Betteraves,Lasagnes,Riz,Fromage blanc,Fruit frais,Pain / Confiture / Jus,0.96,20.8,50,3.3,0.04,5.19
+2024-12-30,Taboulé,Lasagnes,Petits pois,Camembert,Compote,Pain / Confiture / Jus,1.0,7.3,60,4.5,0.11,24.07
+2024-12-31,Concombres,Lasagnes,Frites,,Crème dessert,Pain / Confiture / Jus,0.86,20.6,69,4.9,0.21,37.68
+2025-01-01,Taboulé,Lasagnes,Carottes,Camembert,Compote,Pain / Fromage / Lait,0.97,6.9,58,6.0,0.32,24.28
+2025-01-02,Betteraves,Steak haché,Petits pois,Yaourt nature,Gâteau,Pain / Fromage / Lait,0.99,6.6,68,3.3,0.14,15.8
+2025-01-03,Pamplemousse,Steak haché,Petits pois,Yaourt nature,,Pain / Confiture / Jus,0.99,10.9,54,2.0,0.42,7.9
+2025-01-06,Betteraves,Lasagnes,Carottes,Saint Paulin,Gâteau,Pain / Fromage / Lait,0.91,18.2,46,3.5,0.28,33.91
+2025-01-07,Taboulé,Poulet rôti,Légumes,Yaourt nature,Fruit frais,Pain / Confiture / Jus,0.93,21.3,46,3.0,0.2,24.01
+2025-01-08,Betteraves,Poisson pané,Carottes,Petit suisse,Fruit frais,Pain / Fromage / Lait,0.95,8.8,55,3.9,0.39,8.73
+2025-01-09,Betteraves,Poulet rôti,Carottes,Petit suisse,Fruit frais,Pain / Chocolat / Lait,1.0,10.9,44,2.3,0.39,21.71
+2025-01-10,Pamplemousse,Rôti de bœuf,Riz,Fromage blanc,Compote,Pain / Confiture / Jus,0.99,16.1,77,5.9,0.12,36.25
+2025-01-13,Carottes râpées,Rôti de porc,Légumes,Yaourt nature,Crème dessert,Pain / Fromage / Lait,0.88,23.2,44,5.5,0.37,32.09
+2025-01-14,Concombres,Poulet rôti,Petits pois,Camembert,Compote,Pain / Chocolat / Lait,0.93,14.6,45,2.4,0.43,5.44
+2025-01-15,Salade verte,Poisson pané,Petits pois,Camembert,Fruit frais,Pain / Chocolat / Lait,0.98,10.8,49,2.4,0.46,37.16
+2025-01-16,Concombres,Rôti de bœuf,Petits pois,Petit suisse,Crème dessert,Pain / Confiture / Jus,0.99,24.9,44,5.2,0.43,34.3
+2025-01-17,Taboulé,Rôti de bœuf,Frites,Petit suisse,Gâteau,Pain / Fromage / Lait,0.94,14.1,63,2.6,0.13,17.88
+2025-01-20,Taboulé,Poulet rôti,Haricots verts,Petit suisse,Tarte aux pommes,Pain / Confiture / Jus,0.85,12.8,75,4.3,0.42,27.61
+2025-01-21,Taboulé,Poisson pané,Frites,Saint Paulin,Compote,Pain / Chocolat / Lait,0.94,12.8,68,2.4,0.29,10.2
+2025-01-22,Carottes râpées,Poisson pané,Haricots verts,Emmental,Fruit frais,Pain / Chocolat / Lait,0.95,15.9,43,2.2,0.11,6.27
+2025-01-23,Carottes râpées,Steak haché,Haricots verts,Petit suisse,Fruit frais,Pain / Confiture / Jus,0.96,5.8,71,4.0,0.34,21.38
+2025-01-24,Betteraves,Lasagnes,Carottes,Yaourt nature,Fruit frais,Pain / Fromage / Lait,0.89,22.8,63,4.0,0.17,15.37
+2025-01-27,Concombres,Rôti de bœuf,Légumes,Camembert,Crème dessert,Pain / Fromage / Lait,0.89,22.2,70,2.5,0.17,14.07
+2025-01-28,Salade verte,Rôti de porc,Riz,Petit suisse,Compote,Pain / Confiture / Jus,0.86,7.8,47,2.1,0.18,9.35
+2025-01-29,Carottes râpées,Poulet rôti,Haricots verts,Emmental,Gâteau,Pain / Fromage / Lait,0.9,7.1,51,2.2,0.31,10.6
+2025-01-30,Concombres,Lasagnes,Riz,Camembert,Fruit frais,Pain / Chocolat / Lait,1.0,14.4,59,2.6,0.39,29.61
+2025-01-31,Concombres,Steak haché,Petits pois,Yaourt nature,Gâteau,Pain / Chocolat / Lait,0.95,12.2,57,3.7,0.39,38.07
+2025-02-03,Taboulé,Rôti de porc,Petits pois,Fromage blanc,Fruit frais,Pain / Chocolat / Lait,0.94,17.0,52,2.0,0.34,19.98
+2025-02-04,Carottes râpées,Poulet rôti,Riz,Petit suisse,Compote,Pain / Fromage / Lait,0.94,10.9,41,5.9,0.38,19.97
+2025-02-05,Concombres,Steak haché,Frites,Camembert,Compote,Pain / Confiture / Jus,0.96,20.9,79,4.8,0.27,14.17
+2025-02-06,Pamplemousse,Poulet rôti,Carottes,Emmental,Compote,Pain / Confiture / Jus,1.0,16.0,63,4.1,0.48,12.72
+2025-02-07,Pamplemousse,Rôti de bœuf,Riz,Camembert,Fruit frais,Pain / Confiture / Jus,0.93,15.7,60,3.6,0.46,9.37
+2025-02-10,Betteraves,Rôti de porc,Carottes,Camembert,Crème dessert,Pain / Confiture / Jus,0.98,24.1,51,3.5,0.27,28.76
+2025-02-11,Salade verte,Lasagnes,Frites,,Compote,Pain / Confiture / Jus,0.88,11.6,74,3.1,0.08,27.25
+2025-02-12,Salade verte,Rôti de porc,Petits pois,,Gâteau,Pain / Confiture / Jus,0.97,11.1,73,3.7,0.47,7.05
+2025-02-13,Pamplemousse,Poisson pané,Haricots verts,Emmental,Gâteau,Pain / Confiture / Jus,0.97,15.8,41,4.5,0.34,28.5
+2025-02-14,Salade verte,Poulet rôti,Carottes,Saint Paulin,,Pain / Chocolat / Lait,0.87,12.1,59,2.2,0.33,17.48
+2025-02-17,Carottes râpées,Poisson pané,Haricots verts,Camembert,Compote,Pain / Chocolat / Lait,0.88,20.6,47,3.7,0.13,18.2
+2025-02-18,Taboulé,Poulet rôti,Carottes,Saint Paulin,Gâteau,Pain / Fromage / Lait,0.96,18.4,53,5.9,0.11,23.56
+2025-02-19,Salade verte,Lasagnes,Carottes,Saint Paulin,Compote,Pain / Chocolat / Lait,0.88,7.2,71,2.5,0.17,34.32
+2025-02-20,Pamplemousse,Poisson pané,Petits pois,Fromage blanc,,Pain / Chocolat / Lait,0.97,10.6,69,3.2,0.29,33.92
+2025-02-21,Taboulé,Lasagnes,Carottes,Fromage blanc,Gâteau,Pain / Confiture / Jus,0.87,16.5,63,3.4,0.44,18.82
+2025-02-24,Carottes râpées,Poulet rôti,Frites,Fromage blanc,Compote,Pain / Confiture / Jus,0.97,5.7,62,4.0,0.42,23.55
+2025-02-25,Carottes râpées,Poulet rôti,Riz,Fromage blanc,Crème dessert,Pain / Chocolat / Lait,0.96,5.4,42,3.0,0.16,32.38
+2025-02-26,Salade verte,Rôti de bœuf,Haricots verts,Yaourt nature,Compote,Pain / Fromage / Lait,0.88,11.5,72,3.5,0.37,8.12
+2025-02-27,Salade verte,Rôti de bœuf,Légumes,Camembert,Fruit frais,Pain / Confiture / Jus,0.94,14.6,73,2.6,0.42,18.33
+2025-02-28,Taboulé,Rôti de porc,Carottes,Fromage blanc,Fruit frais,Pain / Fromage / Lait,0.99,5.0,64,3.0,0.3,37.97
+2025-03-03,Concombres,Rôti de porc,Légumes,Petit suisse,,Pain / Fromage / Lait,0.98,23.0,69,4.7,0.34,9.63
+2025-03-04,Salade verte,Lasagnes,Riz,Fromage blanc,Fruit frais,Pain / Confiture / Jus,0.91,6.9,68,3.5,0.38,8.73
+2025-03-05,Concombres,Poisson pané,Frites,Saint Paulin,Gâteau,Pain / Confiture / Jus,0.95,23.5,43,4.9,0.21,20.27
+2025-03-06,Betteraves,Rôti de porc,Frites,Petit suisse,Fruit frais,Pain / Fromage / Lait,0.91,12.9,71,5.8,0.19,28.04
+2025-03-07,Carottes râpées,Rôti de porc,Frites,,Compote,Pain / Confiture / Jus,0.85,9.6,44,5.0,0.09,27.77
+2025-03-10,Concombres,Poulet rôti,Riz,Petit suisse,Gâteau,Pain / Confiture / Jus,0.95,9.4,61,3.8,0.25,24.11
+2025-03-11,Betteraves,Rôti de bœuf,Carottes,Emmental,Compote,Pain / Confiture / Jus,0.86,8.4,67,4.0,0.4,29.9
+2025-03-12,Concombres,Rôti de bœuf,Carottes,Saint Paulin,Compote,Pain / Fromage / Lait,0.95,16.6,46,2.3,0.03,39.76
+2025-03-13,Carottes râpées,Poisson pané,Riz,Petit suisse,Fruit frais,Pain / Chocolat / Lait,0.85,23.8,53,2.5,0.35,10.95
+2025-03-14,Taboulé,Rôti de bœuf,Frites,Fromage blanc,Gâteau,Pain / Fromage / Lait,0.95,19.6,70,2.6,0.32,6.86
+2025-03-17,Carottes râpées,Poulet rôti,Haricots verts,Yaourt nature,Gâteau,Pain / Chocolat / Lait,0.99,5.3,76,4.8,0.09,8.08
+2025-03-18,Concombres,Rôti de bœuf,Carottes,Fromage blanc,Crème dessert,Pain / Fromage / Lait,0.88,16.6,57,2.8,0.42,11.0
+2025-03-19,Taboulé,Rôti de bœuf,Légumes,Emmental,Fruit frais,Pain / Fromage / Lait,0.9,18.9,52,4.7,0.23,39.74
+2025-03-20,Betteraves,Rôti de porc,Frites,Saint Paulin,Gâteau,Pain / Fromage / Lait,0.9,23.5,71,2.3,0.37,12.07
+2025-03-21,Betteraves,Poulet rôti,Carottes,Emmental,Gâteau,Pain / Fromage / Lait,0.91,23.8,69,3.3,0.48,37.62
+2025-03-24,Concombres,Rôti de porc,Légumes,Emmental,Compote,Pain / Confiture / Jus,0.87,6.6,53,3.8,0.45,27.88
+2025-03-25,Taboulé,Rôti de bœuf,Petits pois,,Compote,Pain / Fromage / Lait,1.0,21.3,79,4.4,0.28,29.54
+2025-03-26,Concombres,Poulet rôti,Légumes,Fromage blanc,Compote,Pain / Fromage / Lait,0.86,12.8,50,5.0,0.26,31.84
+2025-03-27,Salade verte,Steak haché,Légumes,Fromage blanc,Fruit frais,Pain / Confiture / Jus,0.96,11.0,69,3.9,0.13,27.32
+2025-03-28,Betteraves,Lasagnes,Légumes,Saint Paulin,Fruit frais,Pain / Chocolat / Lait,0.98,19.6,64,2.5,0.11,15.88
+2025-03-31,Carottes râpées,Rôti de bœuf,Haricots verts,Yaourt nature,Mousse au chocolat,Pain / Fromage / Lait,0.95,9.4,47,4.8,0.48,35.71
+2025-04-01,Concombres,Lasagnes,Petits pois,Emmental,,Pain / Confiture / Jus,0.98,13.3,66,2.9,0.2,33.88
+2025-04-02,Taboulé,Poisson pané,Carottes,Petit suisse,Gâteau,Pain / Confiture / Jus,0.97,20.0,77,3.4,0.13,14.9
+2025-04-03,Concombres,Rôti de bœuf,Carottes,Yaourt nature,Fruit frais,Pain / Confiture / Jus,0.95,23.9,55,3.1,0.23,6.58
+2025-04-04,Carottes râpées,Lasagnes,Carottes,Yaourt nature,Crème dessert,Pain / Fromage / Lait,0.93,21.0,71,3.1,0.18,13.4
+2025-04-07,Taboulé,Poulet rôti,Haricots verts,Camembert,Tarte aux pommes,Pain / Confiture / Jus,0.89,12.0,56,2.4,0.19,9.46
+2025-04-08,Carottes râpées,Poisson pané,Frites,Yaourt nature,Gâteau,Pain / Confiture / Jus,0.95,10.4,41,3.2,0.05,17.06
+2025-04-09,Concombres,Poisson pané,Riz,Fromage blanc,Gâteau,Pain / Fromage / Lait,0.96,18.7,47,3.4,0.36,28.73
+2025-04-10,Betteraves,Poisson pané,Légumes,Camembert,Gâteau,Pain / Chocolat / Lait,0.89,12.5,61,5.3,0.03,7.65
+2025-04-11,Taboulé,Rôti de porc,Frites,Petit suisse,Fruit frais,Pain / Confiture / Jus,0.88,15.6,67,3.3,0.38,12.38
+2025-04-14,Taboulé,Rôti de bœuf,Petits pois,Camembert,Gâteau,Pain / Fromage / Lait,0.88,19.2,71,4.3,0.41,11.39
+2025-04-15,Taboulé,Steak haché,Petits pois,Yaourt nature,Mousse au chocolat,Pain / Fromage / Lait,0.9,24.4,40,4.5,0.05,6.74
+2025-04-16,Carottes râpées,Poulet rôti,Légumes,Fromage blanc,Compote,Pain / Confiture / Jus,0.9,19.7,47,3.9,0.48,16.27
+2025-04-17,Taboulé,Rôti de bœuf,Haricots verts,Saint Paulin,Crème dessert,Pain / Fromage / Lait,0.91,17.3,60,5.9,0.19,37.65
+2025-04-18,Salade verte,Rôti de porc,Frites,Camembert,Tarte aux pommes,Pain / Fromage / Lait,0.91,17.4,50,2.9,0.1,10.87
+2025-04-21,Carottes râpées,Rôti de bœuf,Carottes,Camembert,Compote,Pain / Confiture / Jus,0.96,23.7,79,4.7,0.37,18.34
+2025-04-22,Betteraves,Rôti de bœuf,Carottes,Emmental,Fruit frais,Pain / Confiture / Jus,0.91,11.6,42,3.3,0.16,13.49
+2025-04-23,Salade verte,Lasagnes,Riz,Yaourt nature,Fruit frais,Pain / Confiture / Jus,0.93,11.2,64,5.4,0.33,15.27
+2025-04-24,Concombres,Poisson pané,Frites,,Fruit frais,Pain / Confiture / Jus,0.96,16.7,58,5.8,0.08,22.66
+2025-04-25,Taboulé,Lasagnes,Petits pois,Fromage blanc,Compote,Pain / Fromage / Lait,0.94,5.1,66,5.0,0.48,13.51
+2025-04-28,Concombres,Poulet rôti,Riz,Emmental,Compote,Pain / Confiture / Jus,0.86,13.6,40,5.2,0.19,8.62
+2025-04-29,Salade verte,Lasagnes,Petits pois,Petit suisse,Gâteau,Pain / Confiture / Jus,0.86,16.8,73,2.1,0.47,38.15
+2025-04-30,Betteraves,Rôti de bœuf,Petits pois,,Tarte aux pommes,Pain / Chocolat / Lait,0.94,13.7,75,5.2,0.47,19.37
+2025-05-01,Taboulé,Poulet rôti,Carottes,Camembert,Crème dessert,Pain / Confiture / Jus,0.92,22.1,58,4.1,0.17,5.5
+2025-05-02,Betteraves,Steak haché,Petits pois,Fromage blanc,Compote,Pain / Fromage / Lait,0.98,10.7,53,4.4,0.41,25.19
+2025-05-05,Pamplemousse,Steak haché,Petits pois,Yaourt nature,Compote,Pain / Chocolat / Lait,0.93,14.7,69,3.9,0.11,6.96
+2025-05-06,Carottes râpées,Poisson pané,Haricots verts,Petit suisse,Gâteau,Pain / Confiture / Jus,0.88,18.8,51,4.3,0.18,18.13
+2025-05-07,Pamplemousse,Steak haché,Carottes,Yaourt nature,Fruit frais,Pain / Confiture / Jus,0.85,19.9,56,3.2,0.03,36.8
+2025-05-08,Betteraves,Poulet rôti,Carottes,Emmental,Crème dessert,Pain / Chocolat / Lait,0.93,7.5,74,3.9,0.07,9.48
+2025-05-09,Carottes râpées,Lasagnes,Riz,Emmental,,Pain / Chocolat / Lait,0.89,12.5,43,4.3,0.07,33.44
+2025-05-12,Concombres,Poisson pané,Petits pois,Camembert,Compote,Pain / Confiture / Jus,0.85,7.2,58,2.3,0.13,8.6
+2025-05-13,Betteraves,Poisson pané,Frites,Camembert,Gâteau,Pain / Confiture / Jus,0.98,16.1,50,3.0,0.4,25.6
+2025-05-14,Concombres,Rôti de porc,Légumes,Fromage blanc,Compote,Pain / Fromage / Lait,0.91,7.4,71,5.2,0.16,15.41
+2025-05-15,Carottes râpées,Rôti de bœuf,Carottes,Saint Paulin,Fruit frais,Pain / Fromage / Lait,0.96,5.1,40,2.3,0.4,36.82
+2025-05-16,Pamplemousse,Poulet rôti,Petits pois,Saint Paulin,Compote,Pain / Fromage / Lait,0.99,15.7,41,4.3,0.35,34.98
+2025-05-19,Betteraves,Poulet rôti,Frites,Fromage blanc,Mousse au chocolat,Pain / Fromage / Lait,0.99,17.0,78,5.6,0.16,18.74
+2025-05-20,Carottes râpées,Poisson pané,Légumes,Yaourt nature,Compote,Pain / Confiture / Jus,0.93,21.1,59,2.3,0.19,13.28
+2025-05-21,Taboulé,Rôti de bœuf,Haricots verts,Saint Paulin,Gâteau,Pain / Fromage / Lait,0.94,17.5,45,2.8,0.2,10.14
+2025-05-22,Salade verte,Rôti de porc,Petits pois,Yaourt nature,Mousse au chocolat,Pain / Confiture / Jus,0.98,15.5,53,3.0,0.08,30.66
+2025-05-23,Taboulé,Poisson pané,Petits pois,Camembert,Compote,Pain / Confiture / Jus,0.92,8.1,74,3.9,0.16,37.3
+2025-05-26,Concombres,Steak haché,Légumes,Saint Paulin,Fruit frais,Pain / Confiture / Jus,0.96,7.4,65,5.5,0.19,9.85
+2025-05-27,Salade verte,Steak haché,Légumes,Saint Paulin,Crème dessert,Pain / Fromage / Lait,0.99,24.5,63,2.1,0.36,34.69
+2025-05-28,Pamplemousse,Steak haché,Légumes,Camembert,Fruit frais,Pain / Confiture / Jus,0.99,15.0,60,4.6,0.31,9.64
+2025-05-29,Taboulé,Steak haché,Petits pois,Camembert,,Pain / Chocolat / Lait,0.9,20.4,46,3.6,0.28,39.58
+2025-05-30,Taboulé,Poulet rôti,Frites,Emmental,Compote,Pain / Fromage / Lait,0.87,14.0,79,3.6,0.27,19.23
+2025-06-02,Salade verte,Rôti de bœuf,Haricots verts,Fromage blanc,Fruit frais,Pain / Chocolat / Lait,0.91,10.3,71,2.6,0.14,12.9
+2025-06-03,Carottes râpées,Lasagnes,Légumes,Fromage blanc,Fruit frais,Pain / Chocolat / Lait,0.95,5.3,76,2.3,0.35,26.91
+2025-06-04,Salade verte,Poisson pané,Légumes,Camembert,Fruit frais,Pain / Chocolat / Lait,0.95,18.8,41,3.9,0.22,34.99
+2025-06-05,Pamplemousse,Lasagnes,Frites,Saint Paulin,Compote,Pain / Confiture / Jus,0.91,21.7,61,5.4,0.28,39.38
+2025-06-06,Pamplemousse,Rôti de porc,Carottes,Saint Paulin,Fruit frais,Pain / Fromage / Lait,0.88,23.2,60,2.9,0.36,13.25
+2025-06-09,Salade verte,Rôti de porc,Riz,Fromage blanc,Gâteau,Pain / Chocolat / Lait,0.98,21.5,75,4.6,0.09,33.46
+2025-06-10,Pamplemousse,Poulet rôti,Frites,Emmental,Fruit frais,Pain / Fromage / Lait,0.99,13.7,70,5.2,0.28,36.51
+2025-06-11,Concombres,Steak haché,Frites,Emmental,Tarte aux pommes,Pain / Confiture / Jus,0.92,16.2,45,4.0,0.21,24.87
+2025-06-12,Pamplemousse,Rôti de bœuf,Riz,Saint Paulin,Mousse au chocolat,Pain / Confiture / Jus,0.99,13.1,66,5.7,0.34,27.76
+2025-06-13,Salade verte,Rôti de porc,Petits pois,Emmental,Crème dessert,Pain / Chocolat / Lait,0.9,16.9,45,4.1,0.49,6.15
+2025-06-16,Taboulé,Steak haché,Riz,Camembert,Fruit frais,Pain / Confiture / Jus,0.94,11.2,49,2.5,0.35,24.99
+2025-06-17,Pamplemousse,Rôti de bœuf,Riz,Emmental,Tarte aux pommes,Pain / Confiture / Jus,0.93,13.7,69,3.3,0.16,28.63
+2025-06-18,Pamplemousse,Lasagnes,Riz,Fromage blanc,Gâteau,Pain / Fromage / Lait,0.93,23.5,56,5.7,0.31,15.43
+2025-06-19,Concombres,Poisson pané,Petits pois,Yaourt nature,Fruit frais,Pain / Chocolat / Lait,0.93,23.2,47,3.8,0.02,21.62
+2025-06-20,Concombres,Poisson pané,Frites,Saint Paulin,Gâteau,Pain / Chocolat / Lait,0.91,19.8,79,4.1,0.45,19.82
+2025-06-23,Salade verte,Rôti de porc,Riz,Petit suisse,Compote,Pain / Confiture / Jus,0.98,17.3,76,5.3,0.18,31.86
+2025-06-24,Carottes râpées,Poisson pané,Petits pois,Camembert,Fruit frais,Pain / Fromage / Lait,0.97,19.0,41,5.7,0.28,6.01
+2025-06-25,Taboulé,Poulet rôti,Riz,Saint Paulin,Compote,Pain / Fromage / Lait,0.95,19.5,74,5.6,0.11,18.65
+2025-06-26,Concombres,Poisson pané,Petits pois,Fromage blanc,Gâteau,Pain / Chocolat / Lait,0.94,21.5,44,4.8,0.12,19.84
+2025-06-27,Concombres,Poulet rôti,Frites,Camembert,Gâteau,Pain / Confiture / Jus,0.96,13.2,69,4.9,0.12,9.99
+2025-06-30,Betteraves,Poisson pané,Petits pois,Yaourt nature,Tarte aux pommes,Pain / Chocolat / Lait,0.98,15.0,44,2.6,0.43,15.21

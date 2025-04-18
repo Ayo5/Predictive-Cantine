@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime, timedelta
 import numpy as np
-from config import WEEKDAYS, DEFAULT_DELAY_MAIN_DISH, DEFAULT_DELAY_MENU
+from config import DEFAULT_DELAY_MAIN_DISH, DEFAULT_DELAY_MENU
 
 # Global variables
 delay_main_dish = DEFAULT_DELAY_MAIN_DISH
@@ -12,12 +12,23 @@ delay_menu = DEFAULT_DELAY_MENU
 def calcul_menus(sorted_results, num_weeks):
     """Calculate menus for all weeks"""
     menus = {}
-    for week in range(num_weeks):
-        for i in range(5):
-            delta_i = i + week * 5
-            current_date = datetime(2023, 1, 2) + timedelta(days=delta_i + (2 * np.floor(delta_i / 5)))
-            str_date = current_date.strftime("%d-%m-%Y")
-            menus[str_date] = sorted_results[sorted_results["Date"] == current_date].iloc[:50, :].to_dict("records")
+    
+    # Utiliser les dates réelles du dataset au lieu de générer des dates arbitraires
+    unique_dates = sorted(pd.to_datetime(sorted_results['Date'].unique()))
+    
+    for date in unique_dates:
+        str_date = date.strftime("%d-%m-%Y")
+        date_for_filter = date.strftime("%Y-%m-%d")  # Format pour filtrer le dataset
+        
+        # Filtrer les données pour cette date
+        date_data = sorted_results[sorted_results["Date"] == date_for_filter].iloc[:50, :].to_dict("records")
+        
+        # Ajouter l'objet datetime à chaque élément du menu pour l'affichage
+        for item in date_data:
+            item["Date"] = date
+            
+        menus[str_date] = date_data
+    
     return menus
 
 def get_current_menu(week_number):
@@ -34,29 +45,69 @@ def get_current_menu(week_number):
     
     menus = st.session_state["menus"]
     
-    for i in range(5):
-        i_week = i + week_number * 5
-        current_date = datetime(2023, 1, 2) + timedelta(days=i_week + (2 * np.floor(i_week / 5)))
-        str_date = current_date.strftime("%d-%m-%Y")
-        
-        try:
-            row = menus[str_date][0]
-            if str_date in st.session_state["skips"]:
-                row = menus[str_date][st.session_state["skips"][str_date]]
+    # Obtenir toutes les dates disponibles dans l'ordre chronologique
+    all_dates = sorted([datetime.strptime(date, "%d-%m-%Y") for date in menus.keys()])
+    
+    # Calculer les dates de la semaine sélectionnée
+    if len(all_dates) > 0:
+        # Trouver le premier jour de la semaine sélectionnée
+        start_idx = week_number * 5
+        if start_idx < len(all_dates):
+            week_start = all_dates[start_idx]
             
-            # Check if dish has been served recently
-            if dish_found(row, current_date, menus) or menu_found(row, current_date, menus):
-                st.session_state["skips"][str_date] = st.session_state["skips"].get(str_date, 0) + 1
-                row = menus[str_date][st.session_state["skips"][str_date]]
+            # Obtenir jusqu'à 5 jours consécutifs à partir de cette date
+            week_dates = []
+            current_idx = start_idx
+            while len(week_dates) < 5 and current_idx < len(all_dates):
+                week_dates.append(all_dates[current_idx])
+                current_idx += 1
             
-            week_menus.append(row)
-            
-            # Calculate menu cost and CO2
-            price, co2 = calculate_menu_cost_and_co2(row, co2_couts, price, co2)
-            
-        except Exception as e:
-            st.warning(f"Error processing menu for {str_date}: {e}")
-            # Create default menu item
+            # Traiter chaque jour de la semaine
+            for current_date in week_dates:
+                str_date = current_date.strftime("%d-%m-%Y")
+                
+                try:
+                    if str_date in menus and len(menus[str_date]) > 0:
+                        row = menus[str_date][0]
+                        if str_date in st.session_state["skips"]:
+                            skip_index = st.session_state["skips"][str_date]
+                            if skip_index >= len(menus[str_date]):
+                                skip_index = 0
+                                st.session_state["skips"][str_date] = 0
+                            row = menus[str_date][skip_index]
+                        
+                        # Check if dish has been served recently
+                        if dish_found(row, current_date, menus) or menu_found(row, current_date, menus):
+                            skip_index = st.session_state["skips"].get(str_date, 0) + 1
+                            if skip_index >= len(menus[str_date]):
+                                skip_index = 0
+                            st.session_state["skips"][str_date] = skip_index
+                            row = menus[str_date][skip_index]
+                        
+                        week_menus.append(row)
+                        
+                        # Calculate menu cost and CO2
+                        price, co2 = calculate_menu_cost_and_co2(row, co2_couts, price, co2)
+                    else:
+                        # Create default menu item
+                        row = create_default_menu_item(current_date)
+                        week_menus.append(row)
+                        
+                except Exception as e:
+                    print(f"Error processing menu for {str_date}: {e}")
+                    # Create default menu item
+                    row = create_default_menu_item(current_date)
+                    week_menus.append(row)
+        else:
+            # Si l'index de semaine est hors limites, créer des menus par défaut
+            for i in range(5):
+                current_date = datetime.now() + timedelta(days=i)
+                row = create_default_menu_item(current_date)
+                week_menus.append(row)
+    else:
+        # Si aucune date n'est disponible, créer des menus par défaut
+        for i in range(5):
+            current_date = datetime.now() + timedelta(days=i)
             row = create_default_menu_item(current_date)
             week_menus.append(row)
     

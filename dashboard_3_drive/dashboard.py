@@ -1,6 +1,7 @@
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timedelta
 import numpy as np
+import pandas as pd
 
 # Import modules
 from config import *
@@ -15,7 +16,7 @@ from components.waste_display import display_waste_section
 setup_page_style()
 
 # Main dashboard
-st.markdown("<h1 class='main-header'>🍽️ Predictive Cantine</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-header'>🍽️ Food Vision</h1>", unsafe_allow_html=True)
 
 # Load data if not already in session state
 if "Repas semaine" not in st.session_state:
@@ -25,12 +26,38 @@ if "Repas semaine" not in st.session_state:
         final_dataset = prepare_dataset(dataset, NUM_WEEKS)
         st.session_state["Repas semaine"] = final_dataset
 
-# Week selection
-current_week = int(st.selectbox(
-    "Choix de la semaine",
-    [f"Semaine {i+1}" for i in range(NUM_WEEKS)],
-    index=0
-).split(" ")[-1]) - 1
+# Date selection with calendar
+# Charger le CSV pour obtenir les dates disponibles
+csv_data = pd.read_csv(CSV_PREDICTIONS)
+available_dates = pd.to_datetime(csv_data['Date']).sort_values().unique()
+
+if len(available_dates) > 0:
+    min_date = available_dates[0]
+    max_date = available_dates[-1]
+    default_date = min_date
+else:
+    # Fallback si aucune date n'est disponible
+    today = datetime.now()
+    min_date = today - timedelta(days=today.weekday())
+    max_date = min_date + timedelta(days=NUM_WEEKS * 7)
+    default_date = min_date
+
+selected_date = st.date_input(
+    "Sélectionnez une date pour voir le menu de la semaine correspondante",
+    value=default_date,
+    min_value=min_date,
+    max_value=max_date
+)
+
+# Calculer le numéro de semaine à partir de la date sélectionnée
+selected_date_dt = datetime.combine(selected_date, datetime.min.time())
+days_diff = (selected_date_dt - datetime.combine(min_date, datetime.min.time())).days
+current_week = days_diff // 7
+
+# Afficher la semaine sélectionnée
+week_start = selected_date - timedelta(days=selected_date.weekday())
+week_end = week_start + timedelta(days=4)  # Vendredi
+st.info(f"Prédictions pour la semaine du {week_start.strftime('%d/%m/%Y')} au {week_end.strftime('%d/%m/%Y')}")
 
 # Sort results by waste rate
 sorted_results = st.session_state["Repas semaine"].sort_values("Taux de gaspillage", ascending=True)
@@ -46,11 +73,6 @@ if "skips" not in st.session_state:
 col1, col2, col3 = st.columns(3)
 
 # Display sections
-with col1:
-    display_menu_section(col1, current_week)
-
-with col2:
-    display_budget_section(col2, current_week)
-
-with col3:
-    display_waste_section(col3, current_week)
+display_menu_section(col1, current_week)
+display_budget_section(col2, current_week)
+display_waste_section(col3, current_week)

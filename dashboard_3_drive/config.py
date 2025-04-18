@@ -8,9 +8,12 @@ PROJECT_ID_GASPILLAGE ="67fd2e75a0da87f6f4503261"
 MODEL_ID_GASPILLAGE = "67fd35bb84cb9ee67965e9eb"
 ENDPOINT = "https://app.datarobot.com/api/v2"
 
+CSV_PREDICTIONS = "/Users/dayabe/Documents/Projet/Kesk'IA/dashboard_3_drive/data/data-meteo.csv"
+CSV_CO2_COUTS = "/Users/dayabe/Documents/Projet/Kesk'IA/dashboard_3_drive/data/co2_couts.csv"
+
 NUM_WEEKS = 16  # Sur combien de semaines on réalise les prédictions
 WEEKDAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"]
 
 # Default values for parameters
-DEFAULT_DELAY_MAIN_DISH = 7  # Par défaut, un plat ne peut pas réapparaître en moins de 7 jours
-DEFAULT_DELAY_MENU = 30  # Par défaut, un menu entier ne peut pas réapparaître en moins de 30 jours
+DEFAULT_DELAY_MAIN_DISH = 7  
+DEFAULT_DELAY_MENU = 30  

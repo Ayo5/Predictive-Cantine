@@ -15,9 +15,29 @@ def display_waste_section(col, current_week):
     col.markdown("<h2 class='section-header'>Gaspillage et CO2</h2>", unsafe_allow_html=True)
     
     # Calculate metrics
-    gaspillage_moyen_initial = sum(gaspillage_initial) / len(gaspillage_initial)
-    gaspillage_moyen_prevu = sum(gaspillage_prevu) / len(gaspillage_prevu)
+    gaspillage_moyen_initial = sum(gaspillage_initial) / len(gaspillage_initial) if gaspillage_initial else 0
+    gaspillage_moyen_prevu = sum(gaspillage_prevu) / len(gaspillage_prevu) if gaspillage_prevu else 0
     reduction_gaspillage = gaspillage_moyen_initial - gaspillage_moyen_prevu
+    
+    # Si l'empreinte CO2 est à 0, calculer une valeur approximative
+    if co2 <= 0:
+        # Calculer une valeur approximative basée sur les plats
+        co2 = 0
+        for menu in week_menus:
+            # Ajouter une valeur de base pour chaque repas
+            co2 += 2.0  # Valeur de base par repas
+            
+            # Ajouter des valeurs supplémentaires pour les plats à base de viande
+            if "Plat" in menu and pd.notna(menu["Plat"]):
+                plat = str(menu["Plat"]).lower()
+                if any(viande in plat for viande in ["bœuf", "steak", "veau"]):
+                    co2 += 5.0  # Empreinte élevée pour le bœuf
+                elif any(viande in plat for viande in ["porc", "jambon"]):
+                    co2 += 2.0  # Empreinte moyenne pour le porc
+                elif any(viande in plat for viande in ["poulet", "volaille", "dinde"]):
+                    co2 += 1.5  # Empreinte plus faible pour la volaille
+                elif any(poisson in plat for poisson in ["poisson", "saumon", "thon"]):
+                    co2 += 1.8  # Empreinte pour le poisson
     
     # Display metrics
     cols3_1_metrics = col.columns(3)
@@ -31,13 +51,13 @@ def display_waste_section(col, current_week):
         "Gaspillage prévu",
         f"{gaspillage_moyen_prevu:.1f}%",
         f"-{reduction_gaspillage:.1f}%" if reduction_gaspillage > 0 else f"+{-reduction_gaspillage:.1f}%",
-        delta_color="inverse"  # Green when negative (less waste)
+        delta_color="inverse"  
     )
     
     cols3_1_metrics[2].metric(
         "Empreinte CO2",
         f"{co2:.1f} kg",
-        f"{co2/5:.2f} kg/jour"
+        f"{co2/5:.2f} kg/jour" if len(week_menus) > 0 else "0.00 kg/jour"
     )
     
     # Add some space
@@ -46,11 +66,11 @@ def display_waste_section(col, current_week):
     # Waste comparison chart
     display_waste_chart(col, gaspillage_initial, gaspillage_prevu)
     
-    # Bio products section
-    display_bio_products(col, week_menus)
+    # Suppression de la section "Produits Bio de la semaine"
+    # display_bio_products(col, week_menus)
     
-    # Parameters section
-    display_parameters(col)
+    # Suppression de Parameters section
+    #display_parameters(col)
 
 def display_waste_chart(col, gaspillage_initial, gaspillage_prevu):
     """Display waste comparison chart"""
@@ -87,6 +107,7 @@ def display_waste_chart(col, gaspillage_initial, gaspillage_prevu):
     
     col.altair_chart(gaspillage_chart, use_container_width=True)
 
+# La fonction display_bio_products est conservée mais n'est plus appelée
 def display_bio_products(col, week_menus):
     """Display bio products section"""
     col.markdown("<h2 class='section-header'>Produits Bio de la semaine</h2>", unsafe_allow_html=True)
@@ -99,9 +120,10 @@ def display_bio_products(col, week_menus):
         cols_dish = ["Entrée", "Plat", "Légumes", "Laitage", "Dessert"]
         
         for code, dish in zip(cols_codes, cols_dish):
-            if "AB" in str(row[code]) and not pd.isna(row[dish]):
-                bio_items.append(row[dish])
-                have_bio = True
+            if code in row and dish in row:
+                if "AB" in str(row[code]) and not pd.isna(row[dish]):
+                    bio_items.append(row[dish])
+                    have_bio = True
     
     if have_bio:
         for item in bio_items:
