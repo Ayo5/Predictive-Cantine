@@ -2,8 +2,8 @@ import streamlit as st
 from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
+import os.path
 
-# Import modules
 from config import *
 from utils import setup_page_style
 from data_loader import load_data, prepare_dataset
@@ -11,68 +11,116 @@ from menu_generator import calcul_menus, get_current_menu
 from components.menu_display import display_menu_section
 from components.budget_display import display_budget_section
 from components.waste_display import display_waste_section
+from components.upload_csv import upload_csv_section
 
-# Setup page
 setup_page_style()
 
-# Main dashboard
 st.markdown("<h1 class='main-header'>🍽️ Vision Food</h1>", unsafe_allow_html=True)
 
+data_file_exists = os.path.isfile(CSV_PREDICTIONS)
 
-if "Repas semaine" not in st.session_state:
-    with st.spinner('Calcul en cours...'):
-        # Load and prepare dataset
-        dataset = load_data()
-        final_dataset = prepare_dataset(dataset, NUM_WEEKS)
-        st.session_state["Repas semaine"] = final_dataset
+tab1, tab2 = st.tabs(["Dashboard", "Importer CSV"])
 
-# Date selection with calendar
-# Charger le CSV pour obtenir les dates disponibles
-csv_data = pd.read_csv(CSV_PREDICTIONS)
-available_dates = pd.to_datetime(csv_data['Date']).sort_values().unique()
+with tab1:
+    if not data_file_exists and "Repas semaine" not in st.session_state:
+        st.info("Bienvenue sur Vision Food! Pour commencer, veuillez importer un fichier CSV dans l'onglet 'Importer CSV'.")
+        
+        st.markdown("""
+        ### Comment utiliser cette application:
+        
+        1. Allez dans l'onglet **Importer CSV**
+        2. Téléchargez votre fichier de données au format CSV
+        3. Le système générera des prédictions sur le taux de gaspillage et de participation
+        4. Revenez sur cet onglet pour visualiser les menus optimisés
+        
+        ### Format requis du fichier CSV:
+        
+        Votre fichier doit contenir les colonnes suivantes:
+        - **Date**: au format YYYY-MM-DD
+        - **Entrée**: le nom de l'entrée
+        - **Plat**: le plat principal
+        - **Légumes**: l'accompagnement
+        - **Dessert**: le dessert
+        - **Laitage**: le produit laitier
+        """)
+        
+        # Logo 
+        st.image("https://via.placeholder.com/800x400?text=Vision+Food+Dashboard", 
+                 caption="Aperçu du tableau de bord après importation des données")
+    else:
+        if "Repas semaine" not in st.session_state:
+            with st.spinner('Calcul en cours...'):
+                dataset = load_data()
+                final_dataset = prepare_dataset(dataset, 16)
+                st.session_state["Repas semaine"] = final_dataset
 
-if len(available_dates) > 0:
-    min_date = available_dates[0]
-    max_date = available_dates[-1]
-    default_date = min_date
-else:
-    # Fallback si aucune date n'est disponible
-    today = datetime.now()
-    min_date = today - timedelta(days=today.weekday())
-    max_date = min_date + timedelta(days=NUM_WEEKS * 7)
-    default_date = min_date
+        if "Repas semaine" in st.session_state:
+            try:
+                csv_data = pd.read_csv(CSV_PREDICTIONS)
+                available_dates = pd.to_datetime(csv_data['Date']).sort_values().unique()
 
-selected_date = st.date_input(
-    "Sélectionnez une date pour voir le menu de la semaine correspondante",
-    value=default_date,
-    min_value=min_date,
-    max_value=max_date
-)
+                if len(available_dates) > 0:
+                    min_date = available_dates[0]
+                    max_date = available_dates[-1]
+                    default_date = min_date
+                else:
+                    today = datetime.now()
+                    min_date = today - timedelta(days=today.weekday())
+                    max_date = min_date + timedelta(days=NUM_WEEKS * 7)
+                    default_date = min_date
 
-# Calculer le numéro de semaine à partir de la date sélectionnée
-selected_date_dt = datetime.combine(selected_date, datetime.min.time())
-days_diff = (selected_date_dt - datetime.combine(min_date, datetime.min.time())).days
-current_week = days_diff // 7
+                selected_date = st.date_input(
+                    "Sélectionnez une date pour voir le menu de la semaine correspondante",
+                    value=default_date,
+                    min_value=min_date,
+                    max_value=max_date
+                )
 
-# Afficher la semaine sélectionnée
-week_start = selected_date - timedelta(days=selected_date.weekday())
-week_end = week_start + timedelta(days=4)  # Vendredi
-st.info(f"Prédictions pour la semaine du {week_start.strftime('%d/%m/%Y')} au {week_end.strftime('%d/%m/%Y')}")
+                selected_date_dt = datetime.combine(selected_date, datetime.min.time())
+                days_diff = (selected_date_dt - datetime.combine(min_date, datetime.min.time())).days
+                current_week = days_diff // 7
 
-# Sort results by waste rate
-sorted_results = st.session_state["Repas semaine"].sort_values("Taux de gaspillage", ascending=True)
+                week_start = selected_date - timedelta(days=selected_date.weekday())
+                week_end = week_start + timedelta(days=4)
+                st.info(f"Prédictions pour la semaine du {week_start.strftime('%d/%m/%Y')} au {week_end.strftime('%d/%m/%Y')}")
 
-# Initialize menus and skips
-if "menus" not in st.session_state:
-    st.session_state["menus"] = calcul_menus(sorted_results, NUM_WEEKS)
+                sorted_results = st.session_state["Repas semaine"].sort_values("Taux de gaspillage", ascending=True)
+
+                if "menus" not in st.session_state:
+                    st.session_state["menus"] = calcul_menus(sorted_results, NUM_WEEKS)
+                    
+                if "skips" not in st.session_state:
+                    st.session_state["skips"] = {}
+
+                col1, col2, col3 = st.columns(3)
+
+                display_menu_section(col1, current_week)
+                display_budget_section(col2, current_week)
+                display_waste_section(col3, current_week)
+            except Exception as e:
+                st.error(f"Erreur lors du chargement des données: {str(e)}")
+                st.info("Veuillez vérifier votre fichier CSV ou en importer un nouveau dans l'onglet 'Importer CSV'.")
+
+with tab2:
+    uploaded_data = upload_csv_section()
     
-if "skips" not in st.session_state:
-    st.session_state["skips"] = {}
+    if uploaded_data is not None and not uploaded_data.empty:
+        st.session_state["Repas semaine"] = uploaded_data
 
-# Create layout
-col1, col2, col3 = st.columns(3)
-
-# Display sections
-display_menu_section(col1, current_week)
-display_budget_section(col2, current_week)
-display_waste_section(col3, current_week)
+        if "menus" in st.session_state:
+            del st.session_state["menus"]
+        
+        st.subheader("Analyse des prédictions")
+        
+        avg_waste = uploaded_data['Taux de gaspillage'].mean() * 100
+        st.metric("Taux de gaspillage moyen", f"{avg_waste:.2f}%")
+        
+        avg_participation = uploaded_data['Taux de participation'].mean() * 100
+        st.metric("Taux de participation moyen", f"{avg_participation:.2f}%")
+        
+        st.subheader("Distribution des taux de gaspillage")
+        st.bar_chart(uploaded_data['Taux de gaspillage'] * 100)
+        
+        if st.button("Voir les menus optimisés"):
+            st.experimental_set_query_params(tab="dashboard")
+            st.experimental_rerun()

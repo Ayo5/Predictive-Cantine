@@ -6,25 +6,19 @@ from menu_generator import get_current_menu
 
 def display_waste_section(col, current_week):
     """Display the waste and CO2 section"""
-    # Get data
     week_menus, prix_semaine, co2 = get_current_menu(current_week)
     gaspillage_initial = [row["Taux gaspillage"] * 100 for row in week_menus]
     gaspillage_prevu = [row["Taux de gaspillage"] * 100 for row in week_menus]
     
-    # Waste and CO2 section
     col.markdown("<h2 class='section-header'>Gaspillage et CO2</h2>", unsafe_allow_html=True)
     
-    # Calculate metrics
     gaspillage_moyen_initial = sum(gaspillage_initial) / len(gaspillage_initial) if gaspillage_initial else 0
     gaspillage_moyen_prevu = sum(gaspillage_prevu) / len(gaspillage_prevu) if gaspillage_prevu else 0
     reduction_gaspillage = gaspillage_moyen_initial - gaspillage_moyen_prevu
     
-    # Si l'empreinte CO2 est à 0, calculer une valeur approximative
     if co2 <= 0:
-        # Calculer une valeur approximative basée sur les plats
         co2 = 0
         for menu in week_menus:
-            # Ajouter une valeur de base pour chaque repas
             co2 += 2.0  # Valeur de base par repas
             
             # Ajouter des valeurs supplémentaires pour les plats à base de viande
