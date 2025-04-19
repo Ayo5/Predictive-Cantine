@@ -1,6 +1,8 @@
+import os
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+from config import CSV_PREDICTIONS_SIMULATED
 
 # Définir les plats possibles
 entrees = ["Carottes râpées", "Salade verte", "Betteraves", "Taboulé", "Pamplemousse", "Concombres"]
@@ -51,6 +53,6 @@ for date in dates:
     data.append(row)
 
 df = pd.DataFrame(data)
-df.to_csv("/Users/dayabe/Documents/Projet/Kesk'IA/dashboard_3_drive/data/data_prediction_simulated_weekly.csv", index=False)
+df.to_csv(CSV_PREDICTIONS_SIMULATED, index=False)
 
 print(f"Fichier généré avec {len(data)} jours de données simulées")
