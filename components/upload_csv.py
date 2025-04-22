@@ -86,14 +86,12 @@ def upload_csv_section():
                 co2_file_path = f"uploads/co2_couts_{timestamp}.csv"
                 co2_df.to_csv(co2_file_path, index=False)
                 
-                # Save as the main CO2 data source
                 data_dir = os.path.dirname(CSV_CO2_COUTS)
                 os.makedirs(data_dir, exist_ok=True)
                 co2_df.to_csv(CSV_CO2_COUTS, index=False)
                 
                 st.success("Données CO2 et coûts importées avec succès!")
                 
-                # Display some statistics
                 st.subheader("Statistiques des données CO2 et coûts")
                 
                 avg_co2 = co2_df["Kg CO2 pour 1 kilo ou 1L"].mean()
@@ -106,7 +104,6 @@ def upload_csv_section():
                     st.metric("Aliment avec le plus d'émissions", 
                              f"{max_co2_item['Nom']} ({max_co2_item['Kg CO2 pour 1 kilo ou 1L']:.2f} kg/kg)")
                 
-                # Create a bar chart of CO2 emissions
                 st.subheader("Émissions CO2 par aliment")
                 chart_data = co2_df.sort_values("Kg CO2 pour 1 kilo ou 1L", ascending=False).head(10)
                 st.bar_chart(chart_data.set_index("Nom")["Kg CO2 pour 1 kilo ou 1L"])

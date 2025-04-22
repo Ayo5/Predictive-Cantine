@@ -21,19 +21,17 @@ def display_waste_section(col, current_week):
         for menu in week_menus:
             co2 += 2.0  # Valeur de base par repas
             
-            # Ajouter des valeurs supplémentaires pour les plats à base de viande
             if "Plat" in menu and pd.notna(menu["Plat"]):
                 plat = str(menu["Plat"]).lower()
                 if any(viande in plat for viande in ["bœuf", "steak", "veau"]):
-                    co2 += 5.0  # Empreinte élevée pour le bœuf
+                    co2 += 5.0 
                 elif any(viande in plat for viande in ["porc", "jambon"]):
-                    co2 += 2.0  # Empreinte moyenne pour le porc
+                    co2 += 2.0 
                 elif any(viande in plat for viande in ["poulet", "volaille", "dinde"]):
-                    co2 += 1.5  # Empreinte plus faible pour la volaille
+                    co2 += 1.5  
                 elif any(poisson in plat for poisson in ["poisson", "saumon", "thon"]):
-                    co2 += 1.8  # Empreinte pour le poisson
+                    co2 += 1.8  
     
-    # Display metrics
     cols3_1_metrics = col.columns(3)
     cols3_1_metrics[0].metric(
         "Gaspillage initial",
@@ -54,10 +52,8 @@ def display_waste_section(col, current_week):
         f"{co2/5:.2f} kg/jour" if len(week_menus) > 0 else "0.00 kg/jour"
     )
     
-    # Add some space
     col.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
     
-    # Waste comparison chart
     display_waste_chart(col, gaspillage_initial, gaspillage_prevu)
     
     # Suppression de la section "Produits Bio de la semaine"
@@ -68,14 +64,12 @@ def display_waste_section(col, current_week):
 
 def display_waste_chart(col, gaspillage_initial, gaspillage_prevu):
     """Display waste comparison chart"""
-    # Restructure data for Altair
     gaspillage_long = pd.DataFrame({
         "Jour": [f"{i+1} - {w}" for i, w in enumerate(WEEKDAYS)] * 2,
         "Type": ["Gaspillage initial"] * 5 + ["Gaspillage prévu"] * 5,
         "Pourcentage": gaspillage_initial + gaspillage_prevu
     })
     
-    # Create chart
     chart1 = alt.Chart(gaspillage_long[gaspillage_long["Type"] == "Gaspillage initial"]).mark_bar().encode(
         x=alt.X('Jour:N', title='Jour de la semaine'),
         y=alt.Y('Pourcentage:Q', title='Gaspillage (%)'),
@@ -94,14 +88,12 @@ def display_waste_chart(col, gaspillage_initial, gaspillage_prevu):
         title='Gaspillage prévu'
     )
     
-    # Combine charts
     gaspillage_chart = alt.vconcat(chart1, chart2).resolve_scale(
         y='shared'
     )
     
     col.altair_chart(gaspillage_chart, use_container_width=True)
 
-# La fonction display_bio_products est conservée mais n'est plus appelée
 def display_bio_products(col, week_menus):
     """Display bio products section"""
     col.markdown("<h2 class='section-header'>Produits Bio de la semaine</h2>", unsafe_allow_html=True)

@@ -7,7 +7,6 @@ from menu_comments import get_daily_menu_comment, get_weekly_waste_tip
 def display_menu_section(col, current_week):
     col.markdown("<h2 class='section-header'>Menu de la semaine</h2>", unsafe_allow_html=True)
     week_menus, prix_semaine, _ = get_current_menu(current_week)
-    
     weekly_tip = get_weekly_waste_tip()
     col.info(weekly_tip)
     

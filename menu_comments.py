@@ -145,14 +145,12 @@ def get_menu_comments(menu_item, category):
     Returns:
         str: A comment about waste reduction for this item
     """
-    # Check if we have specific comments for this item
     if category in WASTE_REDUCTION_TIPS and menu_item in WASTE_REDUCTION_TIPS[category]:
         comments = WASTE_REDUCTION_TIPS[category][menu_item]
     else:
         
         comments = WASTE_REDUCTION_TIPS["general"]
     
-    # Return a random comment from the available ones
     return random.choice(comments)
 
 def get_daily_menu_comment(menu_row):
@@ -167,7 +165,6 @@ def get_daily_menu_comment(menu_row):
     """
     comments = []
     
-    # Add comments for each part of the menu if available
     for category, item_key in [
         ("entrée", "Entrée"), 
         ("plat", "Plat"), 
@@ -179,11 +176,9 @@ def get_daily_menu_comment(menu_row):
             item = menu_row[item_key]
             comments.append(get_menu_comment(item, category))
     
-    # If we have at least one specific comment, return it
     if comments:
         return random.choice(comments)
     
-    # Otherwise return a general comment
     return random.choice(WASTE_REDUCTION_TIPS["general"])
 
 def get_menu_comment(item, category):
@@ -200,7 +195,6 @@ def get_menu_comment(item, category):
     if category in WASTE_REDUCTION_TIPS and item in WASTE_REDUCTION_TIPS[category]:
         comment = random.choice(WASTE_REDUCTION_TIPS[category][item])
     else:
-        # Use general comments if no specific ones are available
         comment = random.choice(WASTE_REDUCTION_TIPS["general"])
     
     return f"{item}: {comment}"

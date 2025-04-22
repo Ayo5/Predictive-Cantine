@@ -3,19 +3,16 @@ import warnings
 import datarobot as dr
 from config import ENDPOINT, API_TOKEN
 
-# Suppress deprecation warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 def setup_page_style():
     """Setup page configuration and CSS styling"""
-    # Set page configuration
     st.set_page_config(
         layout="wide", 
         page_title="Predictive Cantine",
         page_icon="🍽️"
     )
     
-    # Add custom CSS
     st.markdown("""
     <style>
         .main-header {
@@ -50,7 +47,6 @@ def setup_page_style():
     </style>
     """, unsafe_allow_html=True)
     
-    # Initialize DataRobot client
     try:
         dr.Client(endpoint=ENDPOINT, token=API_TOKEN)
     except Exception as e:
