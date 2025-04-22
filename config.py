@@ -7,6 +7,7 @@ PROJECT_ID_GASPILLAGE ="67fd2e75a0da87f6f4503261"
 MODEL_ID_GASPILLAGE = "67fd35bb84cb9ee67965e9eb"
 ENDPOINT = "https://app.datarobot.com/api/v2"
 
+TRAIN_DATA = "./data/data-predictions.csv"
 CSV_PREDICTIONS = "./uploads/menu.csv"
 CSV_CO2_COUTS = "./uploads/couts.csv"
 

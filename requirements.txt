@@ -9,6 +9,7 @@ datarobot
 scikit-learn
 tensorflow
 joblib
+xgboost
 
 # Visualization
 matplotlib
