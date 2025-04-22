@@ -32,7 +32,7 @@ def upload_csv_section():
                 
                 os.makedirs("uploads", exist_ok=True)
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                file_path = f"uploads/uploaded_{timestamp}.csv"
+                file_path = f"uploads/menu.csv"
                 df.to_csv(file_path, index=False)
                 
                 data_dir = os.path.dirname(CSV_PREDICTIONS)
@@ -83,7 +83,7 @@ def upload_csv_section():
                 
                 os.makedirs("uploads", exist_ok=True)
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                co2_file_path = f"uploads/co2_couts_{timestamp}.csv"
+                co2_file_path = f"uploads/couts.csv"
                 co2_df.to_csv(co2_file_path, index=False)
                 
                 data_dir = os.path.dirname(CSV_CO2_COUTS)

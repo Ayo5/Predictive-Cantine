@@ -11,7 +11,8 @@ def load_data():
     
     closed_values = [
         "VACANCES SCOLAIRES", "FERIE", "FÉRIÉ", "FERIÉ", 
-        "PAS DE CENTRE", "CENTRE FERMÉ", "CENTRE FERME"
+        "PAS DE CENTRE", "CENTRE FERMÉ", "CENTRE FERME", 
+        "ferme"
     ]
     
     for col in ["Commentaire semaine", "Commentaire jour"]:

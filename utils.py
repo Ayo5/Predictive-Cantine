@@ -9,7 +9,7 @@ def setup_page_style():
     """Setup page configuration and CSS styling"""
     st.set_page_config(
         layout="wide", 
-        page_title="Predictive Cantine",
+        page_title="Vision Food",
         page_icon="🍽️"
     )
     

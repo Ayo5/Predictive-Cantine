@@ -57,7 +57,7 @@ def display_waste_section(col, current_week):
     display_waste_chart(col, gaspillage_initial, gaspillage_prevu)
     
     # Suppression de la section "Produits Bio de la semaine"
-    # display_bio_products(col, week_menus)
+    display_bio_products(col, week_menus)
     
     # Suppression de Parameters section
     #display_parameters(col)

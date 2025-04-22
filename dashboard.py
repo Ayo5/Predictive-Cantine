@@ -17,11 +17,41 @@ setup_page_style()
 
 st.markdown("<h1 class='main-header'>🍽️ Vision Food</h1>", unsafe_allow_html=True)
 
-data_file_exists = os.path.isfile(CSV_PREDICTIONS)
-
-tab1, tab2 = st.tabs(["Dashboard", "Importer CSV"])
+tab1, tab2, tab3 = st.tabs(["Workspace", "Dashboard", "Importer CSV"])
 
 with tab1:
+    st.markdown("""
+    ### Bienvenue sur Vision Food! 🎉
+    
+    Vision Food est votre assistant intelligent pour la gestion des menus de restauration collective.
+    
+    #### Fonctionnalités principales :
+    
+    1. 📊 **Analyse prédictive**
+       - Prévision des taux de participation
+       - Estimation du gaspillage alimentaire
+    
+    2. 🍽️ **Optimisation des menus**
+       - Suggestions de menus équilibrés
+       - Rotation optimale des plats
+    
+    3. 💰 **Gestion budgétaire**
+       - Suivi des coûts
+       - Optimisation des dépenses
+    
+    #### Pour commencer :
+    
+    1. Allez dans l'onglet **Importer CSV**
+    2. Téléchargez votre fichier de menus
+    3. Consultez les analyses dans l'onglet **Dashboard**
+    """)
+    
+    st.image("./images/dashboard.png", 
+             caption="Aperçu du tableau de bord Vision Food")
+
+with tab2:
+    data_file_exists = os.path.isfile(CSV_PREDICTIONS)
+    
     if not data_file_exists and "Repas semaine" not in st.session_state:
         st.info("Bienvenue sur Vision Food! Pour commencer, veuillez importer un fichier CSV dans l'onglet 'Importer CSV'.")
         
@@ -45,8 +75,8 @@ with tab1:
         """)
         
         # Logo 
-        st.image("https://via.placeholder.com/800x400?text=Vision+Food+Dashboard", 
-                 caption="Aperçu du tableau de bord après importation des données")
+        # st.image("https://via.placeholder.com/800x400?text=Vision+Food+Dashboard", 
+                #  caption="Aperçu du tableau de bord après importation des données")
     else:
         if "Repas semaine" not in st.session_state:
             with st.spinner('Calcul en cours...'):
@@ -101,7 +131,7 @@ with tab1:
                 st.error(f"Erreur lors du chargement des données: {str(e)}")
                 st.info("Veuillez vérifier votre fichier CSV ou en importer un nouveau dans l'onglet 'Importer CSV'.")
 
-with tab2:
+with tab3:
     uploaded_data = upload_csv_section()
     
     if uploaded_data is not None and not uploaded_data.empty:
@@ -122,5 +152,5 @@ with tab2:
         st.bar_chart(uploaded_data['Taux de gaspillage'] * 100)
         
         if st.button("Voir les menus optimisés"):
-            st.experimental_set_query_params(tab="dashboard")
+            st.set_query_params(tab="dashboard")
             st.experimental_rerun()
