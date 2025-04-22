@@ -17,9 +17,14 @@ setup_page_style()
 
 st.markdown("<h1 class='main-header'>🍽️ Vision Food</h1>", unsafe_allow_html=True)
 
-tab1, tab2, tab3 = st.tabs(["Workspace", "Dashboard", "Importer CSV"])
+st.sidebar.title("Navigation")
 
-with tab1:
+page = st.sidebar.radio(
+    "Sélectionnez une page",
+    ["Home", "Menu semaine", "Gaspillage", "Affluence", "Importation"]
+)
+
+if page == "Home":
     st.markdown("""
     ### Bienvenue sur Vision Food! 🎉
     
@@ -38,45 +43,15 @@ with tab1:
     3. 💰 **Gestion budgétaire**
        - Suivi des coûts
        - Optimisation des dépenses
-    
-    #### Pour commencer :
-    
-    1. Allez dans l'onglet **Importer CSV**
-    2. Téléchargez votre fichier de menus
-    3. Consultez les analyses dans l'onglet **Dashboard**
     """)
     
-    st.image("./images/dashboard.png", 
-             caption="Aperçu du tableau de bord Vision Food")
+    st.image("./images/dashboard.png", caption="Aperçu du tableau de bord Vision Food")
 
-with tab2:
+elif page == "Menu semaine":
     data_file_exists = os.path.isfile(CSV_PREDICTIONS)
     
     if not data_file_exists and "Repas semaine" not in st.session_state:
-        st.info("Bienvenue sur Vision Food! Pour commencer, veuillez importer un fichier CSV dans l'onglet 'Importer CSV'.")
-        
-        st.markdown("""
-        ### Comment utiliser cette application:
-        
-        1. Allez dans l'onglet **Importer CSV**
-        2. Téléchargez votre fichier de données au format CSV
-        3. Le système générera des prédictions sur le taux de gaspillage et de participation
-        4. Revenez sur cet onglet pour visualiser les menus optimisés
-        
-        ### Format requis du fichier CSV:
-        
-        Votre fichier doit contenir les colonnes suivantes:
-        - **Date**: au format YYYY-MM-DD
-        - **Entrée**: le nom de l'entrée
-        - **Plat**: le plat principal
-        - **Légumes**: l'accompagnement
-        - **Dessert**: le dessert
-        - **Laitage**: le produit laitier
-        """)
-        
-        # Logo 
-        # st.image("https://via.placeholder.com/800x400?text=Vision+Food+Dashboard", 
-                #  caption="Aperçu du tableau de bord après importation des données")
+        st.info("Pour visualiser les menus, veuillez d'abord importer un fichier CSV dans la section 'Importation'.")
     else:
         if "Repas semaine" not in st.session_state:
             with st.spinner('Calcul en cours...'):
@@ -84,59 +59,67 @@ with tab2:
                 final_dataset = prepare_dataset(dataset, 16)
                 st.session_state["Repas semaine"] = final_dataset
 
-        if "Repas semaine" in st.session_state:
-            try:
-                csv_data = pd.read_csv(CSV_PREDICTIONS)
-                available_dates = pd.to_datetime(csv_data['Date']).sort_values().unique()
+        try:
+            csv_data = pd.read_csv(CSV_PREDICTIONS)
+            available_dates = pd.to_datetime(csv_data['Date']).sort_values().unique()
 
-                if len(available_dates) > 0:
-                    min_date = available_dates[0]
-                    max_date = available_dates[-1]
-                    default_date = min_date
-                else:
-                    today = datetime.now()
-                    min_date = today - timedelta(days=today.weekday())
-                    max_date = min_date + timedelta(days=NUM_WEEKS * 7)
-                    default_date = min_date
+            if len(available_dates) > 0:
+                min_date = available_dates[0]
+                max_date = available_dates[-1]
+                default_date = min_date
+            else:
+                today = datetime.now()
+                min_date = today - timedelta(days=today.weekday())
+                max_date = min_date + timedelta(days=NUM_WEEKS * 7)
+                default_date = min_date
 
-                selected_date = st.date_input(
-                    "Sélectionnez une date pour voir le menu de la semaine correspondante",
-                    value=default_date,
-                    min_value=min_date,
-                    max_value=max_date
-                )
+            selected_date = st.date_input(
+                "Sélectionnez une date",
+                value=default_date,
+                min_value=min_date,
+                max_value=max_date
+            )
 
-                selected_date_dt = datetime.combine(selected_date, datetime.min.time())
-                days_diff = (selected_date_dt - datetime.combine(min_date, datetime.min.time())).days
-                current_week = days_diff // 7
+            selected_date_dt = datetime.combine(selected_date, datetime.min.time())
+            days_diff = (selected_date_dt - datetime.combine(min_date, datetime.min.time())).days
+            current_week = days_diff // 7
 
-                week_start = selected_date - timedelta(days=selected_date.weekday())
-                week_end = week_start + timedelta(days=4)
-                st.info(f"Prédictions pour la semaine du {week_start.strftime('%d/%m/%Y')} au {week_end.strftime('%d/%m/%Y')}")
+            week_start = selected_date - timedelta(days=selected_date.weekday())
+            week_end = week_start + timedelta(days=4)
+            st.info(f"Menu de la semaine du {week_start.strftime('%d/%m/%Y')} au {week_end.strftime('%d/%m/%Y')}")
 
+            if "menus" not in st.session_state:
                 sorted_results = st.session_state["Repas semaine"].sort_values("Taux de gaspillage", ascending=True)
+                st.session_state["menus"] = calcul_menus(sorted_results, NUM_WEEKS)
+                
+            if "skips" not in st.session_state:
+                st.session_state["skips"] = {}
 
-                if "menus" not in st.session_state:
-                    st.session_state["menus"] = calcul_menus(sorted_results, NUM_WEEKS)
-                    
-                if "skips" not in st.session_state:
-                    st.session_state["skips"] = {}
+            display_menu_section(st, current_week)
 
-                col1, col2, col3 = st.columns(3)
+        except Exception as e:
+            st.error(f"Erreur lors du chargement des données: {str(e)}")
+            st.info("Veuillez vérifier votre fichier CSV ou en importer un nouveau dans la section 'Importation'.")
 
-                display_menu_section(col1, current_week)
-                display_budget_section(col2, current_week)
-                display_waste_section(col3, current_week)
-            except Exception as e:
-                st.error(f"Erreur lors du chargement des données: {str(e)}")
-                st.info("Veuillez vérifier votre fichier CSV ou en importer un nouveau dans l'onglet 'Importer CSV'.")
+elif page == "Gaspillage":
+    if "Repas semaine" not in st.session_state:
+        st.info("Pour visualiser les statistiques de gaspillage, veuillez d'abord importer un fichier CSV dans la section 'Importation'.")
+    else:
+        current_week = 0  # Semaine par défaut
+        display_waste_section(st, current_week)
 
-with tab3:
+elif page == "Affluence":
+    if "Repas semaine" not in st.session_state:
+        st.info("Pour visualiser les statistiques d'affluence, veuillez d'abord importer un fichier CSV dans la section 'Importation'.")
+    else:
+        current_week = 0  # Semaine par défaut
+        display_budget_section(st, current_week)
+
+elif page == "Importation":
     uploaded_data = upload_csv_section()
     
     if uploaded_data is not None and not uploaded_data.empty:
         st.session_state["Repas semaine"] = uploaded_data
-
         if "menus" in st.session_state:
             del st.session_state["menus"]
         

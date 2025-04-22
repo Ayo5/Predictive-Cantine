@@ -55,7 +55,6 @@ def upload_csv_section():
                         file_name=f"predictions_{timestamp}.csv",
                         mime="text/csv",
                     )
-                    
                     return processed_data
                     
             except Exception as e:
