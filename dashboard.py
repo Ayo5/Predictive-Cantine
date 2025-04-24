@@ -149,4 +149,4 @@ elif page == "Importation":
         
         if st.button("Voir les menus optimisés"):
             st.set_query_params(tab="dashboard")
-            st.experimental_rerun()
+            st.rerun()

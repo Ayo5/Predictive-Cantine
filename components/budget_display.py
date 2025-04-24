@@ -41,14 +41,14 @@ def display_budget_section(col, current_week):
                 prix_semaine += prix_jour
             
             if prix_semaine <= 0:
-                prix_semaine = 3.5 * 5  
+                prix_semaine = 10 * 5  
         except Exception as e:
             print(f"Erreur lors du calcul du prix: {e}")
-            prix_semaine = 3.5 * 5  
+            prix_semaine = 10 * 5  
     
     cols2_1_metrics = col.columns(3)
-    cout_semaine = prix_semaine * num_students
-    cout_standard = 4.5 * 5 * num_students  
+    cout_semaine = prix_semaine * 5 * num_students 
+    cout_standard = 10 * 5 * num_students  
     economies = cout_standard - cout_semaine if cout_standard > cout_semaine else 0
     
     cols2_1_metrics[0].metric(

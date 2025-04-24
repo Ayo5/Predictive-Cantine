@@ -44,7 +44,7 @@ def display_menu_section(col, current_week):
             new_index = menu_options.index(selected_option)
             if new_index != current_index:
                 st.session_state["skips"][str_date] = new_index
-                st.experimental_rerun()
+                st.rerun()
             
             day_cols = st.columns(3)
             
