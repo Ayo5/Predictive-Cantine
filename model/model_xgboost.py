@@ -1,3 +1,4 @@
+import os
 import pandas as pd 
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.compose import ColumnTransformer
@@ -6,6 +7,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.multioutput import MultiOutputRegressor
 from xgboost import XGBRegressor
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_PREDICTIONS = "/Users/dayabe/Documents/Projet/Kesk'IA/uploads/menu.csv"
 TRAIN_DATA = "/Users/dayabe/Documents/Projet/Kesk'IA/data/data_prediction.csv"
 

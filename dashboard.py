@@ -24,6 +24,41 @@ page = st.sidebar.radio(
     ["Home", "Menu semaine", "Gaspillage", "Affluence", "Importation"]
 )
 
+def select_date_and_week():
+    try:
+        csv_data = pd.read_csv(CSV_PREDICTIONS)
+        available_dates = pd.to_datetime(csv_data['Date']).sort_values().unique()
+
+        if len(available_dates) > 0:
+            min_date = available_dates[0]
+            max_date = available_dates[-1]
+            default_date = min_date
+        else:
+            today = datetime.now()
+            min_date = today - timedelta(days=today.weekday())
+            max_date = min_date + timedelta(days=NUM_WEEKS * 7)
+            default_date = min_date
+
+        selected_date = st.date_input(
+            "Sélectionnez une date",
+            value=default_date,
+            min_value=min_date,
+            max_value=max_date
+        )
+
+        selected_date_dt = datetime.combine(selected_date, datetime.min.time())
+        days_diff = (selected_date_dt - datetime.combine(min_date, datetime.min.time())).days
+        current_week = days_diff // 7
+
+        week_start = selected_date - timedelta(days=selected_date.weekday())
+        week_end = week_start + timedelta(days=4)
+        st.info(f"Semaine du {week_start.strftime('%d/%m/%Y')} au {week_end.strftime('%d/%m/%Y')}")
+        
+        return current_week
+    except Exception as e:
+        st.error(f"Erreur lors de la sélection de date: {str(e)}")
+        return 0
+
 if page == "Home":
     st.markdown("""
     ### Bienvenue sur Vision Food! 🎉
@@ -60,33 +95,7 @@ elif page == "Menu semaine":
                 st.session_state["Repas semaine"] = final_dataset
 
         try:
-            csv_data = pd.read_csv(CSV_PREDICTIONS)
-            available_dates = pd.to_datetime(csv_data['Date']).sort_values().unique()
-
-            if len(available_dates) > 0:
-                min_date = available_dates[0]
-                max_date = available_dates[-1]
-                default_date = min_date
-            else:
-                today = datetime.now()
-                min_date = today - timedelta(days=today.weekday())
-                max_date = min_date + timedelta(days=NUM_WEEKS * 7)
-                default_date = min_date
-
-            selected_date = st.date_input(
-                "Sélectionnez une date",
-                value=default_date,
-                min_value=min_date,
-                max_value=max_date
-            )
-
-            selected_date_dt = datetime.combine(selected_date, datetime.min.time())
-            days_diff = (selected_date_dt - datetime.combine(min_date, datetime.min.time())).days
-            current_week = days_diff // 7
-
-            week_start = selected_date - timedelta(days=selected_date.weekday())
-            week_end = week_start + timedelta(days=4)
-            st.info(f"Menu de la semaine du {week_start.strftime('%d/%m/%Y')} au {week_end.strftime('%d/%m/%Y')}")
+            current_week = select_date_and_week()
 
             if "menus" not in st.session_state:
                 sorted_results = st.session_state["Repas semaine"].sort_values("Taux de gaspillage", ascending=True)
@@ -105,14 +114,18 @@ elif page == "Gaspillage":
     if "Repas semaine" not in st.session_state:
         st.info("Pour visualiser les statistiques de gaspillage, veuillez d'abord importer un fichier CSV dans la section 'Importation'.")
     else:
-        current_week = 0  # Semaine par défaut
+        # Ajout du sélecteur de date pour la page Gaspillage
+        st.markdown("<h2 class='section-header'>Sélection de la période</h2>", unsafe_allow_html=True)
+        current_week = select_date_and_week()
         display_waste_section(st, current_week)
 
 elif page == "Affluence":
     if "Repas semaine" not in st.session_state:
         st.info("Pour visualiser les statistiques d'affluence, veuillez d'abord importer un fichier CSV dans la section 'Importation'.")
     else:
-        current_week = 0  # Semaine par défaut
+        # Ajout du sélecteur de date pour la page Affluence
+        st.markdown("<h2 class='section-header'>Sélection de la période</h2>", unsafe_allow_html=True)
+        current_week = select_date_and_week()
         display_budget_section(st, current_week)
 
 elif page == "Importation":
