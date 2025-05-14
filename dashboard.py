@@ -109,7 +109,6 @@ elif page == "Menu semaine":
                 
             if "skips" not in st.session_state:
                 st.session_state["skips"] = {}
-
             display_menu_section(st, current_week)
 
         except Exception as e:
