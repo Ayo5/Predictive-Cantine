@@ -70,29 +70,20 @@ def display_waste_chart(col, gaspillage_initial, gaspillage_prevu):
         "Pourcentage": gaspillage_initial + gaspillage_prevu
     })
     
-    chart1 = alt.Chart(gaspillage_long[gaspillage_long["Type"] == "Gaspillage initial"]).mark_bar().encode(
+    chart = alt.Chart(gaspillage_long).mark_bar().encode(
         x=alt.X('Jour:N', title='Jour de la semaine'),
         y=alt.Y('Pourcentage:Q', title='Gaspillage (%)'),
-        color=alt.value('#ff9999'),
-        tooltip=['Jour', 'Pourcentage']
+        color=alt.Color('Type:N', scale=alt.Scale(
+            domain=['Gaspillage initial', 'Gaspillage prévu'],
+            range=['#ff9999', '#5fa059']  # Rouge pour initial, Vert pour prévu
+        )),
+        tooltip=['Jour', 'Type', 'Pourcentage']
     ).properties(
-        title='Gaspillage initial'
+        title='Gaspillage initial et prévu'
     )
     
-    chart2 = alt.Chart(gaspillage_long[gaspillage_long["Type"] == "Gaspillage prévu"]).mark_bar().encode(
-        x=alt.X('Jour:N', title='Jour de la semaine'),
-        y=alt.Y('Pourcentage:Q', title='Gaspillage (%)'),
-        color=alt.value('#66b3ff'),
-        tooltip=['Jour', 'Pourcentage']
-    ).properties(
-        title='Gaspillage prévu'
-    )
-    
-    gaspillage_chart = alt.vconcat(chart1, chart2).resolve_scale(
-        y='shared'
-    )
-    
-    col.altair_chart(gaspillage_chart, use_container_width=True)
+    # Affichage du graphique
+    col.altair_chart(chart, use_container_width=True)
 
 def display_bio_products(col, week_menus):
     """Display bio products section"""

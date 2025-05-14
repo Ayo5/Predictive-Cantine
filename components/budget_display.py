@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import altair as alt
 from config import WEEKDAYS, CSV_CO2_COUTS
 from menu_generator import get_current_menu
 
@@ -75,11 +76,17 @@ def display_budget_section(col, current_week):
     chart_data = pd.DataFrame(
         np.array([[round(x * 10) / 10 if show_percent else round(x / 100 * num_students)] for x in participations]),
         index=[f"{i+1} - {w}" for i, w in enumerate(WEEKDAYS)],
-        columns=["Taux de participation" if show_percent else "Nombre de participants"]
+        columns=["Taux de participation" if show_percent else "Nombre de participants"],
     )
     
-    col.bar_chart(
-        data=chart_data,
-        y="Taux de participation" if show_percent else "Nombre de participants",
-        use_container_width=True
+    chart = alt.Chart(chart_data.reset_index()).mark_bar().encode(
+        x='index:N',
+        y=alt.Y('Taux de participation' if show_percent else 'Nombre de participants',
+                title='Taux de participation (%)' if show_percent else 'Nombre de participants'),
+        color=alt.value('#5fa059')  # Utilisation de la couleur personnalisée
+    ).properties(
+        title='Affluence par jour'
     )
+    
+    # Affichage du graphique
+    col.altair_chart(chart, use_container_width=True)
