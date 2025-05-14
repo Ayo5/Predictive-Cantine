@@ -3,6 +3,7 @@ import pandas as pd
 import altair as alt
 from config import WEEKDAYS, DEFAULT_DELAY_MAIN_DISH, DEFAULT_DELAY_MENU
 from menu_generator import get_current_menu
+import os
 
 def display_waste_section(col, current_week):
     """Display the waste and CO2 section"""
@@ -55,12 +56,29 @@ def display_waste_section(col, current_week):
     col.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
     
     display_waste_chart(col, gaspillage_initial, gaspillage_prevu)
-    
-    # Suppression de la section "Produits Bio de la semaine"
     display_bio_products(col, week_menus)
+    display_parameters(col) # à corriger
     
-    # Suppression de Parameters section
-    #display_parameters(col)
+    col.markdown("h2 class='section-header'>Rapport</h2>", unsafe_allow_html=True)
+    if col.button("📄 Générer le rapport PDF de la semaine"):
+        try:
+            from components.report_generator import generate_weekly_report
+            filename = generate_weekly_report(
+                week_menus, 
+                prix_semaine, 
+                co2, 
+                gaspillage_initial, 
+                gaspillage_prevu
+            )
+            with open(filename, "rb") as pdf_file:
+                col.download_button(
+                    label="📥 Télécharger le rapport PDF",
+                    data=pdf_file,
+                    file_name=os.path.basename(filename),
+                    mime="application/pdf"
+                )
+        except Exception as e:
+            col.error(f"Erreur lors de la génération du rapport : {str(e)}")
 
 def display_waste_chart(col, gaspillage_initial, gaspillage_prevu):
     """Display waste comparison chart"""
@@ -87,7 +105,7 @@ def display_waste_chart(col, gaspillage_initial, gaspillage_prevu):
 
 def display_bio_products(col, week_menus):
     """Display bio products section"""
-    col.markdown("<h2 class='section-header'>Produits Bio de la semaine</h2>", unsafe_allow_html=True)
+    col.markdown("<h2 class='section-header'></h2>", unsafe_allow_html=True)
     
     have_bio = False
     bio_items = []
