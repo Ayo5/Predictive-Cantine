@@ -1,0 +1,45 @@
+/* Variables globales */
+:root {
+    --primary-color: #5fa059;
+    --text-color: #1d1d1f;
+    --hover-color: #2db14f;
+    --background-color: #f5f5f7;
+    --hover-background: rgba(52, 199, 89, 0.1);
+}
+
+/* Style de la sidebar */
+.stSidebar {
+    background-color: var(--primary-color) !important;
+}
+.sidebar-title {
+    color: white !important;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Style des boutons de la sidebar */
+.stSidebar [data-testid="stButton"] > button {
+    width: 200px !important;
+    height: 45px !important;
+    margin: 4px auto !important;
+    padding-left: 2rem!important;
+    display: flex !important;
+    align-items: left !important;
+    justify-content: left !important;
+    background: transparent !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+}
+
+.stSidebar [data-testid="stButton"] > button:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: white !important;
+}
+
+
+

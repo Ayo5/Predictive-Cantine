@@ -13,39 +13,9 @@ def setup_page_style():
         page_icon="🍽️"
     )
     
-    st.markdown("""
-    <style>
-        .main-header {
-            font-size: 2.5rem;
-            color: #1E88E5;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        .section-header {
-            color: #0D47A1;
-            font-size: 1.5rem;
-            padding-top: 1rem;
-        }
-        .menu-day {
-            background-color: #f0f2f6;
-            border-radius: 10px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .menu-item {
-            margin-bottom: 5px;
-        }
-        .bio-tag {
-            color: green;
-            font-weight: bold;
-        }
-        .divider {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+    # Charger le fichier CSS externe
+    with open("styles/main.css", "r") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
     
     try:
         dr.Client(endpoint=ENDPOINT, token=API_TOKEN)

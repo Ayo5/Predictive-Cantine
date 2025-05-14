@@ -15,14 +15,20 @@ from components.upload_csv import upload_csv_section
 
 setup_page_style()
 
-st.markdown("<h1 class='main-header'>🍽️ Vision Food</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-header'>Vision Food</h1>", unsafe_allow_html=True)
 
-st.sidebar.title("Navigation")
+st.sidebar.markdown("<h2 class='sidebar-title'>Navigation</h2>", unsafe_allow_html=True)
 
-page = st.sidebar.radio(
-    "Sélectionnez une page",
-    ["Home", "Menu semaine", "Gaspillage", "Affluence", "Importation"]
-)
+pages = ["Home", "Menu semaine", "Gaspillage", "Affluence", "Importation"]
+
+if 'current_page' not in st.session_state:
+    st.session_state.current_page = "Home"
+
+for p in pages:
+    if st.sidebar.button(p, key=f"nav_{p}"):
+        st.session_state.current_page = p
+
+page = st.session_state.current_page
 
 def select_date_and_week():
     try:
