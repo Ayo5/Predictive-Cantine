@@ -50,7 +50,6 @@ def prepare_dataset(dataset, num_weeks):
     final_dataset['Taux de participation'] = final_dataset['Taux de participation'].clip(0.5, 1.0)
     
     return final_dataset
-
 def predict_waste_and_participation(final_dataset):
     """Make predictions using DataRobot models"""
     dr.Client(endpoint=ENDPOINT, token=API_TOKEN_GASP)
