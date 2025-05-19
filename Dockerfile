@@ -1,15 +1,24 @@
-FROM python:3.9-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    ffmpeg libsm6 libxext6 \
+    software-properties-common \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir -r requirements.txt
+# Install uv using pip
+RUN pip3 install uv
 
-COPY . .
+COPY . /app/
+# Use uv to install dependencies with --system flag
+RUN uv pip install --system -r requirements.txt
 
-RUN mkdir -p uploads data
+EXPOSE 8080
 
-EXPOSE 8501
+HEALTHCHECK CMD curl --fail http://localhost:8080/_stcore/health
 
-CMD ["streamlit", "run", "dashboard.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "dashboard.py", "--server.port=8080", "--server.address=0.0.0.0"]
