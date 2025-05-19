@@ -14,8 +14,9 @@ from components.waste_display import display_waste_section
 from components.upload_csv import upload_csv_section
 
 setup_page_style()
-
+st.image("./images/logo.png", width=100) 
 st.markdown("<h1 class='main-header'>Vision Food</h1>", unsafe_allow_html=True)
+
 
 st.sidebar.markdown("<h2 class='sidebar-title'>Navigation</h2>", unsafe_allow_html=True)
 

@@ -9,7 +9,7 @@ from config import NUM_WEEKS, CSV_PREDICTIONS, CSV_CO2_COUTS
 def upload_csv_section():
     st.markdown("<h2 class='section-header'>Importer un fichier CSV</h2>", unsafe_allow_html=True)
     
-    csv_tabs = st.tabs(["Données des menus", "Données CO2 et coûts"])
+    csv_tabs = st.tabs(["Données des menus", "Données CO2 et coûts", "Saisie manuelle"])
     
     with csv_tabs[0]:
         st.subheader("Importer les données des menus")
@@ -109,5 +109,57 @@ def upload_csv_section():
                 
             except Exception as e:
                 st.error(f"Erreur lors du traitement du fichier CO2: {str(e)}")
+    
+    with csv_tabs[2]:
+        st.subheader("Saisie manuelle des données")
+        
+        # Saisie des données pour le menu
+        st.markdown("### Saisie des données du menu")
+        date = st.date_input("Date")
+        entree = st.text_input("Entrée")
+        plat = st.text_input("Plat")
+        legumes = st.text_input("Légumes")
+        dessert = st.text_input("Dessert")
+        laitage = st.text_input("Laitage")
+        gouter = st.text_input("Gouter")
+        temperature = st.number_input("Température", min_value=-20.0, max_value=40.0, value=20.0)
+        humidite = st.number_input("Humidité", min_value=0.0, max_value=100.0, value=50.0)
+        vitesse_vent = st.number_input("Vitesse du vent", min_value=0.0, max_value=10.0, value=5.0)
+        attente_moyenne = st.number_input("Attente moyenne (minutes)", min_value=0, max_value=120, value=30)
+
+        if st.button("Ajouter au CSV des menus"):
+            new_data = {
+                "Date": date.strftime("%Y-%m-%d"),
+                "Entrée": entree,
+                "Plat": plat,
+                "Légumes": legumes,
+                "Dessert": dessert,
+                "Laitage": laitage,
+                "Gouter" : gouter,
+                "Température": temperature,
+                "Humidité": humidite,
+                "Vitesse du vent moyen 10 mn": vitesse_vent,
+                "Attente moyenne": attente_moyenne
+            }
+            df = pd.DataFrame([new_data])
+            df.to_csv(CSV_PREDICTIONS, mode='a', header=False, index=False)
+            st.success("Données ajoutées avec succès au CSV des menus!")
+        
+        # Saisie des données CO2 et coûts
+        st.markdown("### Saisie des données CO2 et coûts")
+        nom = st.text_input("Nom de l'aliment")
+        co2 = st.number_input("Kg CO2 pour 1 kilo ou 1L", min_value=0.0)
+        prix = st.number_input("Prix Unitaire Kg", min_value=0.0)
+        
+        if st.button("Ajouter au CSV CO2 et coûts"):
+            new_co2_data = {
+                "Nom": nom,
+                "Kg CO2 pour 1 kilo ou 1L": co2,
+                "Portion 100g" : co2/10 , 
+                "Prix Unitaire Kg": prix
+            }
+            co2_df = pd.DataFrame([new_co2_data])
+            co2_df.to_csv(CSV_CO2_COUTS, mode='a', header=False, index=False)
+            st.success("Données ajoutées avec succès au CSV CO2 et coûts!")
     
     return None
