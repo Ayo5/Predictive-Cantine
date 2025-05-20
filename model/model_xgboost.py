@@ -120,10 +120,9 @@ class XGBoostPredictor:
 
 if __name__ == "__main__":
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    TRAIN_DATA = os.path.join(BASE_DIR, "data", "data_prediction.csv")
-    INPUT_CSV = os.path.join(BASE_DIR, "uploads", "menu.csv")
-    OUTPUT_PATH = os.path.join(BASE_DIR, "output", "pred.csv")
+    TRAIN_DATA = os.path.join(BASE_DIR, "data", "train_data.csv")
+    OUTPUT_PATH = os.path.join(BASE_DIR, "output", "predictions.csv")
 
     predictor = XGBoostPredictor()
     if predictor.train(TRAIN_DATA):
-        predictor.predict_and_save(INPUT_CSV, OUTPUT_PATH)
+        predictor.predict_and_save(CSV_PREDICTIONS, OUTPUT_PATH)

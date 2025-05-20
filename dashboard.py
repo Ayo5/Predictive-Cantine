@@ -22,6 +22,13 @@ st.sidebar.markdown("<h2 class='sidebar-title'>Navigation</h2>", unsafe_allow_ht
 
 pages = ["Home", "Menu semaine", "Gaspillage", "Affluence", "Importation"]
 
+if "model_choice" not in st.session_state:
+    st.session_state.model_choice = "Local (XGBoost)"
+    model_choice = st.sidebar.radio(
+        "Choisir le modèle de prédiction",
+        ["DataRobot", "Local (XGBoost)"],
+        key="model_choice",
+    )
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Home"
 

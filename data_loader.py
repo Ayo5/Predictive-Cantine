@@ -42,7 +42,7 @@ def load_data():
     return dataset
 
 
-def predict_waste_and_participation(final_dataset, model_choice="datarobot"):
+def predict_waste_and_participation(final_dataset, model_choice="local"):
     """Make predictions using selected model"""
     if model_choice == "datarobot":
         try:
@@ -113,8 +113,6 @@ def prepare_dataset(dataset, num_week):
     final_dataset = dataset.copy()
     final_dataset["Date"] = pd.to_datetime(final_dataset["Date"])
 
-    if "model_choice" not in st.session_state:
-        st.session_state.model_choice = "Local (XGBoost)"
     model_choice = st.sidebar.radio(
         "Choisir le modèle de prédiction",
         ["DataRobot", "Local (XGBoost)"],
