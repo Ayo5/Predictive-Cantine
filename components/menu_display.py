@@ -6,37 +6,39 @@ from menu_comments import get_daily_menu_comment, get_weekly_waste_tip
 
 
 def display_menu_section(col, current_week):
-    col.markdown("<h2 class='section-header'>Menu de la semaine</h2>", unsafe_allow_html=True)
+    col.markdown(
+        "<h2 class='section-header'>Menu de la semaine</h2>", unsafe_allow_html=True
+    )
     week_menus, prix_semaine, _ = get_current_menu(current_week)
     weekly_tip = get_weekly_waste_tip()
     col.info(weekly_tip)
-    
+
     csv_data = pd.read_csv(CSV_PREDICTIONS)
-    
+
     for i, row in enumerate(week_menus):
         with col.container():
-            unique_menus = csv_data.drop_duplicates(subset=['Plat', 'Légumes']).head(10)
+            unique_menus = csv_data.drop_duplicates(subset=["Plat", "Légumes"]).head(10)
             menu_options = []
             for j, menu_option in enumerate(unique_menus.iterrows()):
                 _, menu_data = menu_option
                 plat_desc = f"{menu_data['Plat']}"
-                if not pd.isna(menu_data.get('Légumes', '')):
+                if not pd.isna(menu_data.get("Légumes", "")):
                     plat_desc += f" + {menu_data['Légumes']}"
                 menu_options.append(f"Option {j+1}: {plat_desc}")
-            
+
             str_date = row["Date"].strftime("%d-%m-%Y")
             current_index = st.session_state["skips"].get(str_date, 0)
             if current_index >= len(menu_options):
                 current_index = 0
                 st.session_state["skips"][str_date] = 0
-            
+
             selected_option = st.selectbox(
                 "Choisir un menu alternatif:",
                 menu_options,
                 index=current_index,
-                key=f"menu_select_{str_date}"
+                key=f"menu_select_{str_date}",
             )
-            
+
             new_index = menu_options.index(selected_option)
             if new_index != current_index:
                 st.session_state["skips"][str_date] = new_index
@@ -63,18 +65,18 @@ def display_menu_section(col, current_week):
     </div>
     
 </div>"""
-            
-          
+
             st.markdown(html_content, unsafe_allow_html=True)
-            
+
             metrics_cols = st.columns(2)
             with metrics_cols[0]:
-                participation = row.get('Taux de participation', 0.8) * 100
+                participation = row.get("Taux participation", 0.8) * 100
                 st.metric("Participation", f"{participation:.1f}%")
             with metrics_cols[1]:
-                waste = row.get('Taux de gaspillage', 0.2) * 100
+                waste = row.get("Taux gaspillage", 0.2) * 100
                 st.metric(
-                    "Gaspillage", f"{waste:.1f}%",
+                    "Gaspillage",
+                    f"{waste:.1f}%",
                     delta=f"{-5:.1f}%" if waste < 25 else f"{5:.1f}%",
-                    delta_color="inverse"
+                    delta_color="inverse",
                 )

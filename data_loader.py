@@ -11,7 +11,10 @@ from config import (
     PROJECT_ID_PARTICIPATION,
     MODEL_ID_PARTICIPATION,
     CSV_PREDICTIONS,
+    TRAIN_DATA,
 )
+
+from model.model_xgboost import XGBoostPredictor
 
 
 def load_data():
@@ -74,55 +77,43 @@ def predict_waste_and_participation(final_dataset, model_choice="datarobot"):
                 float(row[1]["prediction"])
                 for row in predictions_participation.iterrows()
             ]
-            final_dataset.loc[:, "Taux de participation"] = results_participation
+            final_dataset.loc[:, "Taux participation"] = results_participation
 
         except Exception as e:
             st.error(f"Erreur lors de la prédiction avec DataRobot: {str(e)}")
-            model_choice = "local"  # Fallback sur le modèle local en cas d'erreur
+            model_choice = "local"
 
     if model_choice == "local":
         try:
             predictor = XGBoostPredictor()
-            predictions = predictor.predict(final_dataset)
-            final_dataset.loc[:, "Taux de gaspillage"] = predictions[:, 1]
-            final_dataset.loc[:, "Taux de participation"] = predictions[:, 0]
+            predictor.train(TRAIN_DATA)
+            predictor.predict_and_save(final_dataset)
+
+            st.success(f"Prédictions sauvegardées dans output")
         except Exception as e:
             st.error(f"Erreur lors de la prédiction avec le modèle local: {str(e)}")
             # Utilisation de valeurs aléatoires en dernier recours
-            final_dataset.loc[:, "Taux de gaspillage"] = np.random.uniform(
+            final_dataset.loc[:, "Taux gaspillage"] = np.random.uniform(
                 0.05, 0.35, size=len(final_dataset)
             )
-            final_dataset.loc[:, "Taux de participation"] = np.random.uniform(
+            final_dataset.loc[:, "Taux participation"] = np.random.uniform(
                 0.65, 0.95, size=len(final_dataset)
             )
             print("Utilisation de valeurs aléatoires suite à une erreur")
 
-    # Ajustement des valeurs prédites dans des plages raisonnables
-    final_dataset["Taux de gaspillage"] = final_dataset["Taux de gaspillage"].clip(
-        0.01, 0.5
+    final_dataset["Taux gaspillage"] = final_dataset["Taux gaspillage"].clip(0.01, 0.5)
+    final_dataset["Taux participation"] = final_dataset["Taux participation"].clip(
+        0.5, 1.0
     )
-    final_dataset["Taux de participation"] = final_dataset[
-        "Taux de participation"
-    ].clip(0.5, 1.0)
 
     return final_dataset
 
 
-def prepare_dataset(dataset, num_weeks):
+def prepare_dataset(dataset, num_week):
     """Prepare dataset for predictions"""
     final_dataset = dataset.copy()
     final_dataset["Date"] = pd.to_datetime(final_dataset["Date"])
 
-    if "Taux de gaspillage" not in final_dataset.columns:
-        final_dataset["Taux de gaspillage"] = 0.0
-
-    if "Taux de participation" not in final_dataset.columns:
-        final_dataset["Taux de participation"] = 0.0
-
-    if "Taux gaspillage" not in final_dataset.columns:
-        final_dataset["Taux gaspillage"] = 0.3
-
-    # Ajout du sélecteur de modèle dans l'interface
     if "model_choice" not in st.session_state:
         st.session_state.model_choice = "Local (XGBoost)"
     model_choice = st.sidebar.radio(
