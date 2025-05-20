@@ -113,6 +113,21 @@ def prepare_dataset(dataset, num_week):
     final_dataset = dataset.copy()
     final_dataset["Date"] = pd.to_datetime(final_dataset["Date"])
 
+    st.markdown(
+        """
+        <style>
+        div[data-testid="stRadio"] > div[role="radiogroup"] > label > div:first-child {
+            background-color: #1b5e20;
+            
+        }
+        div[data-testid="stRadio"] > div[role="radiogroup"] > label:hover > div:first-child {
+            background-color: #2e7d32;
+        }
+        </style>
+    """,
+        unsafe_allow_html=True,
+    )
+
     model_choice = st.radio(
         "Choisir le modèle de prédiction",
         ["DataRobot", "Local (XGBoost)"],

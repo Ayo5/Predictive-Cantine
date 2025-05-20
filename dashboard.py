@@ -20,7 +20,7 @@ st.markdown("<h1 class='main-header'>Vision Food</h1>", unsafe_allow_html=True)
 
 st.sidebar.markdown("<h2 class='sidebar-title'>Navigation</h2>", unsafe_allow_html=True)
 
-pages = ["Home", "Menu semaine", "Gaspillage", "Affluence", "Importation"]
+pages = ["Home", "Menu semaine", "Gaspillage", "Affluence", "Importation", "Contact"]
 
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Home"
