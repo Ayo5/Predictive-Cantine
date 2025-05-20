@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import datarobot as dr
+import os
 from config import (
     ENDPOINT,
     API_TOKEN,
@@ -45,7 +46,6 @@ def predict_waste_and_participation(final_dataset, model_choice="datarobot"):
     """Make predictions using selected model"""
     if model_choice == "datarobot":
         try:
-            # Prédiction du taux de gaspillage avec DataRobot
             dr.Client(endpoint=ENDPOINT, token=API_TOKEN_GASP)
             project = dr.Project.get(PROJECT_ID_GASPILLAGE)
             model = dr.Model.get(PROJECT_ID_GASPILLAGE, MODEL_ID_GASPILLAGE)
@@ -56,9 +56,8 @@ def predict_waste_and_participation(final_dataset, model_choice="datarobot"):
             predictions = pred_job.get_result_when_complete(max_wait=3600)
 
             results = [float(row[1]["prediction"]) for row in predictions.iterrows()]
-            final_dataset.loc[:, "Taux de gaspillage"] = results
+            final_dataset.loc[:, "Taux gaspillage prédit"] = results
 
-            # Prédiction du taux de participation avec DataRobot
             dr.Client(endpoint=ENDPOINT, token=API_TOKEN)
             project_participation = dr.Project.get(PROJECT_ID_PARTICIPATION)
             model_participation = dr.Model.get(

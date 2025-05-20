@@ -105,8 +105,8 @@ class XGBoostPredictor:
             X_pred = df_pred.drop("Date", axis=1)
             predictions = self.pipeline.predict(X_pred)
 
-            df_pred["Taux participation"] = predictions[:, 0]
-            df_pred["Taux gaspillage"] = predictions[:, 1]
+            df_pred["Taux participation prédit"] = predictions[:, 0]
+            df_pred["Taux gaspillage prédit"] = predictions[:, 1]
 
             df_pred.to_csv(output_path, index=False)
             print(f"Prédictions sauvegardées dans {output_path}")
