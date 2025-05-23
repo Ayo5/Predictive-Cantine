@@ -12,6 +12,7 @@ ENDPOINT = "https://app.datarobot.com/api/v2"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TRAIN_DATA = os.path.join(BASE_DIR, "data", "data_prediction.csv")
 CSV_PREDICTIONS = os.path.join(BASE_DIR, "uploads", "menu.csv")
+PREDICTIONS = os.path.join(BASE_DIR, "output", "predictions.csv")
 CSV_CO2_COUTS = os.path.join(BASE_DIR, "uploads", "couts.csv")
 
 NUM_WEEKS = 16

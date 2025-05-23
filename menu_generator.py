@@ -198,4 +198,6 @@ def create_default_menu_item(current_date):
         "Code_légumes": "",
         "Code_dessert": "",
         "Code_laitage": "",
+        "Taux gaspillage prédit": 0.0,
+        "Taux participation prédit": 0.0,
     }

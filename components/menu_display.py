@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from config import CSV_PREDICTIONS, WEEKDAYS
+from config import PREDICTIONS, WEEKDAYS
 from menu_generator import get_current_menu
 from menu_comments import get_daily_menu_comment, get_weekly_waste_tip
 
@@ -10,13 +10,42 @@ def display_menu_section(col, current_week):
         "<h2 class='section-header'>Menu de la semaine</h2>", unsafe_allow_html=True
     )
     week_menus, prix_semaine, _ = get_current_menu(current_week)
+    print("la variable bizarre _ :", _)
+    print("la varibale prix semaine :", prix_semaine)
+    print
     weekly_tip = get_weekly_waste_tip()
     col.info(weekly_tip)
 
-    csv_data = pd.read_csv(CSV_PREDICTIONS)
+    csv_data = pd.read_csv(PREDICTIONS)
+    print("csv_data :", csv_data)
+    print(csv_data.columns)
+
+    colonnes_a_convertir = [
+        "Taux participation prédit",
+        "Taux participation",
+        "Taux gaspillage prédit",
+        "Taux gaspillage",
+    ]
+
+    for colonne in colonnes_a_convertir:
+        if colonne in csv_data.columns:
+            csv_data[colonne] = pd.to_numeric(csv_data[colonne], errors="coerce")
 
     for i, row in enumerate(week_menus):
         with col.container():
+            str_date = row["Date"].strftime("%d-%m-%Y")
+
+            # Trouver la ligne correspondante dans csv_data en fonction du Plat et des Légumes
+            matched_row = csv_data[
+                (csv_data["Plat"] == row["Plat"])
+                & (csv_data["Légumes"] == row["Légumes"])
+            ]
+
+            if not matched_row.empty:
+                matched_row = matched_row.iloc[0]
+            else:
+                matched_row = None
+
             unique_menus = csv_data.drop_duplicates(subset=["Plat", "Légumes"]).head(10)
             menu_options = []
             for j, menu_option in enumerate(unique_menus.iterrows()):
@@ -70,13 +99,32 @@ def display_menu_section(col, current_week):
 
             metrics_cols = st.columns(2)
             with metrics_cols[0]:
-                participation = row.get("Taux participation", 0.8) * 100
-                st.metric("Participation", f"{participation:.1f}%")
+                participation = 0.8  # Valeur par défaut
+                if matched_row is not None:
+                    if "Taux participation prédit" in matched_row and not pd.isna(
+                        matched_row["Taux participation prédit"]
+                    ):
+                        participation = matched_row["Taux participation prédit"]
+                    elif "Taux participation" in matched_row and not pd.isna(
+                        matched_row["Taux participation"]
+                    ):
+                        participation = matched_row["Taux participation"]
+                st.metric("Participation", f"{participation*100:.1f}%")
+
             with metrics_cols[1]:
-                waste = row.get("Taux gaspillage", 0.2) * 100
+                waste = 0.2  # Valeur par défaut
+                if matched_row is not None:
+                    if "Taux gaspillage prédit" in matched_row and not pd.isna(
+                        matched_row["Taux gaspillage prédit"]
+                    ):
+                        waste = matched_row["Taux gaspillage prédit"]
+                    elif "Taux gaspillage" in matched_row and not pd.isna(
+                        matched_row["Taux gaspillage"]
+                    ):
+                        waste = matched_row["Taux gaspillage"]
                 st.metric(
                     "Gaspillage",
-                    f"{waste:.1f}%",
-                    delta=f"{-5:.1f}%" if waste < 25 else f"{5:.1f}%",
+                    f"{waste*100:.1f}%",
+                    delta=f"{-5:.1f}%" if waste < 0.25 else f"{5:.1f}%",
                     delta_color="inverse",
                 )
