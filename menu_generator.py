@@ -3,7 +3,12 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime, timedelta
 import numpy as np
-from config import CSV_CO2_COUTS, DEFAULT_DELAY_MAIN_DISH, DEFAULT_DELAY_MENU
+from config import (
+    CSV_CO2_COUTS,
+    DEFAULT_DELAY_MAIN_DISH,
+    DEFAULT_DELAY_MENU,
+    PREDICTIONS,
+)
 
 delay_main_dish = DEFAULT_DELAY_MAIN_DISH
 delay_menu = DEFAULT_DELAY_MENU
@@ -39,55 +44,51 @@ def get_current_menu(week_number):
 
     co2_couts = pd.read_csv(CSV_CO2_COUTS)
     co2_couts["Nom"] = co2_couts["Nom"].str.lower()
-    co2_couts["Nom"] = co2_couts["Nom"].str.replace(r"(^\s+|\s+$)", "")  # Remove spaces
-    co2_couts["Nom"] = co2_couts["Nom"].str.replace(r"s$", "")  # Remove plural
+    co2_couts["Nom"] = co2_couts["Nom"].str.replace(r"(^\s+|\s+$)", "")
+    co2_couts["Nom"] = co2_couts["Nom"].str.replace(r"s$", "")
 
-    menus = st.session_state["menus"]
-    all_dates = sorted([datetime.strptime(date, "%d-%m-%Y") for date in menus.keys()])
+    predictions_df = pd.read_csv(PREDICTIONS)
 
-    if len(all_dates) > 0:
+    predictions_df["Date"] = pd.to_datetime(predictions_df["Date"])
+
+    unique_dates = sorted(predictions_df["Date"].unique())
+
+    if len(unique_dates) > 0:
         start_idx = week_number * 5
-        if start_idx < len(all_dates):
-            week_start = all_dates[start_idx]
-
+        if start_idx < len(unique_dates):
             week_dates = []
             current_idx = start_idx
-            while len(week_dates) < 5 and current_idx < len(all_dates):
-                week_dates.append(all_dates[current_idx])
+            while len(week_dates) < 5 and current_idx < len(unique_dates):
+                week_dates.append(unique_dates[current_idx])
                 current_idx += 1
 
             for current_date in week_dates:
-                str_date = current_date.strftime("%d-%m-%Y")
+                date_data = predictions_df[predictions_df["Date"] == current_date]
 
-                try:
-                    if str_date in menus and len(menus[str_date]) > 0:
-                        row = menus[str_date][0]
-                        if str_date in st.session_state["skips"]:
-                            skip_index = st.session_state["skips"][str_date]
-                            if skip_index >= len(menus[str_date]):
-                                skip_index = 0
-                                st.session_state["skips"][str_date] = 0
-                            row = menus[str_date][skip_index]
+                if not date_data.empty:
+                    row = date_data.iloc[0].to_dict()
+                    str_date = current_date.strftime("%d-%m-%Y")
+                    menu_item = {
+                        "Date": str_date,
+                        "Entrée": row.get("Entrée", ""),
+                        "Plat": row.get("Plat", ""),
+                        "Légumes": row.get("Légumes", ""),
+                        "Laitage": row.get("Laitage", ""),
+                        "Dessert": row.get("Dessert", ""),
+                        "Gouter": row.get("Gouter", ""),
+                        "Taux participation": row.get("Taux participation", 0),
+                        "Taux participation prédit": row.get(
+                            "Taux participation prédit", 0
+                        ),
+                        "Taux gaspillage": row.get("Taux gaspillage", 0),
+                        "Taux gaspillage prédit": row.get("Taux gaspillage prédit", 0),
+                    }
 
-                        if dish_found(row, current_date, menus) or menu_found(
-                            row, current_date, menus
-                        ):
-                            skip_index = st.session_state["skips"].get(str_date, 0) + 1
-                            if skip_index >= len(menus[str_date]):
-                                skip_index = 0
-                            st.session_state["skips"][str_date] = skip_index
-                            row = menus[str_date][skip_index]
-
-                        week_menus.append(row)
-                        price, co2 = calculate_menu_cost_and_co2(
-                            row, co2_couts, price, co2
-                        )
-                    else:
-                        row = create_default_menu_item(current_date)
-                        week_menus.append(row)
-
-                except Exception as e:
-                    print(f"Error processing menu for {str_date}: {e}")
+                    week_menus.append(menu_item)
+                    price, co2 = calculate_menu_cost_and_co2(
+                        menu_item, co2_couts, price, co2
+                    )
+                else:
                     row = create_default_menu_item(current_date)
                     week_menus.append(row)
         else:

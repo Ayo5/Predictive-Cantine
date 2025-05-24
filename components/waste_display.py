@@ -9,26 +9,21 @@ import os
 def display_waste_section(col, current_week):
     """Display the waste and CO2 section"""
 
-    csv_data = pd.read_csv(PREDICTIONS)
-
-    numeric_columns = ["Taux gaspillage", "Taux gaspillage prédit"]
-    for colonne in numeric_columns:
-        if colonne in csv_data.columns:
-            csv_data[colonne] = pd.to_numeric(csv_data[colonne], errors="coerce")
-
     week_menus, prix_semaine, co2 = get_current_menu(current_week)
 
     gaspillage_initial = []
     gaspillage_prevu = []
 
-    for row in csv_data.to_dict("records"):
-        if "Taux gaspillage" in row and pd.notna(row["Taux gaspillage"]):
-            gaspillage_initial.append(float(row["Taux gaspillage"]) * 100)
+    for menu in week_menus:
+        if "Taux gaspillage" in menu and pd.notna(menu["Taux gaspillage"]):
+            gaspillage_initial.append(float(menu["Taux gaspillage"]) * 100)
         else:
             gaspillage_initial.append(20.0)
 
-        if "Taux gaspillage prédit" in row and pd.notna(row["Taux gaspillage prédit"]):
-            gaspillage_prevu.append(float(row["Taux gaspillage prédit"]) * 100)
+        if "Taux gaspillage prédit" in menu and pd.notna(
+            menu["Taux gaspillage prédit"]
+        ):
+            gaspillage_prevu.append(float(menu["Taux gaspillage prédit"]) * 100)
         else:
             gaspillage_prevu.append(20.0)
 
@@ -94,7 +89,7 @@ def display_waste_section(col, current_week):
 
     display_waste_chart(col, gaspillage_initial, gaspillage_prevu)
     display_bio_products(col, week_menus)
-    display_parameters(col)  # à corriger
+    display_parameters(col)
 
     col.markdown("h2 class='section-header'>Rapport</h2>", unsafe_allow_html=True)
     if col.button("📄 Générer le rapport PDF de la semaine"):
@@ -118,16 +113,12 @@ def display_waste_section(col, current_week):
 def display_waste_chart(col, gaspillage_initial, gaspillage_prevu):
     """Display waste comparison charts"""
     jours = [f"{i+1} - {w}" for i, w in enumerate(WEEKDAYS)]
-
-    # Créer deux colonnes pour les graphiques
     chart_cols = col.columns(2)
 
-    # Graphique pour le taux de gaspillage initial
     gaspillage_initial_df = pd.DataFrame(
         {"Jour": jours, "Pourcentage": gaspillage_initial}
     )
 
-    # Filtrer les valeurs None ou NaN
     gaspillage_initial_df = gaspillage_initial_df.dropna()
 
     if not gaspillage_initial_df.empty:
