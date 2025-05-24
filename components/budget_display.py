@@ -58,11 +58,14 @@ def display_budget_section(col, current_week):
 
     cols2_1_metrics = col.columns(3)
     cout_semaine = prix_semaine * 5 * num_students
-    cout_standard = 10 * 5 * num_students
+    cout_standard = 13 * 5 * num_students  # A changer selon les besoins
     economies = cout_standard - cout_semaine if cout_standard > cout_semaine else 0
 
     cols2_1_metrics[0].metric(
-        "Coût par enfant", f"{prix_semaine:.2f}€", f"{(prix_semaine/5):.2f}€/jour"
+        "Coût par enfant",
+        f"{prix_semaine:.2f}€",
+        f"{(prix_semaine/5):.2f}€/jour",
+        delta_color=("normal" if economies > 0 else "inverse"),
     )
     cols2_1_metrics[1].metric(
         "Coût total semaine", f"{cout_semaine:.2f}€", f"{num_students} enfants"
@@ -71,7 +74,6 @@ def display_budget_section(col, current_week):
         "Économies réalisées",
         f"{economies:.2f}€",
         f"{(economies/cout_standard):.1f}" if cout_standard > 0 else "0",
-        delta_color="normal" if economies > 0 else "off",
     )
 
     col.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
@@ -98,5 +100,4 @@ def display_budget_section(col, current_week):
         .properties(title="Affluence par jour")
     )
 
-    # Affichage du graphique
     col.altair_chart(chart, use_container_width=True)
