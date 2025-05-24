@@ -1,16 +1,44 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-from config import WEEKDAYS, DEFAULT_DELAY_MAIN_DISH, DEFAULT_DELAY_MENU
+from config import WEEKDAYS, DEFAULT_DELAY_MAIN_DISH, DEFAULT_DELAY_MENU, PREDICTIONS
 from menu_generator import get_current_menu
 import os
 
 
 def display_waste_section(col, current_week):
     """Display the waste and CO2 section"""
+
+    csv_data = pd.read_csv(PREDICTIONS)
+
+    numeric_columns = ["Taux gaspillage", "Taux gaspillage prédit"]
+    for colonne in numeric_columns:
+        if colonne in csv_data.columns:
+            csv_data[colonne] = pd.to_numeric(csv_data[colonne], errors="coerce")
+
     week_menus, prix_semaine, co2 = get_current_menu(current_week)
-    gaspillage_initial = [row["Taux gaspillage"] * 100 for row in week_menus]
-    gaspillage_prevu = [row["Taux gaspillage"] * 100 for row in week_menus]
+
+    gaspillage_initial = []
+    gaspillage_prevu = []
+
+    for row in csv_data.to_dict("records"):
+        if "Taux gaspillage" in row and pd.notna(row["Taux gaspillage"]):
+            gaspillage_initial.append(float(row["Taux gaspillage"]) * 100)
+        else:
+            gaspillage_initial.append(20.0)
+
+        if "Taux gaspillage prédit" in row and pd.notna(row["Taux gaspillage prédit"]):
+            gaspillage_prevu.append(float(row["Taux gaspillage prédit"]) * 100)
+        else:
+            gaspillage_prevu.append(20.0)
+
+    while len(gaspillage_initial) < 5:
+        gaspillage_initial.append(20.0)
+    while len(gaspillage_prevu) < 5:
+        gaspillage_prevu.append(20.0)
+
+    gaspillage_initial = gaspillage_initial[:5]
+    gaspillage_prevu = gaspillage_prevu[:5]
 
     col.markdown(
         "<h2 class='section-header'>Gaspillage et CO2</h2>", unsafe_allow_html=True
@@ -88,35 +116,59 @@ def display_waste_section(col, current_week):
 
 
 def display_waste_chart(col, gaspillage_initial, gaspillage_prevu):
-    """Display waste comparison chart"""
-    gaspillage_long = pd.DataFrame(
-        {
-            "Jour": [f"{i+1} - {w}" for i, w in enumerate(WEEKDAYS)] * 2,
-            "Type": ["Gaspillage initial"] * 5 + ["Gaspillage prévu"] * 5,
-            "Pourcentage": gaspillage_initial + gaspillage_prevu,
-        }
+    """Display waste comparison charts"""
+    jours = [f"{i+1} - {w}" for i, w in enumerate(WEEKDAYS)]
+
+    # Créer deux colonnes pour les graphiques
+    chart_cols = col.columns(2)
+
+    # Graphique pour le taux de gaspillage initial
+    gaspillage_initial_df = pd.DataFrame(
+        {"Jour": jours, "Pourcentage": gaspillage_initial}
     )
 
-    chart = (
-        alt.Chart(gaspillage_long)
-        .mark_bar()
-        .encode(
-            x=alt.X("Jour:N", title="Jour de la semaine"),
-            y=alt.Y("Pourcentage:Q", title="Gaspillage (%)"),
-            color=alt.Color(
-                "Type:N",
-                scale=alt.Scale(
-                    domain=["Gaspillage initial", "Gaspillage prévu"],
-                    range=["#ff9999", "#5fa059"],  # Rouge pour initial, Vert pour prévu
-                ),
-            ),
-            tooltip=["Jour", "Type", "Pourcentage"],
+    # Filtrer les valeurs None ou NaN
+    gaspillage_initial_df = gaspillage_initial_df.dropna()
+
+    if not gaspillage_initial_df.empty:
+        chart_initial = (
+            alt.Chart(gaspillage_initial_df)
+            .mark_bar(color="#ff9999")  # Rouge pour initial
+            .encode(
+                x=alt.X("Jour:N", title="Jour de la semaine"),
+                y=alt.Y("Pourcentage:Q", title="Gaspillage (%)"),
+                tooltip=["Jour", "Pourcentage"],
+            )
+            .properties(title="Gaspillage initial")
         )
-        .properties(title="Gaspillage initial et prévu")
-    )
 
-    # Affichage du graphique
-    col.altair_chart(chart, use_container_width=True)
+        # Affichage du graphique initial
+        chart_cols[0].altair_chart(chart_initial, use_container_width=True)
+    else:
+        chart_cols[0].warning("Aucune donnée de gaspillage initial disponible.")
+
+    # Graphique pour le taux de gaspillage prédit
+    gaspillage_prevu_df = pd.DataFrame({"Jour": jours, "Pourcentage": gaspillage_prevu})
+
+    # Filtrer les valeurs None ou NaN
+    gaspillage_prevu_df = gaspillage_prevu_df.dropna()
+
+    if not gaspillage_prevu_df.empty:
+        chart_prevu = (
+            alt.Chart(gaspillage_prevu_df)
+            .mark_bar(color="#5fa059")  # Vert pour prévu
+            .encode(
+                x=alt.X("Jour:N", title="Jour de la semaine"),
+                y=alt.Y("Pourcentage:Q", title="Gaspillage (%)"),
+                tooltip=["Jour", "Pourcentage"],
+            )
+            .properties(title="Gaspillage prédit")
+        )
+
+        # Affichage du graphique prédit
+        chart_cols[1].altair_chart(chart_prevu, use_container_width=True)
+    else:
+        chart_cols[1].warning("Aucune donnée de gaspillage prédit disponible.")
 
 
 def display_bio_products(col, week_menus):

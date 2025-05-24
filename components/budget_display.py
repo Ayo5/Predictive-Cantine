@@ -9,7 +9,8 @@ from menu_generator import get_current_menu
 def display_budget_section(col, current_week):
     """Display the budget section"""
     week_menus, prix_semaine, _ = get_current_menu(current_week)
-    participations = [row["Taux participation"] * 100 for row in week_menus]
+    # Supprimer la variable show_percent et ses utilisations
+    participations = [row["Taux participation"] for row in week_menus]
 
     col.markdown("<h2 class='section-header'>Budget</h2>", unsafe_allow_html=True)
 
@@ -20,7 +21,6 @@ def display_budget_section(col, current_week):
         max_value=5000,
         value=150,
     )
-    show_percent = cols2_2[1].checkbox("Afficher en pourcentages", value=False)
 
     col.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
 
@@ -71,7 +71,7 @@ def display_budget_section(col, current_week):
     cols2_1_metrics[2].metric(
         "Économies réalisées",
         f"{economies:.2f}€",
-        f"{(economies/cout_standard*100):.1f}%" if cout_standard > 0 else "0%",
+        f"{(economies/cout_standard):.1f}" if cout_standard > 0 else "0",
         delta_color="normal" if economies > 0 else "off",
     )
 
@@ -80,14 +80,9 @@ def display_budget_section(col, current_week):
     col.markdown("<h2 class='section-header'>Affluence</h2>", unsafe_allow_html=True)
 
     chart_data = pd.DataFrame(
-        np.array(
-            [
-                [round(x * 10) / 10 if show_percent else round(x / 100 * num_students)]
-                for x in participations
-            ]
-        ),
+        np.array([[round(x * num_students)] for x in participations]),
         index=[f"{i+1} - {w}" for i, w in enumerate(WEEKDAYS)],
-        columns=["Taux participation" if show_percent else "Nombre de participants"],
+        columns=["Nombre de participants"],
     )
 
     chart = (
@@ -96,14 +91,10 @@ def display_budget_section(col, current_week):
         .encode(
             x="index:N",
             y=alt.Y(
-                "Taux de participation" if show_percent else "Nombre de participants",
-                title=(
-                    "Taux de participation (%)"
-                    if show_percent
-                    else "Nombre de participants"
-                ),
+                "Nombre de participants",
+                title="Nombre de participants",
             ),
-            color=alt.value("#5fa059"),  # Utilisation de la couleur personnalisée
+            color=alt.value("#5fa059"),
         )
         .properties(title="Affluence par jour")
     )

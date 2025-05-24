@@ -10,15 +10,10 @@ def display_menu_section(col, current_week):
         "<h2 class='section-header'>Menu de la semaine</h2>", unsafe_allow_html=True
     )
     week_menus, prix_semaine, _ = get_current_menu(current_week)
-    print("la variable bizarre _ :", _)
-    print("la varibale prix semaine :", prix_semaine)
-    print
     weekly_tip = get_weekly_waste_tip()
     col.info(weekly_tip)
 
     csv_data = pd.read_csv(PREDICTIONS)
-    print("csv_data :", csv_data)
-    print(csv_data.columns)
 
     colonnes_a_convertir = [
         "Taux participation prédit",
@@ -118,13 +113,21 @@ def display_menu_section(col, current_week):
                         matched_row["Taux gaspillage prédit"]
                     ):
                         waste = matched_row["Taux gaspillage prédit"]
+                        delta_calc_waste = (
+                            matched_row["Taux gaspillage prédit"]
+                            - matched_row["Taux gaspillage"]
+                        )
+
                     elif "Taux gaspillage" in matched_row and not pd.isna(
                         matched_row["Taux gaspillage"]
                     ):
                         waste = matched_row["Taux gaspillage"]
+
                 st.metric(
                     "Gaspillage",
-                    f"{waste*100:.1f}%",
-                    delta=f"{-5:.1f}%" if waste < 0.25 else f"{5:.1f}%",
+                    f"{waste*100:.2f}%",
+                    delta=(
+                        f"{delta_calc_waste*100:.2f}%" if waste < 25 else f"{5:.1f}%"
+                    ),
                     delta_color="inverse",
                 )
