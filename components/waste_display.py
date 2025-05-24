@@ -91,7 +91,6 @@ def display_waste_section(col, current_week):
     display_bio_products(col, week_menus)
     display_parameters(col)
 
-    col.markdown("h2 class='section-header'>Rapport</h2>", unsafe_allow_html=True)
     if col.button("📄 Générer le rapport PDF de la semaine"):
         try:
             from components.report_generator import generate_weekly_report

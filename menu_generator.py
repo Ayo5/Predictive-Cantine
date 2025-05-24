@@ -67,9 +67,11 @@ def get_current_menu(week_number):
 
                 if not date_data.empty:
                     row = date_data.iloc[0].to_dict()
-                    str_date = current_date.strftime("%d-%m-%Y")
                     menu_item = {
-                        "Date": str_date,
+                        "Date": current_date,
+                        "Date_str": current_date.strftime(
+                            "%d-%m-%Y"
+                        ),  # Ajouter une version string si nécessaire
                         "Entrée": row.get("Entrée", ""),
                         "Plat": row.get("Plat", ""),
                         "Légumes": row.get("Légumes", ""),
