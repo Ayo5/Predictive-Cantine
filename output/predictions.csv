@@ -1,46 +1,46 @@
-Date,Entrée,Plat,Légumes,Laitage,Dessert,Gouter,Taux participation,Température,Humidité,Vitesse du vent moyen 10 mn,Taux gaspillage,Attente moyenne,Taux participation prédit,Taux gaspillage prédit
-2025-09-01,Soupe,Pâtes bolognaise,Riz,Camembert,Compote,Pain et chocolat,0.971,12.2,79.8,8.8,0.063,2.4,0.8684296,0.17772326
-2025-09-02,Carottes râpées,Lasagnes,Haricots verts,Comté,Tarte,Fruit,0.897,17.2,67.8,6.8,0.084,7.5,0.9293558,0.1799199
-2025-09-03,Tomates,Poisson pané,Riz,Yaourt nature,Crème dessert,Madeleine,0.633,13.4,88.4,15.1,0.118,5.3,0.8757097,0.24644835
-2025-09-04,Tomates,Poulet rôti,Carottes,Fromage blanc,Crème dessert,Fruit,0.795,11.9,47.9,15.8,0.073,4.0,0.89658517,0.17791377
-2025-09-05,Soupe,Pâtes bolognaise,Brocolis,Comté,Crème dessert,Madeleine,0.795,10.6,84.2,17.5,0.138,7.6,0.8755433,0.25838417
-2025-09-08,Tomates,Lasagnes,Carottes,Petit suisse,Tarte,Pain et chocolat,0.694,15.4,50.7,24.0,0.103,6.8,0.916695,0.19913323
-2025-09-09,Tomates,Poulet rôti,Haricots verts,Petit suisse,Tarte,Pain et chocolat,0.767,13.4,41.4,6.9,0.166,9.8,0.90651,0.15955487
-2025-09-10,Tomates,Steak haché,Carottes,Fromage blanc,Compote,Madeleine,0.665,19.2,81.6,26.9,0.104,9.7,0.90752363,0.2131385
-2025-09-11,Carottes râpées,Poulet rôti,Petits pois,Petit suisse,Compote,Madeleine,0.66,16.3,73.7,18.8,0.083,3.7,0.9340177,0.189628
-2025-09-12,Salade,Poisson pané,Carottes,Yaourt nature,Fruit,Fruit,0.853,16.0,72.8,11.3,0.189,6.6,0.9206046,0.17600603
-2025-09-15,Tomates,Steak haché,Petits pois,Camembert,Crème dessert,Biscuit,0.655,13.3,72.4,14.6,0.106,3.7,0.90902865,0.20330653
-2025-09-16,Tomates,Poisson pané,Riz,Yaourt nature,Gâteau,Fruit,0.608,10.2,84.8,10.1,0.15,2.7,0.8674701,0.23525333
-2025-09-17,Salade,Lasagnes,Haricots verts,Comté,Fruit,Biscuit,0.645,18.0,40.4,12.1,0.077,8.0,0.9190445,0.13690768
-2025-09-18,Tomates,Pâtes bolognaise,Haricots verts,Comté,Crème dessert,Pain et chocolat,0.666,16.7,48.6,15.9,0.102,8.5,0.9097811,0.1138264
-2025-09-19,Œufs mimosa,Poisson pané,Petits pois,Yaourt nature,Compote,Biscuit,0.749,24.6,44.4,22.7,0.13,9.6,0.936142,0.19357064
-2025-09-22,Soupe,Pâtes bolognaise,Brocolis,Yaourt nature,Tarte,Pain et chocolat,0.881,22.7,42.8,9.1,0.149,3.8,0.91625786,0.10427774
-2025-09-23,Soupe,Steak haché,Brocolis,Comté,Crème dessert,Fruit,0.944,15.0,82.0,29.1,0.157,9.0,0.88517654,0.24862571
-2025-09-24,Carottes râpées,Poulet rôti,Brocolis,Fromage blanc,Gâteau,Pain et chocolat,0.669,14.3,50.3,8.0,0.164,6.3,0.9309074,0.21953383
-2025-09-25,Salade,Poisson pané,Petits pois,Comté,Compote,Fruit,0.843,12.1,64.2,12.5,0.055,2.7,0.92302114,0.17736347
-2025-09-26,Carottes râpées,Lasagnes,Carottes,Camembert,Tarte,Pain et chocolat,0.769,12.5,72.7,10.8,0.172,6.9,0.9173702,0.1767976
-2025-09-29,Soupe,Poisson pané,Haricots verts,Comté,Fruit,Fruit,0.895,16.9,73.9,25.0,0.054,9.4,0.9117752,0.14150104
-2025-09-30,Carottes râpées,Poulet rôti,Riz,Petit suisse,Compote,Biscuit,0.977,11.1,44.5,19.4,0.115,6.9,0.9079536,0.22700496
-2025-10-01,Carottes râpées,Poisson pané,Carottes,Fromage blanc,Fruit,Pain et chocolat,0.94,15.0,84.5,28.3,0.18,7.2,0.9284406,0.23250815
-2025-10-02,Carottes râpées,Lasagnes,Haricots verts,Fromage blanc,Compote,Barre de céréales,0.78,13.0,89.1,20.6,0.057,9.4,0.9096678,0.2439719
-2025-10-05,Tomates,Poulet rôti,Brocolis,Fromage blanc,Tarte,Barre de céréales,0.607,10.9,51.2,19.4,0.168,2.2,0.9042261,0.19429588
-2025-10-06,Salade,Poisson pané,Petits pois,Fromage blanc,Gâteau,Pain et chocolat,0.787,13.6,74.0,25.3,0.072,6.3,0.91619617,0.19476968
-2025-10-07,Salade,Poisson pané,Brocolis,Camembert,Crème dessert,Madeleine,0.706,15.3,55.9,24.8,0.062,7.7,0.92391676,0.17640239
-2025-10-08,Salade,Pâtes bolognaise,Petits pois,Comté,Compote,Madeleine,0.902,19.0,52.4,29.2,0.08,5.0,0.92685276,0.14095084
-2025-10-09,Salade,Poisson pané,Brocolis,Camembert,Compote,Pain et chocolat,0.743,17.3,72.3,7.2,0.153,3.1,0.919687,0.11198857
-2025-10-10,Salade,Steak haché,Haricots verts,Camembert,Crème dessert,Pain et chocolat,0.743,24.8,60.9,25.2,0.127,5.9,0.94308454,0.16003002
-2025-10-13,Soupe,Lasagnes,Brocolis,Yaourt nature,Gâteau,Madeleine,0.889,22.4,51.8,13.6,0.195,6.3,0.9198752,0.15051426
-2025-10-14,Soupe,Steak haché,Carottes,Camembert,Tarte,Madeleine,0.898,23.2,87.5,8.5,0.067,6.0,0.9038852,0.20198679
-2025-10-15,Carottes râpées,Lasagnes,Haricots verts,Petit suisse,Crème dessert,Barre de céréales,0.747,23.2,83.1,19.5,0.077,7.6,0.93590254,0.22399026
-2025-10-16,Carottes râpées,Pâtes bolognaise,Petits pois,Yaourt nature,Crème dessert,Fruit,0.809,23.4,83.6,27.5,0.162,5.5,0.9405867,0.18482551
-2025-10-17,Tomates,Poulet rôti,Riz,Petit suisse,Compote,Barre de céréales,0.916,18.1,43.0,25.5,0.077,8.8,0.9107052,0.146725
-2025-10-20,Carottes râpées,Steak haché,Brocolis,Comté,Compote,Madeleine,0.896,11.4,71.1,16.6,0.178,4.9,0.9197336,0.20014213
-2025-10-21,Œufs mimosa,Steak haché,Carottes,Yaourt nature,Gâteau,Barre de céréales,0.601,10.7,56.2,26.4,0.164,6.3,0.90933526,0.27296758
-2025-10-22,Soupe,Steak haché,Haricots verts,Petit suisse,Crème dessert,Biscuit,0.661,24.5,79.4,12.6,0.055,5.6,0.92265767,0.25688413
-2025-10-23,Soupe,Poulet rôti,Haricots verts,Fromage blanc,Compote,Madeleine,0.94,10.4,70.4,12.9,0.159,3.6,0.90114564,0.19709742
-2025-10-24,Soupe,Pâtes bolognaise,Brocolis,Petit suisse,Tarte,Madeleine,0.799,17.6,54.8,29.2,0.103,3.4,0.9232875,0.14658992
-2025-10-27,Salade,Poisson pané,Riz,Petit suisse,Crème dessert,Biscuit,0.847,12.0,47.9,7.1,0.183,4.2,0.8985382,0.17533118
-2025-10-28,Tomates,Steak haché,Riz,Yaourt nature,Tarte,Fruit,0.701,24.8,43.6,11.8,0.101,7.5,0.9375092,0.22296356
-2025-10-29,Soupe,Poisson pané,Riz,Fromage blanc,Crème dessert,Biscuit,0.719,21.8,88.7,25.1,0.167,6.4,0.9063577,0.16945824
-2025-10-30,Salade,Lasagnes,Haricots verts,Yaourt nature,Compote,Barre de céréales,0.681,21.4,60.1,15.9,0.05,4.2,0.92148346,0.11318895
-2025-10-31,Œufs mimosa,Pâtes bolognaise,Brocolis,Comté,Compote,Barre de céréales,0.874,16.8,64.6,6.4,0.091,7.9,0.923337,0.14637084
+Date,Entrée,Plat,Légumes,Laitage,Dessert,Gouter,Taux participation,Température,Humidité,Vitesse du vent moyen 10 mn,Taux gaspillage,Attente moyenne,Taux gaspillage prédit datarobot,Taux participation prédit datarobot
+2025-09-01,Soupe,Pâtes bolognaise,Riz,Camembert,Compote,Pain et chocolat,0.971,12.2,79.8,8.8,0.063,2.4,0.18825694918632507,0.787599478563439
+2025-09-02,Carottes râpées,Lasagnes,Haricots verts,Comté,Tarte,Fruit,0.897,17.2,67.8,6.8,0.084,7.5,0.17033353447914124,0.8797951927378331
+2025-09-03,Tomates,Poisson pané,Riz,Yaourt nature,Crème dessert,Madeleine,0.633,13.4,88.4,15.1,0.118,5.3,0.4356726109981537,0.5908114454057033
+2025-09-04,Tomates,Poulet rôti,Carottes,Fromage blanc,Crème dessert,Fruit,0.795,11.9,47.9,15.8,0.073,4.0,0.49475058913230896,0.9270468235357358
+2025-09-05,Soupe,Pâtes bolognaise,Brocolis,Comté,Crème dessert,Madeleine,0.795,10.6,84.2,17.5,0.138,7.6,0.21423739194869995,0.9950825311646356
+2025-09-08,Tomates,Lasagnes,Carottes,Petit suisse,Tarte,Pain et chocolat,0.694,15.4,50.7,24.0,0.103,6.8,0.352328896522522,0.9582492421268869
+2025-09-09,Tomates,Poulet rôti,Haricots verts,Petit suisse,Tarte,Pain et chocolat,0.767,13.4,41.4,6.9,0.166,9.8,0.47220563888549805,0.9174706367120171
+2025-09-10,Tomates,Steak haché,Carottes,Fromage blanc,Compote,Madeleine,0.665,19.2,81.6,26.9,0.104,9.7,0.4435264468193054,0.5826734572562846
+2025-09-11,Carottes râpées,Poulet rôti,Petits pois,Petit suisse,Compote,Madeleine,0.66,16.3,73.7,18.8,0.083,3.7,0.3090484142303467,0.8904563038427814
+2025-09-12,Salade,Poisson pané,Carottes,Yaourt nature,Fruit,Fruit,0.853,16.0,72.8,11.3,0.189,6.6,0.29979822039604187,0.9460110926991643
+2025-09-15,Tomates,Steak haché,Petits pois,Camembert,Crème dessert,Biscuit,0.655,13.3,72.4,14.6,0.106,3.7,0.4180079698562622,0.7823140851927048
+2025-09-16,Tomates,Poisson pané,Riz,Yaourt nature,Gâteau,Fruit,0.608,10.2,84.8,10.1,0.15,2.7,0.42276978492736816,0.9664717912561855
+2025-09-17,Salade,Lasagnes,Haricots verts,Comté,Fruit,Biscuit,0.645,18.0,40.4,12.1,0.077,8.0,0.2866629958152771,0.5950117042596126
+2025-09-18,Tomates,Pâtes bolognaise,Haricots verts,Comté,Crème dessert,Pain et chocolat,0.666,16.7,48.6,15.9,0.102,8.5,0.25914907455444336,0.9675786393769903
+2025-09-19,Œufs mimosa,Poisson pané,Petits pois,Yaourt nature,Compote,Biscuit,0.749,24.6,44.4,22.7,0.13,9.6,0.2581760287284851,0.8466505483321598
+2025-09-22,Soupe,Pâtes bolognaise,Brocolis,Yaourt nature,Tarte,Pain et chocolat,0.881,22.7,42.8,9.1,0.149,3.8,0.18005990982055664,0.9316244467107169
+2025-09-23,Soupe,Steak haché,Brocolis,Comté,Crème dessert,Fruit,0.944,15.0,82.0,29.1,0.157,9.0,0.21550092101097107,0.8931211208317287
+2025-09-24,Carottes râpées,Poulet rôti,Brocolis,Fromage blanc,Gâteau,Pain et chocolat,0.669,14.3,50.3,8.0,0.164,6.3,0.30905091762542725,0.5026990031184159
+2025-09-25,Salade,Poisson pané,Petits pois,Comté,Compote,Fruit,0.843,12.1,64.2,12.5,0.055,2.7,0.3117513954639435,0.8375541234379948
+2025-09-26,Carottes râpées,Lasagnes,Carottes,Camembert,Tarte,Pain et chocolat,0.769,12.5,72.7,10.8,0.172,6.9,0.18240967392921448,0.9085564750150666
+2025-09-29,Soupe,Poisson pané,Haricots verts,Comté,Fruit,Fruit,0.895,16.9,73.9,25.0,0.054,9.4,0.23496687412261963,0.8135022964086682
+2025-09-30,Carottes râpées,Poulet rôti,Riz,Petit suisse,Compote,Biscuit,0.977,11.1,44.5,19.4,0.115,6.9,0.31353113055229187,0.8544704130528528
+2025-10-01,Carottes râpées,Poisson pané,Carottes,Fromage blanc,Fruit,Pain et chocolat,0.94,15.0,84.5,28.3,0.18,7.2,0.16140303015708923,0.6421174381697984
+2025-10-02,Carottes râpées,Lasagnes,Haricots verts,Fromage blanc,Compote,Barre de céréales,0.78,13.0,89.1,20.6,0.057,9.4,0.17794132232666016,0.9274703026208243
+2025-10-05,Tomates,Poulet rôti,Brocolis,Fromage blanc,Tarte,Barre de céréales,0.607,10.9,51.2,19.4,0.168,2.2,0.49779999256134033,0.9308023701252699
+2025-10-06,Salade,Poisson pané,Petits pois,Fromage blanc,Gâteau,Pain et chocolat,0.787,13.6,74.0,25.3,0.072,6.3,0.31567561626434326,0.7382944038994325
+2025-10-07,Salade,Poisson pané,Brocolis,Camembert,Crème dessert,Madeleine,0.706,15.3,55.9,24.8,0.062,7.7,0.3111119270324707,0.9194091961170231
+2025-10-08,Salade,Pâtes bolognaise,Petits pois,Comté,Compote,Madeleine,0.902,19.0,52.4,29.2,0.08,5.0,0.20409125089645386,0.6065412915016098
+2025-10-09,Salade,Poisson pané,Brocolis,Camembert,Compote,Pain et chocolat,0.743,17.3,72.3,7.2,0.153,3.1,0.3055816888809204,0.9370495489723695
+2025-10-10,Salade,Steak haché,Haricots verts,Camembert,Crème dessert,Pain et chocolat,0.743,24.8,60.9,25.2,0.127,5.9,0.30480027198791504,0.8996838272108901
+2025-10-13,Soupe,Lasagnes,Brocolis,Yaourt nature,Gâteau,Madeleine,0.889,22.4,51.8,13.6,0.195,6.3,0.2296827733516693,0.9572302848315855
+2025-10-14,Soupe,Steak haché,Carottes,Camembert,Tarte,Madeleine,0.898,23.2,87.5,8.5,0.067,6.0,0.23184162378311157,0.9150024767749171
+2025-10-15,Carottes râpées,Lasagnes,Haricots verts,Petit suisse,Crème dessert,Barre de céréales,0.747,23.2,83.1,19.5,0.077,7.6,0.18871015310287476,0.6460014343652091
+2025-10-16,Carottes râpées,Pâtes bolognaise,Petits pois,Yaourt nature,Crème dessert,Fruit,0.809,23.4,83.6,27.5,0.162,5.5,0.06717753410339355,0.9915691195213228
+2025-10-17,Tomates,Poulet rôti,Riz,Petit suisse,Compote,Barre de céréales,0.916,18.1,43.0,25.5,0.077,8.8,0.5046057105064392,0.9498021851124525
+2025-10-20,Carottes râpées,Steak haché,Brocolis,Comté,Compote,Madeleine,0.896,11.4,71.1,16.6,0.178,4.9,0.18856555223464966,0.7645909286965578
+2025-10-21,Œufs mimosa,Steak haché,Carottes,Yaourt nature,Gâteau,Barre de céréales,0.601,10.7,56.2,26.4,0.164,6.3,0.20348775386810303,0.8327662220557219
+2025-10-22,Soupe,Steak haché,Haricots verts,Petit suisse,Crème dessert,Biscuit,0.661,24.5,79.4,12.6,0.055,5.6,0.2137603759765625,0.5282515365274385
+2025-10-23,Soupe,Poulet rôti,Haricots verts,Fromage blanc,Compote,Madeleine,0.94,10.4,70.4,12.9,0.159,3.6,0.3341132700443268,0.7372114526711102
+2025-10-24,Soupe,Pâtes bolognaise,Brocolis,Petit suisse,Tarte,Madeleine,0.799,17.6,54.8,29.2,0.103,3.4,0.2011413276195526,0.8531047441468134
+2025-10-27,Salade,Poisson pané,Riz,Petit suisse,Crème dessert,Biscuit,0.847,12.0,47.9,7.1,0.183,4.2,0.3389107882976532,0.7518118985239634
+2025-10-28,Tomates,Steak haché,Riz,Yaourt nature,Tarte,Fruit,0.701,24.8,43.6,11.8,0.101,7.5,0.3970501720905304,0.7208776602043925
+2025-10-29,Soupe,Poisson pané,Riz,Fromage blanc,Crème dessert,Biscuit,0.719,21.8,88.7,25.1,0.167,6.4,0.250801682472229,0.5798956701541522
+2025-10-30,Salade,Lasagnes,Haricots verts,Yaourt nature,Compote,Barre de céréales,0.681,21.4,60.1,15.9,0.05,4.2,0.29513290524482727,0.8572605448320869
+2025-10-31,Œufs mimosa,Pâtes bolognaise,Brocolis,Comté,Compote,Barre de céréales,0.874,16.8,64.6,6.4,0.091,7.9,0.11654052138328552,0.8099926802349607

@@ -7,6 +7,7 @@ from config import (
     ENDPOINT,
     API_TOKEN,
     API_TOKEN_GASP,
+    PREDICTIONS,
     PROJECT_ID_GASPILLAGE,
     MODEL_ID_GASPILLAGE,
     PROJECT_ID_PARTICIPATION,
@@ -56,7 +57,7 @@ def predict_waste_and_participation(final_dataset, model_choice="local"):
             predictions = pred_job.get_result_when_complete(max_wait=3600)
 
             results = [float(row[1]["prediction"]) for row in predictions.iterrows()]
-            final_dataset.loc[:, "Taux gaspillage prédit datarobot"] = results
+            final_dataset.loc[:, "Taux gaspillage prédit"] = results
 
             dr.Client(endpoint=ENDPOINT, token=API_TOKEN)
             project_participation = dr.Project.get(PROJECT_ID_PARTICIPATION)
@@ -76,7 +77,9 @@ def predict_waste_and_participation(final_dataset, model_choice="local"):
                 float(row[1]["prediction"])
                 for row in predictions_participation.iterrows()
             ]
-            final_dataset.loc[:, "Taux participation datarobot"] = results_participation
+            final_dataset.loc[:, "Taux participation prédit"] = results_participation
+            final_dataset.to_csv(PREDICTIONS, index=False)
+            print(f"Prédictions sauvegardées dans avec datarobot")
 
         except Exception as e:
             st.error(f"Erreur lors de la prédiction avec DataRobot: {str(e)}")
