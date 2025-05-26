@@ -95,7 +95,9 @@ if page == "Home":
     """
     )
 
-    st.image("./images/dashboard.png", caption="Aperçu du tableau de bord Vision Food")
+    st.image(
+        "./images/dashboard.png", caption="Aperçu du tableau de bord Vision Food (Beta)"
+    )
 
 elif page == "Menu semaine":
     data_file_exists = os.path.isfile(CSV_PREDICTIONS)
@@ -149,7 +151,6 @@ elif page == "Affluence":
             "Pour visualiser les statistiques d'affluence, veuillez d'abord importer un fichier CSV dans la section 'Importation'."
         )
     else:
-        # Ajout du sélecteur de date pour la page Affluence
         st.markdown(
             "<h2 class='section-header'>Sélection de la période</h2>",
             unsafe_allow_html=True,

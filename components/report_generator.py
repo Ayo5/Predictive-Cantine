@@ -21,6 +21,7 @@ def generate_weekly_report(
     co2,
     gaspillage_initial,
     gaspillage_prevu,
+    participation_prevu,
     num_students=150,
 ):
     """Génère un rapport PDF hebdomadaire"""
@@ -134,6 +135,10 @@ def generate_weekly_report(
         [
             "Gaspillage moyen prévu",
             f"{sum(gaspillage_prevu)/len(gaspillage_prevu):.1f}%",
+        ],
+        [
+            "Participation moyenne",
+            f"{sum(participation_prevu)/len(participation_prevu):.1f}%",
         ],
     ]
 

@@ -13,6 +13,7 @@ def display_waste_section(col, current_week):
 
     gaspillage_initial = []
     gaspillage_prevu = []
+    participation_prevu = []
 
     for menu in week_menus:
         if "Taux gaspillage" in menu and pd.notna(menu["Taux gaspillage"]):
@@ -24,6 +25,7 @@ def display_waste_section(col, current_week):
             menu["Taux gaspillage prédit"]
         ):
             gaspillage_prevu.append(float(menu["Taux gaspillage prédit"]) * 100)
+            participation_prevu.append(float(menu["Taux participation prédit"]) * 100)
         else:
             gaspillage_prevu.append(20.0)
 
@@ -34,6 +36,7 @@ def display_waste_section(col, current_week):
 
     gaspillage_initial = gaspillage_initial[:5]
     gaspillage_prevu = gaspillage_prevu[:5]
+    participation_prevu = participation_prevu[:5]
 
     col.markdown(
         "<h2 class='section-header'>Gaspillage et CO2</h2>", unsafe_allow_html=True
@@ -96,7 +99,12 @@ def display_waste_section(col, current_week):
             from components.report_generator import generate_weekly_report
 
             filename = generate_weekly_report(
-                week_menus, prix_semaine, co2, gaspillage_initial, gaspillage_prevu
+                week_menus,
+                prix_semaine,
+                co2,
+                gaspillage_initial,
+                gaspillage_prevu,
+                participation_prevu,
             )
             with open(filename, "rb") as pdf_file:
                 col.download_button(
