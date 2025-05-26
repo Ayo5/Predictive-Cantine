@@ -118,7 +118,7 @@ elif page == "Menu semaine":
 
             if "menus" not in st.session_state:
                 sorted_results = st.session_state["Repas semaine"].sort_values(
-                    "Taux gaspillage", ascending=True
+                    "Date", ascending=True
                 )
                 st.session_state["menus"] = calcul_menus(sorted_results, NUM_WEEKS)
 

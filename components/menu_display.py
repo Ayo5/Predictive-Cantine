@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from config import PREDICTIONS, WEEKDAYS
+from config import WEEKDAYS
 from menu_generator import get_current_menu
 from menu_comments import get_daily_menu_comment, get_weekly_waste_tip
 

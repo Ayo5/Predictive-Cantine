@@ -56,7 +56,7 @@ def predict_waste_and_participation(final_dataset, model_choice="local"):
             predictions = pred_job.get_result_when_complete(max_wait=3600)
 
             results = [float(row[1]["prediction"]) for row in predictions.iterrows()]
-            final_dataset.loc[:, "Taux gaspillage prédit"] = results
+            final_dataset.loc[:, "Taux gaspillage prédit datarobot"] = results
 
             dr.Client(endpoint=ENDPOINT, token=API_TOKEN)
             project_participation = dr.Project.get(PROJECT_ID_PARTICIPATION)
@@ -76,7 +76,7 @@ def predict_waste_and_participation(final_dataset, model_choice="local"):
                 float(row[1]["prediction"])
                 for row in predictions_participation.iterrows()
             ]
-            final_dataset.loc[:, "Taux participation"] = results_participation
+            final_dataset.loc[:, "Taux participation datarobot"] = results_participation
 
         except Exception as e:
             st.error(f"Erreur lors de la prédiction avec DataRobot: {str(e)}")
@@ -91,19 +91,6 @@ def predict_waste_and_participation(final_dataset, model_choice="local"):
             st.success(f"Prédictions sauvegardées dans output")
         except Exception as e:
             st.error(f"Erreur lors de la prédiction avec le modèle local: {str(e)}")
-            # Utilisation de valeurs aléatoires en dernier recours
-            final_dataset.loc[:, "Taux gaspillage"] = np.random.uniform(
-                0.05, 0.35, size=len(final_dataset)
-            )
-            final_dataset.loc[:, "Taux participation"] = np.random.uniform(
-                0.65, 0.95, size=len(final_dataset)
-            )
-            print("Utilisation de valeurs aléatoires suite à une erreur")
-
-    final_dataset["Taux gaspillage"] = final_dataset["Taux gaspillage"].clip(0.01, 0.5)
-    final_dataset["Taux participation"] = final_dataset["Taux participation"].clip(
-        0.5, 1.0
-    )
 
     return final_dataset
 

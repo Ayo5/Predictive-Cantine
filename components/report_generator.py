@@ -54,7 +54,6 @@ def generate_weekly_report(
     )
     story.append(Spacer(1, 12))
 
-    # Menus de la semaine
     story.append(Paragraph("Menus de la semaine", styles["Heading2"]))
     menu_data = [
         [
@@ -82,10 +81,8 @@ def generate_weekly_report(
             ]
         )
 
-    # Calculer la largeur disponible (A4 moins les marges)
     available_width = A4[0] - (doc.leftMargin + doc.rightMargin)
 
-    # Définir les proportions relatives pour chaque colonne
     col_widths = [
         available_width * 0.12,  # Jour (12%)
         available_width * 0.14,  # Entrée (14%)
@@ -105,15 +102,15 @@ def generate_weekly_report(
                 ("TEXTCOLOR", (0, 0), (-1, 0), colors.whitesmoke),
                 ("ALIGN", (0, 0), (-1, -1), "CENTER"),
                 ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-                ("FONTSIZE", (0, 0), (-1, 0), 12),  # Réduire la taille de la police
+                ("FONTSIZE", (0, 0), (-1, 0), 12),
                 ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
                 ("BACKGROUND", (0, 1), (-1, -1), colors.beige),
                 ("TEXTCOLOR", (0, 1), (-1, -1), colors.black),
                 ("FONTNAME", (0, 1), (-1, -1), "Helvetica"),
-                ("FONTSIZE", (0, 1), (-1, -1), 10),  # Réduire la taille de la police
+                ("FONTSIZE", (0, 1), (-1, -1), 10),
                 ("GRID", (0, 0), (-1, -1), 1, colors.black),
-                ("WORDWRAP", (0, 0), (-1, -1), True),  # Permettre le retour à la ligne
-                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),  # Centrer verticalement
+                ("WORDWRAP", (0, 0), (-1, -1), True),
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
             ]
         )
     )
@@ -121,7 +118,6 @@ def generate_weekly_report(
     story.append(menu_table)
     story.append(Spacer(1, 20))
 
-    # Statistiques
     story.append(Paragraph("Statistiques", styles["Heading2"]))
     stats_data = [
         ["Métrique", "Valeur"],
@@ -159,6 +155,5 @@ def generate_weekly_report(
     )
     story.append(stats_table)
 
-    # Génération du PDF
     doc.build(story)
     return filename
