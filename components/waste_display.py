@@ -132,15 +132,12 @@ def display_waste_chart(col, gaspillage_initial, gaspillage_prevu):
             .properties(title="Gaspillage initial")
         )
 
-        # Affichage du graphique initial
         chart_cols[0].altair_chart(chart_initial, use_container_width=True)
     else:
         chart_cols[0].warning("Aucune donnée de gaspillage initial disponible.")
 
-    # Graphique pour le taux de gaspillage prédit
     gaspillage_prevu_df = pd.DataFrame({"Jour": jours, "Pourcentage": gaspillage_prevu})
 
-    # Filtrer les valeurs None ou NaN
     gaspillage_prevu_df = gaspillage_prevu_df.dropna()
 
     if not gaspillage_prevu_df.empty:

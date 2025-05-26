@@ -9,7 +9,7 @@ from menu_generator import get_current_menu
 def display_budget_section(col, current_week):
     """Display the budget section"""
     week_menus, prix_semaine, _ = get_current_menu(current_week)
-    participations = [row["Taux participation"] for row in week_menus]
+    participations = [row["Taux participation prédit"] for row in week_menus]
 
     col.markdown("<h2 class='section-header'>Budget</h2>", unsafe_allow_html=True)
 

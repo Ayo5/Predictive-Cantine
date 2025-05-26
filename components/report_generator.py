@@ -33,7 +33,6 @@ def generate_weekly_report(
     styles = getSampleStyleSheet()
     story = []
 
-    # Ajout du logo en premier
     image_path = "./images/logo.png"
     if os.path.exists(image_path):
         img = Image(image_path, width=1 * inch, height=1 * inch)
@@ -56,32 +55,48 @@ def generate_weekly_report(
 
     # Menus de la semaine
     story.append(Paragraph("Menus de la semaine", styles["Heading2"]))
-    menu_data = [["Jour", "Entrée", "Plat", "Légumes", "Laitage", "Dessert"]]
+    menu_data = [
+        [
+            "Jour",
+            "Entrée",
+            "Plat",
+            "Légumes",
+            "Laitage",
+            "Dessert",
+            "Part.",
+            "Gasp.",
+        ]
+    ]
     for menu in week_menus:
         menu_data.append(
             [
-                WEEKDAYS[
-                    menu["Date"].weekday()
-                ],  # Utiliser l'objet datetime pour weekday()
+                WEEKDAYS[menu["Date"].weekday()],
                 menu["Entrée"],
                 menu["Plat"],
                 menu.get("Légumes", ""),
                 menu.get("Laitage", ""),
                 menu.get("Dessert", ""),
+                f"{float(menu.get('Taux participation prédit', 0)) * 100:.1f}%",
+                f"{float(menu.get('Taux gaspillage prédit', 0)) * 100:.1f}%",
             ]
         )
 
-    menu_table = Table(
-        menu_data,
-        colWidths=[
-            1 * inch,
-            1.5 * inch,
-            1.5 * inch,
-            1.5 * inch,
-            1.5 * inch,
-            1.5 * inch,
-        ],
-    )
+    # Calculer la largeur disponible (A4 moins les marges)
+    available_width = A4[0] - (doc.leftMargin + doc.rightMargin)
+
+    # Définir les proportions relatives pour chaque colonne
+    col_widths = [
+        available_width * 0.12,  # Jour (12%)
+        available_width * 0.14,  # Entrée (14%)
+        available_width * 0.14,  # Plat (14%)
+        available_width * 0.14,  # Légumes (14%)
+        available_width * 0.12,  # Laitage (12%)
+        available_width * 0.14,  # Dessert (14%)
+        available_width * 0.10,  # Taux Participation (15%)
+        available_width * 0.10,  # Taux Gaspillage (15%)
+    ]
+
+    menu_table = Table(menu_data, colWidths=col_widths)
     menu_table.setStyle(
         TableStyle(
             [
@@ -89,16 +104,19 @@ def generate_weekly_report(
                 ("TEXTCOLOR", (0, 0), (-1, 0), colors.whitesmoke),
                 ("ALIGN", (0, 0), (-1, -1), "CENTER"),
                 ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-                ("FONTSIZE", (0, 0), (-1, 0), 14),
+                ("FONTSIZE", (0, 0), (-1, 0), 12),  # Réduire la taille de la police
                 ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
                 ("BACKGROUND", (0, 1), (-1, -1), colors.beige),
                 ("TEXTCOLOR", (0, 1), (-1, -1), colors.black),
                 ("FONTNAME", (0, 1), (-1, -1), "Helvetica"),
-                ("FONTSIZE", (0, 1), (-1, -1), 12),
+                ("FONTSIZE", (0, 1), (-1, -1), 10),  # Réduire la taille de la police
                 ("GRID", (0, 0), (-1, -1), 1, colors.black),
+                ("WORDWRAP", (0, 0), (-1, -1), True),  # Permettre le retour à la ligne
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),  # Centrer verticalement
             ]
         )
     )
+
     story.append(menu_table)
     story.append(Spacer(1, 20))
 

@@ -136,7 +136,6 @@ elif page == "Gaspillage":
             "Pour visualiser les statistiques de gaspillage, veuillez d'abord importer un fichier CSV dans la section 'Importation'."
         )
     else:
-        # Ajout du sélecteur de date pour la page Gaspillage
         st.markdown(
             "<h2 class='section-header'>Sélection de la période</h2>",
             unsafe_allow_html=True,

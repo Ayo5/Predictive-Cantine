@@ -14,7 +14,7 @@ MODEL_ID_GASPILLAGE = "680a2bea9f1281df4aed786c"
 ENDPOINT = "https://app.datarobot.com/api/v2"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TRAIN_DATA = os.path.join(BASE_DIR, "data", "data_prediction.csv")
+TRAIN_DATA = os.path.join(BASE_DIR, "data", "train_data.csv")
 CSV_PREDICTIONS = os.path.join(BASE_DIR, "uploads", "menu.csv")
 PREDICTIONS = os.path.join(BASE_DIR, "output", "predictions.csv")
 CSV_CO2_COUTS = os.path.join(BASE_DIR, "uploads", "couts.csv")
